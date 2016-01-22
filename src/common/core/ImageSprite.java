@@ -25,4 +25,8 @@ public abstract class ImageSprite extends Sprite {
         // not per-pixel-collision
         return super.collidesWith(otherSprite);
     }
+
+    public Image getImage() {
+        return this.image;
+    }
 }

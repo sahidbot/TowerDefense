@@ -1,7 +1,7 @@
 package common;
 
+import common.core.MouseState;
 import common.core.Vector2;
-import game.GameManager;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
@@ -11,7 +11,6 @@ import javafx.scene.text.FontWeight;
  * Created by Sahidul Islam.
  */
 public class ScoreManager {
-    private GameManager parent;
     private double leftOffset;
     private double topOffset;
 
@@ -24,6 +23,9 @@ public class ScoreManager {
     private static final String MONEY_TITLE = "Money";
     private int money = 0;
 
+    private Vector2 mousePosition = Vector2.getZero();
+    private Vector2 leftClickPosition = Vector2.getZero();
+    private Vector2 rightClickPosition = Vector2.getZero();
     private static final String MOUSE_TITLE = "Mouse";
     private static final String MOUSE_LEFT_CLICK_TITLE = "Mouse Left";
     private static final String MOUSE_RIGHT_CLICK_TITLE = "Mouse Right";
@@ -31,14 +33,6 @@ public class ScoreManager {
     public ScoreManager(double leftOffset, double topOffset) {
         this.leftOffset = leftOffset;
         this.topOffset = topOffset;
-    }
-
-    public GameManager getParent() {
-        return parent;
-    }
-
-    public void setParent(GameManager parent) {
-        this.parent = parent;
     }
 
     public int getLevel() {
@@ -63,6 +57,20 @@ public class ScoreManager {
 
     public void setMoney(int money) {
         this.money = money;
+    }
+
+    public void updateMousePosition(MouseState mouseState) {
+        this.mousePosition.setFromVector(mouseState.getMousePosition());
+
+        if (!mouseState.getLeftClickPosition().equals(Vector2.getZero()))
+        {
+            this.leftClickPosition.setFromVector(mouseState.getLeftClickPosition());
+        }
+
+        if (!mouseState.getRightClickPosition().equals(Vector2.getZero()))
+        {
+            this.rightClickPosition.setFromVector(mouseState.getRightClickPosition());
+        }
     }
 
     public void draw(GraphicsContext gc) {
@@ -93,8 +101,8 @@ public class ScoreManager {
         drawText(gc, MOUSE_TITLE, position, Color.RED);
 
         position.setY(position.getY() + 25);
-        String mousePos = String.valueOf(getParent().mouseHandler.mousePosition.getX()) + "," +
-                          String.valueOf(getParent().mouseHandler.mousePosition.getY());
+        String mousePos = String.valueOf(mousePosition.getX()) + "," +
+                          String.valueOf(mousePosition.getY());
         drawText(gc, mousePos, position, Color.BLUE);
 
         // mouse left
@@ -102,8 +110,8 @@ public class ScoreManager {
         drawText(gc, MOUSE_LEFT_CLICK_TITLE, position, Color.RED);
 
         position.setY(position.getY() + 25);
-        mousePos = String.valueOf(getParent().mouseHandler.leftClickPosition.getX()) + "," +
-                   String.valueOf(getParent().mouseHandler.leftClickPosition.getY());
+        mousePos = String.valueOf(leftClickPosition.getX()) + "," +
+                   String.valueOf(rightClickPosition.getY());
         drawText(gc, mousePos, position, Color.BLUE);
 
         // mouse right
@@ -111,8 +119,8 @@ public class ScoreManager {
         drawText(gc, MOUSE_RIGHT_CLICK_TITLE, position, Color.RED);
 
         position.setY(position.getY() + 25);
-        mousePos = String.valueOf(getParent().mouseHandler.rightClickPosition.getX()) + "," +
-                String.valueOf(getParent().mouseHandler.rightClickPosition.getY());
+        mousePos = String.valueOf(rightClickPosition.getX()) + "," +
+                String.valueOf(rightClickPosition.getY());
         drawText(gc, mousePos, position, Color.BLUE);
     }
 

@@ -1,3 +1,4 @@
+import common.Settings;
 import game.*;
 
 import javafx.application.Application;
@@ -6,6 +7,7 @@ import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.stage.Stage;
+import map.MapManager;
 
 public class Main extends Application {
 
@@ -17,11 +19,20 @@ public class Main extends Application {
         primaryStage.setTitle("Defense Tower");
         primaryStage.setResizable(false);
 
-        Canvas canvas = new Canvas(900, 600);
+        int rows = 16;
+        int columns = 16;
+
+        double width = (Settings.TILE_WIDTH * rows) + Settings.SIDEBAR_WIDTH;
+        double height = Settings.TILE_HEIGHT * columns;
+
+        Canvas canvas = new Canvas(width, height);
         root.getChildren().add(canvas);
 
-        GameManager gameManager = new GameManager(canvas.getGraphicsContext2D(), scene);
-        gameManager.start();
+        /*GameManager gameManager = new GameManager(canvas.getGraphicsContext2D(), scene);
+        gameManager.start();*/
+
+        MapManager mapManager = new MapManager(canvas.getGraphicsContext2D(), scene, rows, columns);
+        mapManager.start();
 
         primaryStage.show();
         primaryStage.setHeight(primaryStage.getHeight() - 12);

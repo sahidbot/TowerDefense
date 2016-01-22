@@ -1,6 +1,7 @@
 package common.core;
 
 import javafx.event.EventHandler;
+import javafx.scene.ImageCursor;
 import javafx.scene.Scene;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
@@ -9,31 +10,41 @@ import javafx.scene.input.MouseEvent;
  * Created by Sahidul Islam.
  */
 public class MouseHandler {
-    public Vector2 leftClickPosition = Vector2.zero();
-    public Vector2 rightClickPosition = Vector2.zero();
-    public Vector2 mousePosition = Vector2.zero();
+    private MouseState mouseState = new MouseState();
+    private Scene scene;
 
     public MouseHandler(Scene scene) {
-        scene.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                if (event.getButton() == MouseButton.PRIMARY) {
-                    leftClickPosition.setX(event.getX());
-                    leftClickPosition.setY(event.getY());
-                }
-                else if (event.getButton() == MouseButton.SECONDARY) {
-                    rightClickPosition.setX(event.getX());
-                    rightClickPosition.setY(event.getY());
-                }
+        this.scene = scene;
+
+        scene.setOnMouseClicked(event -> {
+            if (event.getButton() == MouseButton.PRIMARY) {
+                mouseState.setLeftClickPosition(event.getX(), event.getY());
+            }
+            else if (event.getButton() == MouseButton.SECONDARY) {
+                mouseState.setRightClickPosition(event.getX(), event.getY());
             }
         });
 
         scene.setOnMouseMoved(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                mousePosition.setX(event.getX());
-                mousePosition.setY(event.getY());
+                mouseState.setMousePosition(event.getX(), event.getY());
             }
         });
     }
+
+    public MouseState getMouseState() {
+        return this.mouseState;
+    }
+
+    public void clearMouseState() {
+        //this.mouseState.setMousePosition(0, 0);
+        this.mouseState.setLeftClickPosition(0, 0);
+        this.mouseState.setRightClickPosition(0, 0);
+    }
 }
+
+/*
+ * Mouse cursor in JavaFX
+ * https://blog.idrsolutions.com/2014/05/tutorial-change-default-cursor-javafx/
+ */

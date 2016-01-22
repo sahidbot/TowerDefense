@@ -52,11 +52,30 @@ public class Vector2 {
     }
 
     /**
+     * Set the value of X and Y.
+     * @param x The value to set.
+     * @param y The value to set.
+     */
+    public void setXY(double x, double y) {
+        this.x = x;
+        this.y = y;
+    }
+
+    /**
+     * Set the value of X and Y from vector.
+     * @param vector The vector to set.
+     */
+    public void setFromVector(Vector2 vector) {
+        this.x = vector.getX();
+        this.y = vector.getY();
+    }
+
+    /**
      * Creates a zero vector.
      *
      * @return  A vector with zero value of Vector.x and Vector.y.
      */
-    public static Vector2 zero() {
+    public static Vector2 getZero() {
         return new Vector2(0, 0);
     }
 
@@ -154,6 +173,14 @@ public class Vector2 {
     public void negate() {
         this.x = -this.x;
         this.y = -this.y;
+    }
+
+    /**
+     * Indicate whether the vector has zero value or not.
+     * @return Returns true if vector is zero otherwise false.
+     */
+    public boolean isZero() {
+        return x == 0 & y == 0;
     }
 
     /**

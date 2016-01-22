@@ -22,21 +22,22 @@ public class GameManager extends GameLoop {
 
         mouseHandler = new MouseHandler(scene);
 
-        tileManager = new TileManager(12, 12);
-        tileManager.createTiles();
+        tileManager = new TileManager();
+        tileManager.createScenery(12, 12);
 
         scoreManager = new ScoreManager(tileManager.getWidth(), 0);
-        scoreManager.setParent(this);
     }
 
     @Override
     protected void update(double delta) {
         scoreManager.setHealth(scoreManager.getHealth() + 1);
         scoreManager.setMoney(scoreManager.getMoney() + 1);
+        scoreManager.updateMousePosition(mouseHandler.getMouseState());
     }
 
     @Override
     protected void clear() {
+        mouseHandler.clearMouseState();
         gc.clearRect(0, 0, width, height);
     }
 

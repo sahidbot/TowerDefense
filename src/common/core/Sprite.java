@@ -2,10 +2,14 @@ package common.core;
 
 import javafx.scene.canvas.GraphicsContext;
 
+import java.util.UUID;
+
 /**
  * Created by Sahidul Islam
  */
-public abstract class Sprite {
+public abstract class Sprite implements Cloneable{
+    private UUID uniqueId = UUID.randomUUID();
+
     protected double width;
     protected double height;
 
@@ -48,6 +52,14 @@ public abstract class Sprite {
         return height;
     }
 
+    public Vector2 getPosition() {
+        return position;
+    }
+
+    public void setPosition(Vector2 position) {
+        this.position.setFromVector(position);
+    }
+
     public double getCenterX() {
         return position.getX() + width * 0.5;
     }
@@ -56,20 +68,46 @@ public abstract class Sprite {
         return position.getY() + height * 0.5;
     }
 
+    public String getUniqueId() {
+        return this.uniqueId.toString();
+    }
+
+    public void generateNewUniqueId() {
+        this.uniqueId = UUID.randomUUID();
+    }
+
     public boolean collidesWith(Sprite otherSprite) {
         // not per-pixel-collision
-        return (otherSprite.position.getX() + otherSprite.getWidth() >= position.getX() &&
-                otherSprite.position.getY() + otherSprite.getHeight() >= position.getY() &&
-                otherSprite.position.getX() <= position.getX() + width &&
-                otherSprite.position.getY() <= position.getY() + height);
+        return (otherSprite.position.getX() + otherSprite.getWidth() >= this.position.getX() &&
+                otherSprite.position.getY() + otherSprite.getHeight() >= this.position.getY() &&
+                otherSprite.position.getX() <= this.position.getX() + this.width &&
+                otherSprite.position.getY() <= this.position.getY() + this.height);
+    }
+
+    public boolean collidesWith(Vector2 position) {
+        return (position.getX() >= this.position.getX() &&
+                position.getY() >= this.position.getY() &&
+                position.getX() <= this.position.getX() + this.width &&
+                position.getY() <= this.position.getY() + this.height);
     }
 
     public void kill() {
         health = 0;
     }
 
-
     public abstract void draw(GraphicsContext gc);
 
     public abstract void update();
+
+    public boolean equals(Sprite obj) {
+        return this.getUniqueId().equals(obj.getUniqueId());
+    }
+
+    /*
+    public <T extends Sprite> T clone(Class<T> type) throws CloneNotSupportedException {
+        T clonedSprite = type.cast(super.clone());
+        clonedSprite.generateNewUniqueId();
+        return clonedSprite;
+    }
+    */
 }

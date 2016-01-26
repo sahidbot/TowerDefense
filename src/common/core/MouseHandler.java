@@ -16,12 +16,15 @@ public class MouseHandler {
     public MouseHandler(Scene scene) {
         this.scene = scene;
 
-        scene.setOnMouseClicked(event -> {
-            if (event.getButton() == MouseButton.PRIMARY) {
-                mouseState.setLeftClickPosition(event.getX(), event.getY());
-            }
-            else if (event.getButton() == MouseButton.SECONDARY) {
-                mouseState.setRightClickPosition(event.getX(), event.getY());
+        scene.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                if (event.getButton() == MouseButton.PRIMARY) {
+                    mouseState.setLeftClickPosition(event.getX(), event.getY());
+                }
+                else if (event.getButton() == MouseButton.SECONDARY) {
+                    mouseState.setRightClickPosition(event.getX(), event.getY());
+                }
             }
         });
 

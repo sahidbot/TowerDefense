@@ -19,11 +19,11 @@ public class Main extends Application {
         primaryStage.setTitle("Defense Tower");
         primaryStage.setResizable(false);
 
-        int rows = 16;
-        int columns = 16;
+        int rows = 20;
+        int columns = 24;
 
-        double width = (Settings.TILE_WIDTH * rows) + Settings.SIDEBAR_WIDTH;
-        double height = Settings.TILE_HEIGHT * columns;
+        double width = (Settings.TILE_WIDTH * columns) + Settings.SIDEBAR_WIDTH;
+        double height = Settings.TILE_HEIGHT * rows;
 
         Canvas canvas = new Canvas(width, height);
         root.getChildren().add(canvas);

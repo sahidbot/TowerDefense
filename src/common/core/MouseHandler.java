@@ -1,7 +1,6 @@
 package common.core;
 
 import javafx.event.EventHandler;
-import javafx.scene.ImageCursor;
 import javafx.scene.Scene;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;

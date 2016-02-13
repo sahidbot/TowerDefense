@@ -47,11 +47,11 @@ public class TileManager {
         this.rows = rows;
         this.columns = columns;
 
-        sceneryTiles = new Tile[rows][columns];
-        tilesOverlay = new Tile[rows][columns];
+        sceneryTiles = new Tile[columns][rows];
+        tilesOverlay = new Tile[columns][rows];
 
-        for (int x = 0; x < rows; x++) {
-            for (int y = 0; y < columns; y++) {
+        for (int x = 0; x < columns; x++) {
+            for (int y = 0; y < rows; y++) {
                 Vector2 position = new Vector2(Settings.TILE_WIDTH * x, Settings.TILE_HEIGHT * y);
                 Tile tile = new Tile(SpriteType.SCENERY, Settings.TILE_WIDTH, Settings.TILE_HEIGHT, position);
                 sceneryTiles[x][y] = tile;
@@ -82,8 +82,8 @@ public class TileManager {
     }
 
     public void draw(GraphicsContext gc) {
-        for (int x = 0; x < rows; x++) {
-            for (int y = 0; y < columns; y++) {
+        for (int x = 0; x < columns; x++) {
+            for (int y = 0; y < rows; y++) {
                 Tile tile = sceneryTiles[x][y];
                 tile.draw(gc);
 

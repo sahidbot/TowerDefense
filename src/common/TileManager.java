@@ -1,8 +1,12 @@
 package common;
 
+import common.core.MouseEventType;
 import common.core.MouseState;
 import common.core.Vector2;
 import javafx.scene.canvas.GraphicsContext;
+
+import java.util.Observable;
+import java.util.Observer;
 
 /**
  * Created by Sahidul Islam
@@ -47,11 +51,11 @@ public class TileManager {
         this.rows = rows;
         this.columns = columns;
 
-        sceneryTiles = new Tile[rows][columns];
-        tilesOverlay = new Tile[rows][columns];
+        sceneryTiles = new Tile[columns][rows];
+        tilesOverlay = new Tile[columns][rows];
 
-        for (int x = 0; x < rows; x++) {
-            for (int y = 0; y < columns; y++) {
+        for (int x = 0; x < columns; x++) {
+            for (int y = 0; y < rows; y++) {
                 Vector2 position = new Vector2(Settings.TILE_WIDTH * x, Settings.TILE_HEIGHT * y);
                 Tile tile = new Tile(SpriteType.SCENERY, Settings.TILE_WIDTH, Settings.TILE_HEIGHT, position);
                 sceneryTiles[x][y] = tile;
@@ -60,8 +64,8 @@ public class TileManager {
     }
 
     public void update(MouseState mouseState) {
-        if (!mouseState.getLeftClickPosition().isZero()) {
-            Vector2 pos = getTilePosition(mouseState.getLeftClickPosition());
+        if (mouseState.getEventType() == MouseEventType.LEFT_CLICK) {
+            Vector2 pos = getTilePosition(mouseState.getPosition());
             System.out.println(pos);
 
             if (mouseState.getSelectedSprite() != null) {
@@ -74,7 +78,7 @@ public class TileManager {
                 if (tileOverlay != null) {
                     tilesOverlay[x][y] = tileOverlay;
 
-                    // clear out after every drop inside tile zone
+                    // clearPosition out after every drop inside tile zone
                     //mouseState.clearSelectedSprite();
                 }
             }
@@ -82,8 +86,8 @@ public class TileManager {
     }
 
     public void draw(GraphicsContext gc) {
-        for (int x = 0; x < rows; x++) {
-            for (int y = 0; y < columns; y++) {
+        for (int x = 0; x < columns; x++) {
+            for (int y = 0; y < rows; y++) {
                 Tile tile = sceneryTiles[x][y];
                 tile.draw(gc);
 

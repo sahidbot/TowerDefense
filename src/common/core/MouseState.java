@@ -1,36 +1,65 @@
 package common.core;
 
 /**
- * Created by Sahidul Islam.
+ * The state of the mouse event.
  */
 public class MouseState {
-    private Vector2 mousePosition = Vector2.getZero();
-    private Vector2 leftClickPosition = Vector2.getZero();
-    private Vector2 rightClickPosition = Vector2.getZero();
+    private MouseEventType eventType = MouseEventType.NONE;
+    private Vector2 position = Vector2.getZero();
     private Sprite selectedSprite = null;
 
-    public Vector2 getMousePosition() {
-        return mousePosition;
+    /**
+     * Gets the type of the mouse event.
+     *
+     * @return Returns the type of the mouse event
+     */
+    public MouseEventType getEventType() {
+        return this.eventType;
     }
 
-    public void setMousePosition(double x, double y) {
-        this.mousePosition.setXY(x, y);
+    /**
+     * Sets the mouse event type.
+     *
+     * @param eventType Type of the mouse event.
+     */
+    public void setEventType(MouseEventType eventType) {
+        this.eventType = eventType;
     }
 
-    public Vector2 getLeftClickPosition() {
-        return leftClickPosition;
+    /**
+     * Gets the position of the mouse event.
+     *
+     * @return Returns the position of the mouse event
+     */
+    public Vector2 getPosition() {
+        return this.position;
     }
 
-    public void setLeftClickPosition(double x, double y) {
-        this.leftClickPosition.setXY(x, y);
+    /**
+     * Updates the current position with new value.
+     *
+     * @param position Vector of the new position.
+     */
+    public void setPosition(Vector2 position) {
+        this.position.setFromVector(position);
     }
 
-    public Vector2 getRightClickPosition() {
-        return rightClickPosition;
+    /**
+     * Updates the current position with new value.
+     *
+     * @param x X value of the vector.
+     * @param y Y value of the vector.
+     */
+    public void setPosition(double x, double y) {
+        this.position.setXY(x, y);
     }
 
-    public void setRightClickPosition(double x, double y) {
-        this.rightClickPosition.setXY(x, y);
+    /**
+     * Clear the current state.
+     */
+    public void clearPosition() {
+        this.position.setXY(0, 0);
+        this.eventType = MouseEventType.NONE;
     }
 
     public Sprite getSelectedSprite() {

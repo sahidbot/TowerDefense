@@ -1,7 +1,7 @@
 package common;
 
 /**
- * Created by Sahidul Islam.
+ * Types of sprites
  */
 public enum SpriteType {
     SCENERY,

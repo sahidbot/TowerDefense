@@ -60,7 +60,7 @@ public class ScoreManager {
     }
 
     public void updateMousePosition(MouseState mouseState) {
-        this.mousePosition.setFromVector(mouseState.getMousePosition());
+        /*this.mousePosition.setFromVector(mouseState.getMousePosition());
 
         if (!mouseState.getLeftClickPosition().equals(Vector2.getZero()))
         {
@@ -70,7 +70,7 @@ public class ScoreManager {
         if (!mouseState.getRightClickPosition().equals(Vector2.getZero()))
         {
             this.rightClickPosition.setFromVector(mouseState.getRightClickPosition());
-        }
+        }*/
     }
 
     public void draw(GraphicsContext gc) {

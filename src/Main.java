@@ -1,4 +1,5 @@
 import common.Settings;
+import common.core.MouseHandler;
 import game.*;
 
 import javafx.application.Application;
@@ -31,7 +32,7 @@ public class Main extends Application {
         /*GameManager gameManager = new GameManager(canvas.getGraphicsContext2D(), scene);
         gameManager.start();*/
 
-        MapManager mapManager = new MapManager(canvas.getGraphicsContext2D(), scene, rows, columns);
+        MapManager mapManager = new MapManager(canvas.getGraphicsContext2D(), new MouseHandler(scene), rows, columns);
         mapManager.start();
 
         primaryStage.show();

@@ -1,8 +1,12 @@
 package common;
 
+import common.core.MouseEventType;
 import common.core.MouseState;
 import common.core.Vector2;
 import javafx.scene.canvas.GraphicsContext;
+
+import java.util.Observable;
+import java.util.Observer;
 
 /**
  * Created by Sahidul Islam
@@ -60,8 +64,8 @@ public class TileManager {
     }
 
     public void update(MouseState mouseState) {
-        if (!mouseState.getLeftClickPosition().isZero()) {
-            Vector2 pos = getTilePosition(mouseState.getLeftClickPosition());
+        if (mouseState.getEventType() == MouseEventType.LEFT_CLICK) {
+            Vector2 pos = getTilePosition(mouseState.getPosition());
             System.out.println(pos);
 
             if (mouseState.getSelectedSprite() != null) {
@@ -74,7 +78,7 @@ public class TileManager {
                 if (tileOverlay != null) {
                     tilesOverlay[x][y] = tileOverlay;
 
-                    // clear out after every drop inside tile zone
+                    // clearPosition out after every drop inside tile zone
                     //mouseState.clearSelectedSprite();
                 }
             }

@@ -7,10 +7,13 @@ import common.core.*;
 import javafx.scene.Scene;
 import javafx.scene.canvas.GraphicsContext;
 
+import java.util.Observable;
+import java.util.Observer;
+
 /**
  * Created by Sahidul Islam.
  */
-public class MapManager extends GameLoop {
+public class MapManager extends GameLoop implements Observer {
     public MouseHandler mouseHandler;
     public TileManager tileManager;
     public SideBar sideBar;
@@ -18,40 +21,56 @@ public class MapManager extends GameLoop {
     private GraphicsContext gc;
     private double width;
     private double height;
+    private Vector2 mousePosition = Vector2.getZero();
 
-    public MapManager(GraphicsContext gc, Scene scene, int rows, int columns) {
+    public MapManager(GraphicsContext gc, MouseHandler mouseHandler, int rows, int columns) {
         this.gc = gc;
         this.width = gc.getCanvas().getWidth();
         this.height = gc.getCanvas().getHeight();
 
-        mouseHandler = new MouseHandler(scene);
+        this.mouseHandler = mouseHandler;
+        this.mouseHandler.addObserver(this);
 
-        tileManager = new TileManager();
-        tileManager.createScenery(rows, columns);
+        this.tileManager = new TileManager();
+        this.tileManager.createScenery(rows, columns);
 
-        sideBar = new SideBar(Settings.TILE_WIDTH, Settings.TILE_HEIGHT, tileManager.getWidth(), 0);
+        this.sideBar = new SideBar(Settings.TILE_WIDTH, Settings.TILE_HEIGHT, tileManager.getWidth(), 0);
     }
 
+    /**
+     * This method is called whenever the mouse state is changed.
+     *
+     * @param o   the observable object.
+     * @param arg an argument passed to the <code>notifyObservers</code>
+     */
     @Override
-    protected void update(double delta) {
-        MouseState mouseState = mouseHandler.getMouseState();
-        tileManager.update(mouseState);
-        sideBar.update(mouseState);
+    public void update(Observable o, Object arg) {
+        MouseState mouseState = (MouseState) arg;
 
-        if (!mouseState.getLeftClickPosition().isZero() &&
+        if (mouseState.getEventType() == MouseEventType.LEFT_CLICK &&
                 mouseState.getSelectedSprite() != null) {
             Sprite selectedSprite = mouseState.getSelectedSprite();
             System.out.println(selectedSprite.getUniqueId());
         }
 
-        if (!mouseState.getRightClickPosition().isZero()) {
+        tileManager.update(mouseState);
+        sideBar.update(mouseState);
+
+        if (mouseState.getEventType() == MouseEventType.RIGHT_CLICK) {
             mouseState.clearSelectedSprite();
+        }
+
+        if (mouseState.getEventType() == MouseEventType.MOVE) {
+            this.mousePosition = mouseState.getPosition();
         }
     }
 
     @Override
+    protected void update(double delta) {
+    }
+
+    @Override
     protected void clear() {
-        mouseHandler.clearMouseState();
         gc.clearRect(0, 0, width, height);
     }
 
@@ -67,8 +86,8 @@ public class MapManager extends GameLoop {
 
             double w = tile.getWidth();
             double h = tile.getHeight();
-            double sx = Math.max(mouseState.getMousePosition().getX() - (w / 2), 0);
-            double xy = Math.max(mouseState.getMousePosition().getY() - (h / 2), 0);
+            double sx = Math.max(this.mousePosition.getX() - (w / 2), 0);
+            double xy = Math.max(this.mousePosition.getY() - (h / 2), 0);
 
             gc.drawImage(tile.getImage(), imageOffset.getX(), imageOffset.getY(), w, h,
                     sx, xy, tile.getWidth(), tile.getHeight());

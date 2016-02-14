@@ -5,32 +5,42 @@ import javafx.scene.Scene;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 
+import java.util.Observable;
+
 /**
  * Created by Sahidul Islam.
  */
-public class MouseHandler {
-    private MouseState mouseState = new MouseState();
-    private Scene scene;
+public class MouseHandler extends Observable {
+    private MouseState mouseState;
 
     public MouseHandler(Scene scene) {
-        this.scene = scene;
+        this.mouseState = new MouseState();
 
         scene.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
                 if (event.getButton() == MouseButton.PRIMARY) {
-                    mouseState.setLeftClickPosition(event.getX(), event.getY());
+                    mouseState.setPosition(event.getX(), event.getY());
+                    mouseState.setEventType(MouseEventType.LEFT_CLICK);
+                    setChanged();
                 }
                 else if (event.getButton() == MouseButton.SECONDARY) {
-                    mouseState.setRightClickPosition(event.getX(), event.getY());
+                    mouseState.setPosition(event.getX(), event.getY());
+                    mouseState.setEventType(MouseEventType.RIGHT_CLICK);
+                    setChanged();
                 }
+
+                notifyObservers(mouseState);
             }
         });
 
         scene.setOnMouseMoved(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                mouseState.setMousePosition(event.getX(), event.getY());
+                mouseState.setPosition(event.getX(), event.getY());
+                mouseState.setEventType(MouseEventType.MOVE);
+                setChanged();
+                notifyObservers(mouseState);
             }
         });
     }
@@ -40,9 +50,7 @@ public class MouseHandler {
     }
 
     public void clearMouseState() {
-        //this.mouseState.setMousePosition(0, 0);
-        this.mouseState.setLeftClickPosition(0, 0);
-        this.mouseState.setRightClickPosition(0, 0);
+        this.mouseState.clearPosition();
     }
 }
 

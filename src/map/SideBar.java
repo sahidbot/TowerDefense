@@ -3,9 +3,11 @@ package map;
 import common.Settings;
 import common.SpriteType;
 import common.Tile;
+import common.core.MouseEventType;
 import common.core.MouseState;
 import common.core.Vector2;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.paint.Color;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,6 +18,8 @@ import java.util.List;
 public class SideBar {
     private double leftOffset;
     private double topOffset;
+    private Vector2 sampleTextPos;
+    private boolean inspectionHidden = true;
 
     private List<Tile> tiles;
 
@@ -32,6 +36,8 @@ public class SideBar {
         position = new Vector2(position.getX() + tileWidth + Settings.DEFAULT_MARGIN, position.getY());
         Tile tileExit = new Tile(SpriteType.EXIT_POINT, tileWidth, tileHeight, position);
 
+        sampleTextPos = new Vector2(leftOffset + Settings.DEFAULT_MARGIN, position.getY() + tileHeight + Settings.DEFAULT_MARGIN + 50);
+
         tiles = new ArrayList<Tile>();
         tiles.add(tilePath);
         tiles.add(tileEntry);
@@ -43,10 +49,21 @@ public class SideBar {
             Tile tile = tiles.get(i);
             tile.update(mouseState);
 
-            if (mouseState.getLeftClickPosition().getX() > this.leftOffset &&
-                    tile.collidesWith(mouseState.getLeftClickPosition())) {
-                mouseState.setSelectedSprite(tile);
+            if (mouseState.getEventType() == MouseEventType.LEFT_CLICK) {
+                if (mouseState.getPosition().getX() > this.leftOffset &&
+                        tile.collidesWith(mouseState.getPosition())) {
+                    mouseState.setSelectedSprite(tile);
+                }
             }
+
+            /*if (mouseState.getEventType() == MouseEventType.MOVE &&
+                    mouseState.getPosition().getX() > this.leftOffset &&
+                    tile.collidesWith(mouseState.getPosition())) {
+                showInspection();
+            }
+            else {
+                hideInspection();
+            }*/
         }
     }
 
@@ -55,5 +72,22 @@ public class SideBar {
             Tile tile = tiles.get(i);
             tile.draw(gc);
         }
+
+        if (!inspectionHidden) {
+            drawText(gc, "Sample Text", sampleTextPos, Color.BLUE);
+        }
+    }
+
+    public void showInspection() {
+        this.inspectionHidden = true;
+    }
+
+    public void hideInspection() {
+        this.inspectionHidden = false;
+    }
+
+    private static void drawText(GraphicsContext gc, String text, Vector2 position, Color color) {
+        gc.setFill(color);
+        gc.fillText(text, position.getX(), position.getY());
     }
 }

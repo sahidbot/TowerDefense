@@ -12,12 +12,14 @@ import sun.reflect.generics.reflectiveObjects.NotImplementedException;
  * Represents the tower and holds the tower sprite.
  */
 public class Tower extends ImageSprite {
+    private NoMoneySprite noMoneySprite;
+
     private TowerType towerType;
-    private double level = 1;
+    private int level = 1;
     private double rateOfFire;
     private double rateOfFireMultiplier;
-    private double baseCost;
-    private double baseCostMultiplier;
+    private int baseCost;
+    private int baseCostMultiplier;
     private double refundRate;
     private double refundRateMultiplier;
     private double range;
@@ -25,9 +27,7 @@ public class Tower extends ImageSprite {
     private double damage;
     private double damageMultiplier;
     private boolean isActive;
-
-
-
+    private boolean canBuy;
 
     /**
      * Default constructor
@@ -39,6 +39,7 @@ public class Tower extends ImageSprite {
         this.towerType = towerType;
         isActive = false;
         setInitialValues();
+        noMoneySprite = new NoMoneySprite(position);
     }
 
     /**
@@ -123,6 +124,9 @@ public class Tower extends ImageSprite {
     @Override
     public void draw(GraphicsContext gc) {
         gc.drawImage(this.getImage(), getPosition().getX(), getPosition().getY());
+        if(!isActive() && !isCanBuy()){
+            noMoneySprite.draw(gc);
+        }
     }
 
     @Override
@@ -134,7 +138,7 @@ public class Tower extends ImageSprite {
      * Gets current level of the tower
      * @return current level
      * */
-    public double getLevel(){
+    public int getLevel(){
         return level;
     }
     /**
@@ -148,7 +152,7 @@ public class Tower extends ImageSprite {
      * Gets current cost of the tower for either buying or upgrading it
      * @return current cost
      * */
-    public double getCost(){
+    public int getCost(){
         return baseCost + (getLevel() * baseCostMultiplier);
     }
     /**
@@ -182,8 +186,17 @@ public class Tower extends ImageSprite {
     /**
      * Sets current level
      * */
-    protected void setLevel(double level) {
+    protected void setLevel(int level) {
         this.level = level;
+    }
+
+    /**
+     * Adds a level to the current level
+     *
+     * @param levelsToAdd how many levels to add to the current level
+     */
+    protected void AddLevel(int levelsToAdd){
+        this.level++;
     }
 
     /**
@@ -202,7 +215,7 @@ public class Tower extends ImageSprite {
     /**
      * Sets the baste cost multiplier
      * */
-    protected void setBaseCostMultiplier(double baseCostMultiplier) {
+    protected void setBaseCostMultiplier(int baseCostMultiplier) {
         this.baseCostMultiplier = baseCostMultiplier;
     }
 
@@ -221,7 +234,7 @@ public class Tower extends ImageSprite {
     /**
      * Sets the base cost
      * */
-    protected void setBaseCost(double baseCost) {
+    protected void setBaseCost(int baseCost) {
         this.baseCost = baseCost;
     }
     /**
@@ -243,15 +256,49 @@ public class Tower extends ImageSprite {
         this.damage = damage;
     }
 
+    /**
+     * Sets a new value for active
+     *
+     * @param active value to set
+     */
     public void setActive(boolean active) {
         isActive = active;
     }
 
+    /**
+     * Gets the value for IsActive. A tower is active if it can shoot and is placed on the map
+     *
+     * @return value of active
+     */
     public boolean isActive() {
         return isActive;
     }
 
+    /**
+     * Gets {@link TowerType}
+     *
+     * @return returns the value
+     * @see TowerType
+     */
     public TowerType getTowerType() {
         return towerType;
+    }
+
+    /**
+     * Whether this tower is available to buy
+     *
+     * @return result
+     */
+    public boolean isCanBuy() {
+        return canBuy;
+    }
+
+    /**
+     * Set whether the tower is available for buy. Mainly used to show an image in the screen
+     *
+     * @param canBuy new value
+     */
+    public void setCanBuy(boolean canBuy) {
+        this.canBuy = canBuy;
     }
 }

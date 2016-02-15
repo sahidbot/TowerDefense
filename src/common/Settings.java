@@ -14,4 +14,10 @@ public class Settings {
     public static final double SIDEBAR_WIDTH = 300;
 
     public static final Image BACKGROUND_TILE_IMAGE = new Image("/assets/images/background_tiles.png");
+
+    public static final Image TOWERSIEGE_TILE_IMAGE = new Image("/assets/images/Castle1.png");
+    public static final Image TOWERARROW_TILE_IMAGE = new Image("/assets/images/Chapel1.png");
+    public static final Image TOWERFROST_TILE_IMAGE = new Image("/assets/images/Temple1.png");
+
+    public static final String FONT_NAME = "Courier New";
 }

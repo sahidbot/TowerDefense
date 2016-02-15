@@ -1,5 +1,6 @@
 package MainMenu;
 
+import common.core.MouseHandler;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -41,7 +42,7 @@ public class MainMenu {
         /*GameManager gameManager = new GameManager(canvas.getGraphicsContext2D(), scene);
         gameManager.start();*/
 
-                MapManager mapManager = new MapManager(canvas.getGraphicsContext2D(), childScene, rows, columns);
+                MapManager mapManager = new MapManager(canvas.getGraphicsContext2D(), new MouseHandler(childScene), rows, columns);
 
                 mapManager.start();
                 secondaryStage.setScene(childScene);

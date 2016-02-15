@@ -5,7 +5,8 @@ import javafx.scene.canvas.GraphicsContext;
 import java.util.UUID;
 
 /**
- * Created by Sahidul Islam
+ *This is the base sprites class, it stores width, height, position, health, damage and move state of the sprite.
+ * @author Sahidul Islam
  */
 public abstract class Sprite implements Cloneable{
     private UUID uniqueId = UUID.randomUUID();
@@ -40,6 +41,10 @@ public abstract class Sprite implements Cloneable{
         this.height = height;
     }
 
+    /**
+     * This method check if a sprite is alive by comparing sprite health
+     * @return: the compared health
+     */
     public boolean isAlive() {
         return Double.compare(health, 0) > 0;
     }
@@ -91,7 +96,11 @@ public abstract class Sprite implements Cloneable{
                 position.getY() <= this.position.getY() + this.height);
     }
 
+    /**
+     * This method kills a sprite by changing its health to 0
+     */
     public void kill() {
+
         health = 0;
     }
 

@@ -78,6 +78,7 @@ public class InspectionPanel {
             statLines.add("Rate of Fire: " + getSelectedTower().getRateOfFire());
             statLines.add("Range: " + getSelectedTower().getRange());
             statLines.add("Damage: " + getSelectedTower().getDamage());
+            statLines.add("Click to Upgrade  " + getSelectedTower().getButtons());
             if(!selectedTower.isActive()){
                 //If tower is not active, we can buy it
                 statLines.add("Cost: " + getSelectedTower().getCost());

@@ -28,6 +28,7 @@ public class Tower extends ImageSprite {
     private double damageMultiplier;
     private boolean isActive;
     private boolean canBuy;
+    private Button buttonImage;
 
     /**
      * Default constructor
@@ -40,6 +41,13 @@ public class Tower extends ImageSprite {
         isActive = false;
         setInitialValues();
         noMoneySprite = new NoMoneySprite(position);
+
+        buttonImage = new Button(ButtonType.UPGRADE, getPosition());
+
+
+
+
+
     }
 
     /**
@@ -300,5 +308,13 @@ public class Tower extends ImageSprite {
      */
     public void setCanBuy(boolean canBuy) {
         this.canBuy = canBuy;
+    }
+    public Button getButtons() {
+        setButton(buttonImage);
+
+        return buttonImage;
+    }
+    public void setButton(Button buttonImage) {
+        this.buttonImage = buttonImage;
     }
 }

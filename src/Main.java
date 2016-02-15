@@ -10,7 +10,12 @@ import javafx.scene.canvas.Canvas;
 import javafx.stage.Stage;
 import map.MapManager;
 
+/** This is the main class which extends Application,
+ * It holds the main method which calls the launch method of Application
+ * And also overrides the start and stop method of Application class
+ */
 public class Main extends Application {
+
 
     @Override
     public void start(Stage primaryStage) throws Exception {
@@ -29,11 +34,11 @@ public class Main extends Application {
         Canvas canvas = new Canvas(width, height);
         root.getChildren().add(canvas);
 
-        /*GameManager gameManager = new GameManager(canvas.getGraphicsContext2D(), scene);
-        gameManager.start();*/
+        GameManager gameManager = new GameManager(canvas.getGraphicsContext2D(), scene);
+        gameManager.start();
 
-        MapManager mapManager = new MapManager(canvas.getGraphicsContext2D(), new MouseHandler(scene), rows, columns);
-        mapManager.start();
+      /*  MapManager mapManager = new MapManager(canvas.getGraphicsContext2D(), new MouseHandler(scene), rows, columns);
+        mapManager.start();*/
 
         primaryStage.show();
         primaryStage.setHeight(primaryStage.getHeight() - 12);

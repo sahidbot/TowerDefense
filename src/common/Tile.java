@@ -27,7 +27,8 @@ public class Tile extends ImageSprite {
 
     @Override
     public void draw(GraphicsContext gc) {
-        if (type == SpriteType.SCENERY || type == SpriteType.PATH) {
+        if (type == SpriteType.SCENERY || type == SpriteType.PATH ||
+                type == SpriteType.ENTRY_POINT || type == SpriteType.EXIT_POINT) {
             Vector2 imageOffset = getImageOffset();
             gc.drawImage(this.getImage(), imageOffset.getX(), imageOffset.getY(), this.width, this.height,
                     position.getX(), position.getY(), this.width, this.height);
@@ -70,6 +71,12 @@ public class Tile extends ImageSprite {
         }
         else if (type == SpriteType.PATH) {
             return new Vector2(0, 0);
+        }
+        else if (type == SpriteType.ENTRY_POINT) {
+            return new Vector2(64, 32);
+        }
+        else if (type == SpriteType.EXIT_POINT) {
+            return new Vector2(64, 64);
         }
 
         return Vector2.getZero();

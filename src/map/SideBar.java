@@ -55,15 +55,6 @@ public class SideBar {
                     mouseState.setSelectedSprite(tile);
                 }
             }
-
-            /*if (mouseState.getEventType() == MouseEventType.MOVE &&
-                    mouseState.getPosition().getX() > this.leftOffset &&
-                    tile.collidesWith(mouseState.getPosition())) {
-                showInspection();
-            }
-            else {
-                hideInspection();
-            }*/
         }
     }
 
@@ -72,22 +63,5 @@ public class SideBar {
             Tile tile = tiles.get(i);
             tile.draw(gc);
         }
-
-        if (!inspectionHidden) {
-            drawText(gc, "Sample Text", sampleTextPos, Color.BLUE);
-        }
-    }
-
-    public void showInspection() {
-        this.inspectionHidden = true;
-    }
-
-    public void hideInspection() {
-        this.inspectionHidden = false;
-    }
-
-    private static void drawText(GraphicsContext gc, String text, Vector2 position, Color color) {
-        gc.setFill(color);
-        gc.fillText(text, position.getX(), position.getY());
     }
 }

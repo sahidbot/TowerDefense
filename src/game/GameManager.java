@@ -1,9 +1,7 @@
 package game;
 
 import common.*;
-import common.core.GameLoop;
-import common.core.MouseHandler;
-import common.core.MouseState;
+import common.core.*;
 import javafx.scene.Scene;
 import javafx.scene.canvas.GraphicsContext;
 
@@ -42,6 +40,8 @@ public class GameManager extends GameLoop implements Observer {
                 gc.getCanvas().getHeight(),
                 tileManager.getWidth(),
                 0);
+        sideBar.setAvailableGold(Settings.STARTING_CURRENCY);
+        RefreshCanBuyTowers();
     }
 
     @Override
@@ -72,10 +72,56 @@ public class GameManager extends GameLoop implements Observer {
      * */
     @Override
     public void update(Observable o, Object arg) {
-        MouseHandler sender = (MouseHandler)o;
-        MouseState mouseState =  sender.getMouseState();
+        MouseHandler sender = (MouseHandler) o;
+        MouseState mouseState = sender.getMouseState();
 
-        sideBar.update(mouseState);
+        if (mouseState.getEventType() == MouseEventType.RIGHT_CLICK) {
+            mouseState.clearSelectedSprite();
+        }
 
+        if (mouseState.getEventType() == MouseEventType.LEFT_CLICK) {
+            //Check towers to buy collision
+            for (Tower tower :
+                    sideBar.getTowersAvailable()) {
+                if (tower.collidesWith(mouseState.getPosition())) {
+                    //We detected the tower - lets see if we can buy it now
+                    if (tower.isCanBuy()) {
+                        mouseState.setSelectedSprite(tower);
+                        sideBar.setAvailableGold(sideBar.getAvailableGold() - tower.getCost());
+                        RefreshCanBuyTowers();
+                        //TODO: Add some kind of feedback that the tower was bought
+                    }
+                    //either way, we show it in our inspection panel
+                    sideBar.getInspectionPanel().setSelectedTower(tower);
+                    break;
+                }
+            }
+            //TODO: Select tower from TileManager to Upgrade/Sell
+        }
+
+
+        if (mouseState.getEventType() == MouseEventType.MOVE) {
+            Sprite selectedSprite = mouseState.getSelectedSprite();
+            if (selectedSprite != null && selectedSprite instanceof Tower) {
+                sideBar.getInspectionPanel().setSelectedTower((Tower) selectedSprite);
+            } else if (selectedSprite == null) {
+                Tower foundTower = null;
+                for (Tower tower :
+                        sideBar.getTowersAvailable()) {
+                    if (tower.collidesWith(mouseState.getPosition())) {
+                        foundTower = tower;
+                        break;
+                    }
+                }
+                sideBar.getInspectionPanel().setSelectedTower(foundTower);
+            }
+        }
+    }
+
+    private void RefreshCanBuyTowers() {
+        for (Tower tower :
+                sideBar.getTowersAvailable()) {
+            tower.setCanBuy(tower.getCost() <= sideBar.getAvailableGold());
+        }
     }
 }

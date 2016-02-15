@@ -1,18 +1,12 @@
 package game;
 
 import common.Settings;
-import common.SpriteType;
-import common.Tile;
-import common.core.MouseEventType;
 import common.core.MouseState;
-import common.core.Sprite;
 import common.core.Vector2;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
-
-import java.util.ArrayList;
 
 /**
  * Created by Sahidul on 2/13/2016.
@@ -30,20 +24,23 @@ public class SideBar {
     private final double defaultMargin;
     private InspectionPanel inspectionPanel;
     private Tower[] towersAvailable;
+    private int AvailableGold;
 
     /**
      * Main Constructor
+     *
      * @param width width of the sidebar (panel)
      * @param leftOffset X offset of the scene
      * @param topOffset Y offset of the scene
      */
     public SideBar(double width, double height, double leftOffset, double topOffset) {
         this(width, height, leftOffset, topOffset, Settings.DEFAULT_MARGIN, Settings.TILE_WIDTH,
-                100, 35);
+                100, Settings.FONTSIZE_TITLE + 5);
     }
 
     /**
      * Constructor mainly done for unit tests
+     *
      * @param width width of the sidebar
      * @param height height of the sidebar
      * @param leftOffset X offset of the scene
@@ -64,7 +61,7 @@ public class SideBar {
         this.width = width;
         this.inspectionTowerHeight = inspectionTowerHeight;
         this.shopTitleWidth = shopTitleWidth;
-        inspectionPanel = new InspectionPanel(width, height, leftOffset, height - inspectionTowerHeight);
+        inspectionPanel = new InspectionPanel(width, height, leftOffset, height/2);
         towersAvailable = new Tower[]{
                 new Tower(TowerType.ARROW, generateBuyableTowerPosition(1)),
                 new Tower(TowerType.FROST, generateBuyableTowerPosition(2)),
@@ -74,6 +71,7 @@ public class SideBar {
 
     /**
      * Generates a position for the tower
+     *
      * @param positionNumber position on the grid, from left to right
      * @return a vector representing the position to use
      */
@@ -85,6 +83,7 @@ public class SideBar {
 
     /**
      * Draws the sidebar in the scene
+     *
      * @param gc the context to draw on
      */
     public void draw(GraphicsContext gc) {
@@ -103,11 +102,23 @@ public class SideBar {
                 towersAvailable) {
             tower.draw(gc);
         }
+
+        //Draw AvailableGold
+        Font currencyFont = Font.font(Settings.FONT_NAME, FontWeight.NORMAL, Settings.FONTSIZE_LINE);
+        gc.setFont(currencyFont);
+        Vector2 currencyPosition = new Vector2(leftOffset + defaultMargin,
+                topOffset + defaultMargin + shopTitleWidth + defaultMargin + towerWidth + defaultMargin + Settings.FONTSIZE_LINE);
+        String currencyLine = "Available: $" + getAvailableGold();
+        drawText(gc, currencyLine, currencyPosition, Color.BLACK);
+        //Draw inspectionPanel
         inspectionPanel.draw(gc);
+
+
     }
 
     /**
      * Draws text in the graphic contexts
+     *
      * @param gc target to draw on
      * @param text text to be drawn
      * @param position position of the text
@@ -120,24 +131,55 @@ public class SideBar {
 
     /**
      * Method that handles the {@link MouseState}
+     *
      * @param mouseState state to react to
      */
     public void update(MouseState mouseState) {
-        if(mouseState.getEventType() == MouseEventType.MOVE){
-            Sprite selectedSprite =  mouseState.getSelectedSprite();
-            if(selectedSprite != null && selectedSprite instanceof Tower){
-                inspectionPanel.setSelectedTower((Tower)selectedSprite);
-            }
-            else{
-                for (Tower tower :
-                        towersAvailable) {
-                    if (mouseState.getPosition().getX() > this.leftOffset &&
-                            tower.collidesWith(mouseState.getPosition())) {
-                        mouseState.setSelectedSprite(tower);
-                        break;
-                    }
-                }
-            }
-        }
+
+    }
+
+    /**
+     * Gets the current AvailableGold
+     *
+     * @return current AvailableGold
+     */
+    public int getAvailableGold() {
+        return AvailableGold;
+    }
+
+    /**
+     * Sets the current AvailableGold
+     *
+     * @param availableGold
+     */
+    public void setAvailableGold(int availableGold) {
+        this.AvailableGold = availableGold;
+    }
+
+    /**
+     * Adds an amount of gold to the total pool
+     *
+     * @param toAdd gold to add
+     */
+    public void addAvailableGold(int toAdd){
+        setAvailableGold(this.getAvailableGold() + toAdd);
+    }
+
+    /**
+     * Gets the towers available for buying
+     *
+     * @return the array of towers
+     */
+    public Tower[] getTowersAvailable() {
+        return towersAvailable;
+    }
+
+    /**
+     * Gets the inspectionPanel
+     *
+     * @return inspection panel
+     */
+    public InspectionPanel getInspectionPanel(){
+        return inspectionPanel;
     }
 }

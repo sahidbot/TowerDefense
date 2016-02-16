@@ -13,6 +13,7 @@ import sun.reflect.generics.reflectiveObjects.NotImplementedException;
  */
 public class Button extends ImageSprite {
     public ButtonType buttonType;
+    private boolean isEnabled;
 
 
     /**
@@ -63,6 +64,7 @@ public class Button extends ImageSprite {
 
     @Override
     public void draw(GraphicsContext gc) {
+        if(isEnabled())
         gc.drawImage(this.getImage(), getPosition().getX(), getPosition().getY());
     }
 
@@ -71,4 +73,17 @@ public class Button extends ImageSprite {
 
     }
 
+    /**
+     * @return the value of enabled
+     */
+    public boolean isEnabled() {
+        return isEnabled;
+    }
+
+    /**
+     * @param enabled is the new value
+     */
+    public void setEnabled(boolean enabled) {
+        isEnabled = enabled;
+    }
 }

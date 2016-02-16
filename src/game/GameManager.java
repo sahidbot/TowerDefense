@@ -80,17 +80,36 @@ public class GameManager extends GameLoop implements Observer {
         }
 
         if (mouseState.getEventType() == MouseEventType.LEFT_CLICK) {
+            Tower inspectionPanelTower = sideBar.getInspectionPanel().getSelectedTower();
+            if( inspectionPanelTower != null){
+                if(sideBar.getInspectionPanel().getSellButton().isEnabled() && sideBar.getInspectionPanel().getSellButton().collidesWith(mouseState.getPosition())){
+                   // if detected selling tower and sellbutton is clicked
+                    sideBar.addAvailableGold(inspectionPanelTower.getRefund());
+                    RefreshCanBuyTowers();
+                }
+                    else if(sideBar.getInspectionPanel().getUpgradeButton().isEnabled() && sideBar.getInspectionPanel().getUpgradeButton().collidesWith(mouseState.getPosition())){
+                    // if detected upgrade tower and updatebutton is clicked
+                    if(sideBar.getAvailableGold() >= inspectionPanelTower.getCost()){
+                            sideBar.addAvailableGold(-inspectionPanelTower.getCost());
+                            inspectionPanelTower.AddLevel(1);
+                            RefreshCanBuyTowers();
+
+                        }
+                }
+            }
             //Check towers to buy collision
             for (Tower tower :
                     sideBar.getTowersAvailable()) {
                 if (tower.collidesWith(mouseState.getPosition())) {
                     //We detected the tower - lets see if we can buy it now
-                    if (tower.isCanBuy()) {
-                        mouseState.setSelectedSprite(tower);
+                    if (tower.isCanBuy()&& !tower.isActive()) {
                         sideBar.setAvailableGold(sideBar.getAvailableGold() - tower.getCost());
                         RefreshCanBuyTowers();
                         //TODO: Add some kind of feedback that the tower was bought
                     }
+                    //selecting a sprite
+                    mouseState.setSelectedSprite(tower);
+
                     //either way, we show it in our inspection panel
                     sideBar.getInspectionPanel().setSelectedTower(tower);
                     break;

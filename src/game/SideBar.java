@@ -66,7 +66,10 @@ public class SideBar {
                 new Tower(TowerType.ARROW, generateBuyableTowerPosition(1)),
                 new Tower(TowerType.FROST, generateBuyableTowerPosition(2)),
                 new Tower(TowerType.SIEGE, generateBuyableTowerPosition(3)),
+                new Tower(TowerType.ARROW, generateBuyableTowerPosition(4)),
         };
+        towersAvailable[3].setActive(true);
+        towersAvailable[3].setCanBuy(false);
     }
 
     /**
@@ -112,7 +115,6 @@ public class SideBar {
         drawText(gc, currencyLine, currencyPosition, Color.BLACK);
         //Draw inspectionPanel
         inspectionPanel.draw(gc);
-
 
     }
 
@@ -182,4 +184,5 @@ public class SideBar {
     public InspectionPanel getInspectionPanel(){
         return inspectionPanel;
     }
+
 }

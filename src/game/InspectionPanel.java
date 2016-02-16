@@ -22,6 +22,10 @@ public class InspectionPanel {
     private final double leftOffset;
     private final double topOffset;
     private Tower selectedTower;
+    private  Button sellButton;
+    private Button upgradeButton;
+
+
 
     /**
      * Default constructor
@@ -35,6 +39,10 @@ public class InspectionPanel {
         this.leftOffset = leftOffset;
         this.topOffset = topOffset;
         this.width = width;
+        Vector2 sellPosition= new Vector2(leftOffset, topOffset);
+        Vector2 upgradePosition = new Vector2(leftOffset,topOffset);
+        sellButton = new Button(ButtonType.SELL,sellPosition );
+        upgradeButton = new Button (ButtonType.UPGRADE, upgradePosition);
     }
 
     /**
@@ -78,13 +86,14 @@ public class InspectionPanel {
             statLines.add("Rate of Fire: " + getSelectedTower().getRateOfFire());
             statLines.add("Range: " + getSelectedTower().getRange());
             statLines.add("Damage: " + getSelectedTower().getDamage());
-            statLines.add("Click to Upgrade  " + getSelectedTower().getButtons());
             if(!selectedTower.isActive()){
                 //If tower is not active, we can buy it
                 statLines.add("Cost: " + getSelectedTower().getCost());
             }
             else{
                 statLines.add("Upgrade Cost: " + getSelectedTower().getCost());
+                statLines.add("Sell Refund: " + getSelectedTower().getRefund());
+
             }
 
             //draw each line
@@ -93,13 +102,37 @@ public class InspectionPanel {
                         new Vector2(titlePosition.getX(), titlePosition.getY() + (i + 1) * linesSeparation),
                         Color.BLACK);
             }
+           getSellButton().setEnabled(selectedTower.isActive());
+                Vector2 newSellButtonPosition = new Vector2(titlePosition.getX(), titlePosition.getY() + linesSeparation + (statLines.size() * linesSeparation));
+                getSellButton().setPosition(newSellButtonPosition);
+                getSellButton().draw(gc);
+            getUpgradeButton().setEnabled(selectedTower.isActive());
+                Vector2 newUpgradeButton = new Vector2(titlePosition.getX() + 128 + 2,  titlePosition.getY() + linesSeparation + (statLines.size() * linesSeparation));
+                getUpgradeButton().setPosition(newUpgradeButton);
+                getUpgradeButton().draw(gc);
+            }
 
         }
-    }
+
 
     private void drawText(GraphicsContext gc, String text, Vector2 position, Color color) {
         gc.setFill(color);
         gc.fillText(text, position.getX(), position.getY());
     }
 
+    public Button getUpgradeButton() {
+        return upgradeButton;
+    }
+
+    public void setUpgradeButton(Button upgradeButton) {
+        this.upgradeButton = upgradeButton;
+    }
+
+    public Button getSellButton() {
+        return sellButton;
+    }
+
+    public void setSellButton(Button sellButton) {
+        this.sellButton = sellButton;
+    }
 }

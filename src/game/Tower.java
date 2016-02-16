@@ -21,15 +21,14 @@ public class Tower extends Tile {
     private double rateOfFireMultiplier;
     private int baseCost;
     private int baseCostMultiplier;
-    private double refundRate;
-    private double refundRateMultiplier;
+    private int refundRate;
+    private int refundRateMultiplier;
     private double range;
     private double rangeMultiplier;
     private double damage;
     private double damageMultiplier;
     private boolean isActive;
     private boolean canBuy;
-    private Button buttonImage;
 
     /**
      * Default constructor
@@ -43,7 +42,6 @@ public class Tower extends Tile {
         setInitialValues();
         noMoneySprite = new NoMoneySprite(position);
 
-        buttonImage = new Button(ButtonType.UPGRADE, getPosition());
 
 
 
@@ -168,7 +166,7 @@ public class Tower extends Tile {
      * Gets current refund for the tower if available
      * @return current refund
      */
-    public double getRefund() {
+    public int getRefund() {
         return refundRate + (getLevel() * refundRateMultiplier);
     }
     /**
@@ -231,7 +229,7 @@ public class Tower extends Tile {
     /**
      * Sets the range multiplier
      * */
-    protected void setRefundRateMultiplier(double refundRateMultiplier) {
+    protected void setRefundRateMultiplier(int refundRateMultiplier) {
         this.refundRateMultiplier = refundRateMultiplier;
     }
     /**
@@ -249,7 +247,7 @@ public class Tower extends Tile {
     /**
      * Sets the base refund rate
      * */
-    protected void setRefundRate(double refundRate) {
+    protected void setRefundRate(int refundRate) {
         this.refundRate = refundRate;
     }
     /**
@@ -310,12 +308,6 @@ public class Tower extends Tile {
     public void setCanBuy(boolean canBuy) {
         this.canBuy = canBuy;
     }
-    public Button getButtons() {
-        setButton(buttonImage);
 
-        return buttonImage;
     }
-    public void setButton(Button buttonImage) {
-        this.buttonImage = buttonImage;
-    }
-}
+

@@ -11,6 +11,8 @@ import java.util.List;
 import java.util.Map;
 
 /**
+ * The class serves as an event handler to respond to presedkeys
+ * it stores pressed keys using a map
  * Created by Sahidul Islam.
  */
 public class KeyHandler {
@@ -36,10 +38,19 @@ public class KeyHandler {
         });
     }
 
+    /**
+     * Checks if a key is pressed
+     * @param key is the pressed key
+     * @return the key
+     */
     public boolean isKeyPressed(KeyCode key) {
         return pressedKyes.containsKey(key);
     }
 
+    /**
+     * Gets the pressed keys
+     * @return the pressed keys
+     */
     public List<KeyCode> getPressedKeys() {
         List<KeyCode> keys = new ArrayList<KeyCode>();
         for (Map.Entry<KeyCode, Boolean> entry : pressedKyes.entrySet()) {

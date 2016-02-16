@@ -25,11 +25,12 @@ import java.io.*;
  */
 public class MainMenu {
     public void OpenMenu(Stage primaryStage) throws IOException {
+        SaveMap("Hi");
         String mapContents = LoadMap("hello world");
         StackPane root = new StackPane();
         Button createMap = new Button("Create Map");
         ListView<String> fileList = new ListView<String>();
-        final File folder = new File("/Users/saddamtahir/Downloads");
+        final File folder = new File("Maps/");
         File[] listOfFiles = folder.listFiles();
 
         ObservableList<String> maps = FXCollections.observableArrayList();
@@ -93,9 +94,6 @@ public class MainMenu {
         Button editMap = new Button("Edit Map");
 editMap.setOnAction(m -> {
 
-//    FileChooser fileChooser = new FileChooser();
-//    fileChooser.setTitle("Open Resource File");
-//    fileChooser.showOpenDialog(stage);
 });
 
 
@@ -115,12 +113,10 @@ editMap.setOnAction(m -> {
 
         primaryStage.setScene(scene);
         primaryStage.show();
-
-        // primaryStage.setHeight(primaryStage.getHeight() - 12);
     }
 public String LoadMap(String contents) throws IOException
 {
-    BufferedReader br = new BufferedReader(new FileReader("/Users/saddamtahir/file.txt"));
+    BufferedReader br = new BufferedReader(new FileReader("Maps/sample.txt"));
     String everything = null;
     try {
         StringBuilder sb = new StringBuilder();
@@ -143,7 +139,7 @@ public String LoadMap(String contents) throws IOException
     public void SaveMap(String mapContents)
     {
         try {
-            BufferedWriter out = new BufferedWriter(new FileWriter("sample.txt"));
+            BufferedWriter out = new BufferedWriter(new FileWriter("Maps/sample.txt"));
             out.write(mapContents);
             out.close();
         }

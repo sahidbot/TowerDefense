@@ -24,6 +24,9 @@ public class Tile extends ImageSprite {
         this.width = width;
         this.height = height;
     }
+    public Tile(Image image, Vector2 position){
+        super(image, position);
+    }
 
     @Override
     public void draw(GraphicsContext gc) {

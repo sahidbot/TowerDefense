@@ -17,15 +17,15 @@ import javafx.scene.layout.HBoxBuilder;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import map.MapManager;
-
-import java.io.File;
+import java.io.*;
 
 
 /**
  * Created by saddamtahir on 2016-02-13.
  */
 public class MainMenu {
-    public void OpenMenu(Stage primaryStage){
+    public void OpenMenu(Stage primaryStage) throws IOException {
+        String mapContents = LoadMap("hello world");
         StackPane root = new StackPane();
         Button createMap = new Button("Create Map");
         ListView<String> fileList = new ListView<String>();
@@ -53,8 +53,15 @@ public class MainMenu {
 
             /* event to open map editor window */
             btnOpenMapEditor.setOnAction(a -> {
-                int rows = Integer.parseInt(txtRows.getText());
-                int columns = Integer.parseInt(txtRows.getText());
+
+                int rows=5,columns = 5; // set default columns and rows value
+                if(!txtRows.getText().equals("")){
+                 rows = Integer.parseInt(txtRows.getText());
+                }
+                if(!txtRows.getText().equals("")) {
+                    columns = Integer.parseInt(txtRows.getText());
+                }
+
                 double width = (Settings.TILE_WIDTH * rows) + Settings.SIDEBAR_WIDTH;
                 double height = Settings.TILE_HEIGHT * columns;
                 //primaryStage.close();
@@ -111,7 +118,40 @@ editMap.setOnAction(m -> {
 
         // primaryStage.setHeight(primaryStage.getHeight() - 12);
     }
+public String LoadMap(String contents) throws IOException
+{
+    BufferedReader br = new BufferedReader(new FileReader("/Users/saddamtahir/file.txt"));
+    String everything = null;
+    try {
+        StringBuilder sb = new StringBuilder();
+        String line = br.readLine();
 
+        while (line != null) {
+            sb.append(line);
+            sb.append(System.lineSeparator());
+            line = br.readLine();
+        }
+        everything = sb.toString();
+        return everything;
+    }
+    catch(IOException e) {}
+    finally {
+        br.close();
+    }
+    return everything;
+}
+    public void SaveMap(String mapContents)
+    {
+        try {
+            BufferedWriter out = new BufferedWriter(new FileWriter("sample.txt"));
+            out.write(mapContents);
+            out.close();
+        }
+        catch (IOException e)
+        {
+            System.out.println("Exception");
+        }
+    }
 
 }
 

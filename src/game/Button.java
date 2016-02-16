@@ -8,24 +8,22 @@ import javafx.scene.image.Image;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 /**
- * Created by Dele on 2/14/2016.
- * Represents the tower and holds the tower sprite.
+ * @author Dele
+ * Represents the button and holds the button sprite.
  */
 public class Button extends ImageSprite {
     public ButtonType buttonType;
-    private boolean isActive;
 
 
     /**
      * Default constructor
      *
-     * @param buttonType Represents the type of tower
+     * @param buttonType Represents the type of button
      * @param position   Represents the position of the Sprite
      */
     public Button(ButtonType buttonType, Vector2 position) {
         this(imageFrom(buttonType), position);
         this.buttonType = buttonType;
-        isActive = false;
     }
 
 
@@ -41,10 +39,10 @@ public class Button extends ImageSprite {
     }
 
     /***
-     * Method that translates from TowerType to Image
+     * Method that translates from ButtonType to Image
      *
-     * @param buttonType Tower type to be converted
-     * @see TowerType
+     * @param buttonType Button type to be converted
+     * @see ButtonType
      */
     private static Image imageFrom(ButtonType buttonType) {
         Image buttonImage;

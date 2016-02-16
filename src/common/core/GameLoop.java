@@ -2,12 +2,20 @@ package common.core;
 
 import javafx.animation.AnimationTimer;
 
+/**
+ * This class controls the game by monitoring the game timer
+ * holds a timer of type AnimationTimer, running state, lastTime and delta
+ * @author Sahidul
+ */
 public abstract class GameLoop {
     private AnimationTimer timer;
     private boolean running = false;
     private long lastTime = 0;
     private double delta = 0;
 
+    /**
+     * This method starts the game and changes the running state to true
+     */
     public synchronized void start() {
         if (running) return;
 

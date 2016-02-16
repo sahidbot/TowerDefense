@@ -8,7 +8,9 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 
 /**
- * Created by Sahidul Islam.
+ * This class manages the Level, Health and Money at gameplay
+ * Its holds constants of LEVEL, HEALTH, MONEY TITLE
+ * @author Sahidul Islam.
  */
 public class ScoreManager {
     private double leftOffset;

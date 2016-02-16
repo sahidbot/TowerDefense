@@ -1,7 +1,8 @@
 package game;
 
 /**
- * Created by Dele on 2/14/2016.
+ *Stores different types of button
+ * @author Dele
  */
 public enum ButtonType {
     SELL,

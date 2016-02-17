@@ -8,8 +8,11 @@ import javafx.scene.paint.Color;
  * Created by Sahidul Islam.
  */
 public class Helper {
-    public static boolean CheckBound(Vector2 positon, Vector2 boundary) {
-        return false;
+    public static boolean checkValidBoundaries(int x, int y, int dx, int dy) {
+        if (x < 0 || x > dx || y < 0 || y > dy) {
+            return false;
+        }
+        return true;
     }
 
     public static void drawText(GraphicsContext gc, String text, Vector2 position, Color color) {

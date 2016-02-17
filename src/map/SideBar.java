@@ -1,5 +1,6 @@
 package map;
 
+import common.Helper;
 import common.Settings;
 import common.SpriteType;
 import common.Tile;
@@ -52,7 +53,9 @@ public class SideBar {
             if (mouseState.getEventType() == MouseEventType.LEFT_CLICK) {
                 if (mouseState.getPosition().getX() > this.leftOffset &&
                         tile.collidesWith(mouseState.getPosition())) {
-                    mouseState.setSelectedSprite(tile);
+                    if (tile.isActive()) {
+                        mouseState.setSelectedSprite(tile);
+                    }
                 }
             }
         }
@@ -62,6 +65,16 @@ public class SideBar {
         for (int i = 0; i < tiles.size(); i++) {
             Tile tile = tiles.get(i);
             tile.draw(gc);
+            Helper.drawText(gc, "X", tile.getPosition(), Color.RED);
+        }
+    }
+
+    public void setActive(SpriteType type, boolean value) {
+        for (Tile tile : tiles) {
+            if (tile.getType() == type) {
+                tile.setActive(value);
+                break;
+            }
         }
     }
 }

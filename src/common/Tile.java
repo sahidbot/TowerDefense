@@ -17,6 +17,7 @@ import javafx.scene.text.Text;
  */
 public class Tile extends ImageSprite {
     private SpriteType type;
+    private boolean isActive = true;
 
     public Tile(SpriteType type, double width, double height, Vector2 position) {
         super(Settings.BACKGROUND_TILE_IMAGE, position);
@@ -36,7 +37,7 @@ public class Tile extends ImageSprite {
             gc.drawImage(this.getImage(), imageOffset.getX(), imageOffset.getY(), this.width, this.height,
                     position.getX(), position.getY(), this.width, this.height);
         }
-        else {
+        /*else {
             // background
             gc.setFill(getFillColor());
             gc.fillRect(position.getX(), position.getY(), width, height);
@@ -50,7 +51,7 @@ public class Tile extends ImageSprite {
             gc.setFont(new Font(20));
             gc.setFill(getTextColor());
             gc.fillText(getText(), position.getX() + 10, position.getY() + 22);
-        }
+        }*/
     }
 
     @Override
@@ -58,6 +59,14 @@ public class Tile extends ImageSprite {
     }
 
     public void update(MouseState mouseState) {
+    }
+
+    public boolean isActive() {
+        return isActive;
+    }
+
+    public void setActive(boolean active) {
+        isActive = active;
     }
 
     public Tile copy(Vector2 position) {
@@ -76,10 +85,20 @@ public class Tile extends ImageSprite {
             return new Vector2(0, 0);
         }
         else if (type == SpriteType.ENTRY_POINT) {
-            return new Vector2(64, 32);
+            if (isActive()) {
+                return new Vector2(64, 32);
+            }
+            else {
+                return new Vector2(0, 96);
+            }
         }
         else if (type == SpriteType.EXIT_POINT) {
-            return new Vector2(64, 64);
+            if (isActive()) {
+                return new Vector2(64, 64);
+            }
+            else {
+                return new Vector2(32, 96);
+            }
         }
 
         return Vector2.getZero();

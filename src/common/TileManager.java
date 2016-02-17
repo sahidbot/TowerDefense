@@ -5,9 +5,6 @@ import common.core.MouseState;
 import common.core.Vector2;
 import javafx.scene.canvas.GraphicsContext;
 
-import java.util.Observable;
-import java.util.Observer;
-
 /**
  * Created by Sahidul Islam
  */
@@ -16,6 +13,9 @@ public class TileManager {
     private Tile[][] tilesOverlay;
     private int rows;
     private int columns;
+    private boolean hasAnyOverlayTile;
+    private boolean hasEntryPointTile;
+    private boolean hasExitPointTile;
 
     public int getRows() {
         return rows;
@@ -66,7 +66,7 @@ public class TileManager {
     public void update(MouseState mouseState) {
         if (mouseState.getEventType() == MouseEventType.LEFT_CLICK) {
             Vector2 pos = getTilePosition(mouseState.getPosition());
-            System.out.println(pos);
+            //System.out.println(pos);
 
             if (mouseState.getSelectedSprite() != null) {
                 int x = (int) pos.getX() - 1;
@@ -77,6 +77,14 @@ public class TileManager {
 
                 if (tileOverlay != null) {
                     tilesOverlay[x][y] = tileOverlay;
+                    hasAnyOverlayTile = true;
+
+                    if (tileOverlay.getType() == SpriteType.ENTRY_POINT) {
+                        hasEntryPointTile = true;
+                    }
+                    else if (tileOverlay.getType() == SpriteType.EXIT_POINT) {
+                        hasExitPointTile = true;
+                    }
 
                     // clearPosition out after every drop inside tile zone
                     //mouseState.clearSelectedSprite();
@@ -99,17 +107,52 @@ public class TileManager {
         }
     }
 
+    public boolean hasEntryPoint() {
+        return hasEntryPointTile;
+    }
+
+    public boolean hasExitPoint() {
+        return hasExitPointTile;
+    }
+
     private Tile createPlaceableTile(int x, int y, Tile tile) {
+        System.out.println(x + ", " + y);
+
+        // check boundaries
+        if (!checkValidBoundaries(x, y))
+            return null;
+
         // check if already one exists on that position
         if (tilesOverlay[x][y] != null)
             return null;
 
-        if (tile.getType() == SpriteType.PATH) {
-            //if (x > 0 && tilesOverlay[x-1][y] == null)
+        if (hasAnyOverlayTile) {
+            if ((tile.getType() == SpriteType.ENTRY_POINT && hasEntryPointTile) ||
+                    (tile.getType() == SpriteType.EXIT_POINT && hasExitPointTile))
+            {
+                return null;
+            }
+
+            SpriteType type = tile.getType();
+
+            if (!matchValidTile(x - 1, y, type) &&  !matchValidTile(x, y - 1, type) &&
+                    !matchValidTile(x + 1, y, type) && !matchValidTile(x, y + 1, type))
+            {
+                return null;
+            }
         }
 
         // create new tile
         Vector2 position = new Vector2(Settings.TILE_WIDTH * x, Settings.TILE_HEIGHT * y);
         return tile.copy(position);
+    }
+
+    private boolean checkValidBoundaries(int x, int y) {
+        return Helper.checkValidBoundaries(x, y, this.rows - 1, this.columns - 1);
+    }
+
+    private boolean matchValidTile(int x, int y, SpriteType type) {
+        return checkValidBoundaries(x, y) && tilesOverlay[x][y] != null &&
+                tilesOverlay[x][y].getType() == SpriteType.PATH;
     }
 }

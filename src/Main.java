@@ -1,7 +1,8 @@
+import MainMenu.MainMenu;
 import common.Settings;
-import common.core.MouseHandler;
-import game.*;
 
+import common.core.MouseHandler;
+import game.GameManager;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.scene.Group;
@@ -34,11 +35,14 @@ public class Main extends Application {
         Canvas canvas = new Canvas(width, height);
         root.getChildren().add(canvas);
 
-        GameManager gameManager = new GameManager(canvas.getGraphicsContext2D(), scene);
-        gameManager.start();
+        /*GameManager gameManager = new GameManager(canvas.getGraphicsContext2D(), scene, rows, columns);
+        gameManager.start();*/
 
-      /*  MapManager mapManager = new MapManager(canvas.getGraphicsContext2D(), new MouseHandler(scene), rows, columns);
-        mapManager.start();*/
+        MapManager mapManager = new MapManager(canvas.getGraphicsContext2D(), new MouseHandler(scene), rows, columns);
+        mapManager.start();
+
+        /*MainMenu mainMenu = new MainMenu();
+        mainMenu.openMenu(primaryStage);*/
 
         primaryStage.show();
         primaryStage.setHeight(primaryStage.getHeight() - 12);

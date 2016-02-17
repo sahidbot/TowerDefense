@@ -1,6 +1,7 @@
 package map;
 
 import common.Settings;
+import common.SpriteType;
 import common.Tile;
 import common.TileManager;
 import common.core.*;
@@ -50,11 +51,19 @@ public class MapManager extends GameLoop implements Observer {
         if (mouseState.getEventType() == MouseEventType.LEFT_CLICK &&
                 mouseState.getSelectedSprite() != null) {
             Sprite selectedSprite = mouseState.getSelectedSprite();
-            System.out.println(selectedSprite.getUniqueId());
+            //System.out.println(selectedSprite.getUniqueId());
         }
 
         tileManager.update(mouseState);
         sideBar.update(mouseState);
+
+        if (tileManager.hasEntryPoint()) {
+            sideBar.setActive(SpriteType.ENTRY_POINT, false);
+        }
+
+        if (tileManager.hasExitPoint()) {
+            sideBar.setActive(SpriteType.EXIT_POINT, false);
+        }
 
         if (mouseState.getEventType() == MouseEventType.RIGHT_CLICK) {
             mouseState.clearSelectedSprite();

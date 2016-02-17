@@ -8,6 +8,8 @@ import javafx.scene.input.MouseEvent;
 import java.util.Observable;
 
 /**
+ * Serves as the model for the mouse state which changes from time to time
+ * Its hold the mouseState to be notified for changes
  * Created by Sahidul Islam.
  */
 public class MouseHandler extends Observable {
@@ -45,10 +47,17 @@ public class MouseHandler extends Observable {
         });
     }
 
+    /**
+     * gets the mouseState
+     * @return current mouseState
+     */
     public MouseState getMouseState() {
         return this.mouseState;
     }
 
+    /**
+     * clears the mouseState position
+     */
     public void clearMouseState() {
         this.mouseState.clearPosition();
     }

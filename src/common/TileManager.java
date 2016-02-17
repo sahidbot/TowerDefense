@@ -6,6 +6,8 @@ import common.core.Vector2;
 import javafx.scene.canvas.GraphicsContext;
 
 /**
+ * Holds the tiles of type Tile(2dim array) of sceneryTiles and tilesOverlay drawn on the canvas
+ * It also hols the rows and columns of type int
  * Created by Sahidul Islam
  */
 public class TileManager {
@@ -17,6 +19,10 @@ public class TileManager {
     private boolean hasEntryPointTile;
     private boolean hasExitPointTile;
 
+    /**
+     * getter for rows
+     * @return rows
+     */
     public int getRows() {
         return rows;
     }
@@ -29,6 +35,10 @@ public class TileManager {
         return Settings.TILE_HEIGHT * rows;
     }
 
+    /**
+     * gets the width of a tile
+     * @return width of type double
+     */
     public double getWidth() {
         return Settings.TILE_WIDTH * columns;
     }
@@ -47,6 +57,11 @@ public class TileManager {
         return new Vector2(x, y);
     }
 
+    /**
+     * creates scenery tiles
+     * @param rows is the specified rows
+     * @param columns is the specified columns
+     */
     public void createScenery(int rows, int columns) {
         this.rows = rows;
         this.columns = columns;

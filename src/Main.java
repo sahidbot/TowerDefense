@@ -1,15 +1,16 @@
-import MainMenu.MainMenu;
 import common.Settings;
 
-import common.core.MouseHandler;
-import game.GameManager;
 import javafx.application.Application;
 import javafx.application.Platform;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Group;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.stage.Stage;
-import map.MapManager;
+import mainMenu.MainMenu;
+
+import java.io.IOException;
 
 /** This is the main class which extends Application,
  * It holds the main method which calls the launch method of Application
@@ -20,10 +21,30 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
+        Parent root = FXMLLoader.load(getClass().getResource("/mainMenu/views/mainMenuView.fxml"));
+        primaryStage.setScene(new Scene(root));
+        primaryStage.setTitle("Defense Tower");
+        primaryStage.setResizable(false);
+        primaryStage.show();
+
+        //cavasWindow(primaryStage);
+    }
+
+    @Override
+    public void stop() throws Exception {
+        super.stop();
+        Platform.exit();
+        System.exit(0);
+    }
+
+    public static void main(String[] args) {
+        launch(args);
+    }
+
+    private void cavasWindow(Stage primaryStage) throws IOException {
         Group root = new Group();
         Scene scene = new Scene(root);
         primaryStage.setScene(scene);
-        primaryStage.setTitle("Defense Tower");
         primaryStage.setResizable(false);
 
         int rows = 20;
@@ -38,24 +59,13 @@ public class Main extends Application {
         /*GameManager gameManager = new GameManager(canvas.getGraphicsContext2D(), scene, rows, columns);
         gameManager.start();*/
 
-        MapManager mapManager = new MapManager(canvas.getGraphicsContext2D(), new MouseHandler(scene), rows, columns);
-        mapManager.start();
+        /*MapManager mapManager = new MapManager(canvas.getGraphicsContext2D(), new MouseHandler(scene), rows, columns);
+        mapManager.start();*/
 
-        /*MainMenu mainMenu = new MainMenu();
-        mainMenu.openMenu(primaryStage);*/
+        MainMenu mainMenu = new MainMenu();
+        mainMenu.openMenu(primaryStage);
 
         primaryStage.show();
         primaryStage.setHeight(primaryStage.getHeight() - 12);
-    }
-
-    @Override
-    public void stop() throws Exception {
-        super.stop();
-        Platform.exit();
-        System.exit(0);
-    }
-
-    public static void main(String[] args) {
-        launch(args);
     }
 }

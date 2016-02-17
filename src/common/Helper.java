@@ -4,6 +4,8 @@ import common.core.Vector2;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 
+import java.io.*;
+
 /**
  * This class helps to abstract methods the are commonly used through out all classes
  */
@@ -35,5 +37,56 @@ public class Helper {
     public static void drawText(GraphicsContext gc, String text, Vector2 position, Color color) {
         gc.setFill(color);
         gc.fillText(text, position.getX(), position.getY());
+    }
+
+    /**
+     * Draw mouse icon as tile image.
+     *
+     * @param gc Graphics context of the canvas.
+     * @param tile Tile to get the image.
+     * @param mousePosition Position to draw.
+     */
+    public static void drawMouseIconTile(GraphicsContext gc, Tile tile, Vector2 mousePosition) {
+        Vector2 imageOffset = tile.getImageOffset();
+
+        double w = tile.getWidth();
+        double h = tile.getHeight();
+        double sx = Math.max(mousePosition.getX() - (w / 2), 0);
+        double xy = Math.max(mousePosition.getY() - (h / 2), 0);
+
+        gc.drawImage(tile.getImage(), imageOffset.getX(), imageOffset.getY(), w, h,
+                sx, xy, tile.getWidth(), tile.getHeight());
+    }
+
+    public static void saveMap(String mapName, String mapContents) {
+        try {
+            BufferedWriter out = new BufferedWriter(new FileWriter(Settings.USER_MAP_DIRECTORY + "/" + mapName));
+            out.write(mapContents);
+            out.close();
+        } catch (IOException e) {
+            System.out.println(e.toString());
+        }
+    }
+
+    public static String loadMap(String mapName) {
+        try {
+            StringBuilder sb = new StringBuilder();
+
+            BufferedReader br = new BufferedReader(new FileReader(Settings.USER_MAP_DIRECTORY + "/" + mapName));
+            String line = br.readLine();
+
+            while (line != null) {
+                sb.append(line);
+                sb.append(System.lineSeparator());
+                line = br.readLine();
+            }
+            br.close();
+
+            return sb.toString();
+        } catch (IOException e) {
+            System.out.println(e.toString());
+        }
+
+        return null;
     }
 }

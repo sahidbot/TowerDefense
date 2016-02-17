@@ -122,6 +122,14 @@ public class TileManager {
         }
     }
 
+    public Tile[][] getTilesOverlay() {
+        return tilesOverlay;
+    }
+
+    public boolean hasAnyOverlay() {
+        return hasAnyOverlayTile;
+    }
+
     public boolean hasEntryPoint() {
         return hasEntryPointTile;
     }
@@ -130,9 +138,19 @@ public class TileManager {
         return hasExitPointTile;
     }
 
-    private Tile createPlaceableTile(int x, int y, Tile tile) {
-        System.out.println(x + ", " + y);
+    public void setHasAnyOverlayTile(boolean hasAnyOverlayTile) {
+        this.hasAnyOverlayTile = hasAnyOverlayTile;
+    }
 
+    public void setHasEntryPointTile(boolean hasEntryPointTile) {
+        this.hasEntryPointTile = hasEntryPointTile;
+    }
+
+    public void setHasExitPointTile(boolean hasExitPointTile) {
+        this.hasExitPointTile = hasExitPointTile;
+    }
+
+    private Tile createPlaceableTile(int x, int y, Tile tile) {
         // check boundaries
         if (!checkValidBoundaries(x, y))
             return null;
@@ -163,7 +181,7 @@ public class TileManager {
     }
 
     private boolean checkValidBoundaries(int x, int y) {
-        return Helper.checkValidBoundaries(x, y, this.rows - 1, this.columns - 1);
+        return Helper.checkValidBoundaries(x, y, this.columns - 1, this.rows - 1);
     }
 
     private boolean matchValidTile(int x, int y, SpriteType type) {

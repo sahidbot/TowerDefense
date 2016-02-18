@@ -10,11 +10,18 @@ import java.util.Observable;
 /**
  * Serves as the model for the mouse state which changes from time to time
  * Its hold the mouseState to be notified for changes
- * Created by Sahidul Islam.
+ * @author Team 7
+ * @version $revision $
  */
 public class MouseHandler extends Observable {
     private MouseState mouseState;
 
+    /**
+     * constructor to initialize mouse state
+     * implements mouse state as observable
+     * notify observers about change in mouse state
+     * @param scene of type scene
+     */
     public MouseHandler(Scene scene) {
         this.mouseState = new MouseState();
 

@@ -9,8 +9,10 @@ import javafx.scene.canvas.GraphicsContext;
 /**
  * Holds the tiles of type Tile(2dim array) of sceneryTiles and tilesOverlay drawn on the canvas
  * It also hols the rows and columns of type int
- * Created by Sahidul Islam
+ * @author Team 7
+ * @version 1.0.0
  */
+
 public class TileManager {
     private Tile[][] sceneryTiles;
     private Tile[][] tilesOverlay;
@@ -28,10 +30,18 @@ public class TileManager {
         return rows;
     }
 
+    /**
+     * getter for columns
+     * @return columns
+     */
     public int getColumns() {
         return columns;
     }
 
+    /**
+     *
+     * @return height of type double
+     */
     public double getHeight() {
         return Settings.TILE_HEIGHT * rows;
     }
@@ -48,6 +58,12 @@ public class TileManager {
         return sceneryTiles;
     }
 
+    /**
+     * return placed tile position
+     *
+     * @param position of type vector2
+     * @return vector2 coordinates for placed tile
+     */
     public Vector2 getTilePosition(Vector2 position) {
         double x = position.getX() > 0 ? Math.ceil(position.getX() / Settings.TILE_WIDTH) : 0;
         double y = position.getY() > 0 ? Math.ceil(position.getY() / Settings.TILE_HEIGHT) : 0;
@@ -60,6 +76,7 @@ public class TileManager {
 
     /**
      * creates scenery tiles
+     *
      * @param rows is the specified rows
      * @param columns is the specified columns
      */
@@ -79,6 +96,10 @@ public class TileManager {
         }
     }
 
+    /**
+     * method to update mouse state as per selected tile
+     * @param mouseState current mouse state
+     */
     public void update(MouseState mouseState) {
         if (mouseState.getEventType() == MouseEventType.LEFT_CLICK) {
             Vector2 pos = getTilePosition(mouseState.getPosition());
@@ -109,6 +130,10 @@ public class TileManager {
         }
     }
 
+    /**
+     * method to draw a tile on map
+     * @param gc of type graphicContext
+     */
     public void draw(GraphicsContext gc) {
         for (int x = 0; x < columns; x++) {
             for (int y = 0; y < rows; y++) {

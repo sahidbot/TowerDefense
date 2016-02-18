@@ -2,6 +2,8 @@ package common.core;
 
 /**
  * Represents a displacement in 2-D space.
+ * @author Team 7
+ * @version $revision $
  */
 public class Vector2 {
 

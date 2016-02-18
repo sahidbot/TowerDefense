@@ -10,6 +10,12 @@ import javafx.scene.canvas.GraphicsContext;
 import java.util.Observable;
 import java.util.Observer;
 
+/**
+ * game manager class implemented as observer
+ * has method related to gameplay, towers
+ * @author Team 7
+ * @version $revision $
+ */
 public class GameManager extends GameLoop implements Observer {
     public TileManager tileManager;
     public MouseHandler mouseHandler;

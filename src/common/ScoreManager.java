@@ -10,7 +10,8 @@ import javafx.scene.text.FontWeight;
 /**
  * This class manages the Level, Health and Money at gameplay
  * Its holds constants of LEVEL, HEALTH, MONEY TITLE
- * @author Sahidul Islam.
+ * @author Team 7
+ * @version $revision $
  */
 public class ScoreManager {
     private double leftOffset;
@@ -75,6 +76,10 @@ public class ScoreManager {
         }*/
     }
 
+    /**
+     * method to display text and other information
+     * @param gc graphics context to draw
+     */
     public void draw(GraphicsContext gc) {
         Font font = Font.font("Courier New", FontWeight.BOLD, 28);
         gc.setFont(font);
@@ -126,6 +131,13 @@ public class ScoreManager {
         drawText(gc, mousePos, position, Color.BLUE);
     }
 
+    /**
+     * method to draw text on sidebar
+     * @param gc graphic context to draw
+     * @param text text to be drawn
+     * @param position position at which text will be drawn
+     * @param color color of text
+     */
     private static void drawText(GraphicsContext gc, String text, Vector2 position, Color color) {
         gc.setFill(color);
         gc.fillText(text, position.getX(), position.getY());

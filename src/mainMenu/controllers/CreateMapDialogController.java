@@ -23,7 +23,9 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 /**
- * Created by Sahidul on 2/17/2016.
+ * Controller for handling map editor
+ * @author Team 7
+ * @version $revision $
  */
 public class CreateMapDialogController implements Initializable {
     @FXML
@@ -56,6 +58,10 @@ public class CreateMapDialogController implements Initializable {
         txtColumns.setText("24");*/
     }
 
+    /**
+     *
+     * @param mouseEvent Reference to the control whose event is fired
+     */
     public void onCreateNewClicked(MouseEvent mouseEvent) {
         if (!txtName.getText().equals("") &&
                 !txtRows.getText().equals("") &&
@@ -115,6 +121,13 @@ public class CreateMapDialogController implements Initializable {
         }
     }
 
+    /**
+     * method to check that entered values
+     * for rows and columns are numeric
+     * @param text textfield whose value is to be set
+     * @param oldValue old value of textfield
+     * @param newValue new value that is to be checked for numeric
+     */
     private void checkNumericValue(TextField text, String oldValue, String newValue) {
         try {
             if (newValue.matches("\\d*")) {

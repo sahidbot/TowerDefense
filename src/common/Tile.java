@@ -2,34 +2,53 @@ package common;
 
 import common.core.ImageSprite;
 import common.core.MouseState;
-import common.core.Sprite;
 import common.core.Vector2;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
-import javafx.scene.text.Font;
-import javafx.scene.text.Text;
 
 
 /**
- * Created by Sahidul Islam
+ * Class for drawing tiles. Extends ImageSpriteClass
+ * Holds methods to get tile status and position
+ * and sprites for tiles
+ * @author Team 7
+ * @version $revision $
  */
 public class Tile extends ImageSprite {
     private SpriteType type;
     private boolean isActive = true;
     private boolean isDraggable = true;
 
+    /**
+     * Constructor to calls ImageSprite Constructor to draw tile
+     * @see ImageSprite#ImageSprite(Image, Vector2, double, double) 
+     * @param type Type of sprite based on selection
+     * @param width Width of tile to be drawn
+     * @param height Height of tile to be drawn
+     * @param position (x,y ) coordinates for position at which tile will be drawn
+     */
     public Tile(SpriteType type, double width, double height, Vector2 position) {
         super(Settings.BACKGROUND_TILE_IMAGE, position);
         this.type = type;
         this.width = width;
         this.height = height;
     }
+
+    /**
+     * Constructor to calls ImageSprite Constructor to draw tile
+     * @see ImageSprite#ImageSprite(Image, Vector2)
+     * @param image Sprite Image for tile
+     * @param position Position at which tile will be drawn
+     */
     public Tile(Image image, Vector2 position){
         super(image, position);
     }
 
+    /**
+     * Method to draw tiles
+     * @param gc The context to draw on
+     */
     @Override
     public void draw(GraphicsContext gc) {
         if (type == SpriteType.SCENERY || type == SpriteType.PATH ||

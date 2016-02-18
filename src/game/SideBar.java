@@ -26,6 +26,8 @@ public class SideBar {
     private Tower[] towersAvailable;
     private int AvailableGold;
 
+    public Tower selectedTowerForInspection;
+
     /**
      * Main Constructor
      *

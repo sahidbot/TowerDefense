@@ -18,6 +18,7 @@ import javafx.scene.paint.Color;
 public class Tile extends ImageSprite {
     private SpriteType type;
     private boolean isActive = true;
+    private boolean isDraggable = true;
 
     /**
      * Constructor to calls ImageSprite Constructor to draw tile
@@ -78,6 +79,14 @@ public class Tile extends ImageSprite {
     }
 
     public void update(MouseState mouseState) {
+    }
+
+    public boolean isDraggable() {
+        return isDraggable;
+    }
+
+    public void setDraggable(boolean draggable) {
+        isDraggable = draggable;
     }
 
     public boolean isActive() {

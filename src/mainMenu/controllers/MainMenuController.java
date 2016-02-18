@@ -137,6 +137,9 @@ public class MainMenuController implements Initializable{
         btnStartGame.setDisable(selectedMap == null);
     }
 
+    /**
+     * Method to load saved maps
+     */
     private void loadSavedMapList() {
         final File folder = new File(Settings.USER_MAP_DIRECTORY);
         File[] listOfFiles = folder.listFiles();

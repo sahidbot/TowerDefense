@@ -21,7 +21,7 @@ public class Tile extends ImageSprite {
 
     /**
      * Constructor to calls ImageSprite Constructor to draw tile
-     * @see ImageSprite#ImageSprite(Image, Vector2, double, double)
+     * @see ImageSprite#ImageSprite(Image, Vector2, double, double) 
      * @param type Type of sprite based on selection
      * @param width Width of tile to be drawn
      * @param height Height of tile to be drawn

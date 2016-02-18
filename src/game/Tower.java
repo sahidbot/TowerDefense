@@ -2,12 +2,14 @@ package game;
 
 import common.Settings;
 import common.Tile;
+import common.core.ImageSprite;
 import common.core.Vector2;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 /**
+ * Created by Monster on 2/14/2016.
  * Represents the tower and holds the tower sprite.
  */
 public class Tower extends Tile {

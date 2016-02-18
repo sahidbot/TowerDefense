@@ -22,10 +22,18 @@ import java.io.*;
 
 
 /**
- * Created by saddamtahir on 2016-02-13.
+ * This class is to create main menu UI layout
+ * to select different options. like map editor,
+ * start game or edit map
+ * @author Team 7
+ * @version $revision $
  */
 public class MainMenu {
-    public void openMenu(Stage primaryStage) throws IOException {
+    /**
+     * entry point of main menu. Opens menu window
+     * @param primaryStage primarystage of type Stage
+     */
+    public void openMenu(Stage primaryStage) {
         StackPane root = new StackPane();
         Button createMap = new Button("Create Map");
         ListView<String> fileList = new ListView<String>();
@@ -115,6 +123,13 @@ public class MainMenu {
         primaryStage.show();
     }
 
+    /**
+     * @deprecated moved to helper class
+     * @see common.Helper#loadMap(String)
+     * @param mapName name of map to be saved
+     * @return contents of map to be loaded as string
+     * @throws IOException file not found exception
+     */
     public static String loadMap(String mapName) throws IOException {
         try {
             StringBuilder sb = new StringBuilder();
@@ -137,6 +152,12 @@ public class MainMenu {
         return null;
     }
 
+    /**
+     * @deprecated moved to helper class
+     * @see common.Helper#saveMap(String, String)
+     * @param mapName map name
+     * @param mapContents map contents
+     */
     public static void saveMap(String mapName, String mapContents) {
         try {
             BufferedWriter out = new BufferedWriter(new FileWriter(Settings.USER_MAP_DIRECTORY + "/" + mapName));

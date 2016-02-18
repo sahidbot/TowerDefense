@@ -8,6 +8,8 @@ import java.io.*;
 
 /**
  * This class helps to abstract methods the are commonly used through out all classes
+ * @author Team 7
+ * @version 1.0.0
  */
 public class Helper {
     /**
@@ -58,6 +60,12 @@ public class Helper {
                 sx, xy, tile.getWidth(), tile.getHeight());
     }
 
+    /**
+     * method to save created or edited map
+     *
+     * @param mapName name of map to be saved
+     * @param mapContents map file contents as string
+     */
     public static void saveMap(String mapName, String mapContents) {
         try {
             BufferedWriter out = new BufferedWriter(new FileWriter(Settings.USER_MAP_DIRECTORY + "/" + mapName));
@@ -68,6 +76,12 @@ public class Helper {
         }
     }
 
+    /**
+     * method to load selected map to be edited to start game
+     *
+     * @param mapName name of map to be loaded
+     * @return contents of loaded map as string
+     */
     public static String loadMap(String mapName) {
         try {
             StringBuilder sb = new StringBuilder();

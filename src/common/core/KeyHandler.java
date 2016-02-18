@@ -13,7 +13,8 @@ import java.util.Map;
 /**
  * The class serves as an event handler to respond to presedkeys
  * it stores pressed keys using a map
- * Created by Sahidul Islam.
+ * @author Team 7
+ * @version $revision $
  */
 public class KeyHandler {
     private Map<KeyCode, Boolean> pressedKyes;

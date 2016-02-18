@@ -25,7 +25,9 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 /**
- * Created by Sahidul on 2/16/2016.
+ * Main to handle operation from main menu UI
+ * @author Team 7
+ * @version $revision $
  */
 public class MainMenuController implements Initializable{
     @FXML
@@ -64,6 +66,10 @@ public class MainMenuController implements Initializable{
         stage.showAndWait();
     }
 
+    /**
+     * Ddit map button callback
+     * @param mouseEvent Reference to the control whose event is fired
+     */
     public void onEditMapClicked(MouseEvent mouseEvent) {
         try {
             String selectedMap = (String) mapListView.getSelectionModel().getSelectedItem();
@@ -113,10 +119,18 @@ public class MainMenuController implements Initializable{
         }
     }
 
+    /**
+     * Callback for start game button
+     * @param mouseEvent Reference to the control whose event is fired
+     */
     public void onStartGameClicked(MouseEvent mouseEvent) {
         System.out.println("start...");
     }
 
+    /**
+     * Method to get selected file from listview
+     * @param event Reference to the control whose event is fired
+     */
     public void onListViewClicked(MouseEvent event) {
         String selectedMap = (String) mapListView.getSelectionModel().getSelectedItem();
         btnEditMap.setDisable(selectedMap == null);

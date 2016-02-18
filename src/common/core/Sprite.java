@@ -6,7 +6,8 @@ import java.util.UUID;
 
 /**
  *This is the base sprites class, it stores width, height, position, health, damage and move state of the sprite.
- * @author Sahidul Islam
+ * @author Team 7
+ * @version $revision $
  */
 public abstract class Sprite implements Cloneable{
     private UUID uniqueId = UUID.randomUUID();

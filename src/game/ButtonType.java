@@ -2,7 +2,7 @@ package game;
 
 /**
  *Stores different types of button
- * @author Dele
+ * @author Team 7
  */
 public enum ButtonType {
     SELL,

@@ -5,7 +5,8 @@ import javafx.animation.AnimationTimer;
 /**
  * This class controls the game by monitoring the game timer
  * holds a timer of type AnimationTimer, running state, lastTime and delta
- * @author Sahidul
+ * @author Team 7
+ * @version $revision $
  */
 public abstract class GameLoop {
     private AnimationTimer timer;

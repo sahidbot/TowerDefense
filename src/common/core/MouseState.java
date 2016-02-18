@@ -62,24 +62,36 @@ public class MouseState {
         this.position.setXY(0, 0);
         this.eventType = MouseEventType.NONE;
     }
-
+    /**
+     * Get selected sprite.
+     * @return Sprite which is selected
+     */
     public Sprite getSelectedSprite() {
         return selectedSprite;
     }
-
+    /**
+     * Method to get selected sprite
+     * @param type The type of sprite
+     * @return Sprite which is selected
+     */
     public <T extends Sprite> T getSelectedSprite(Class<T> type) {
         if (this.selectedSprite != null && type.isInstance(this.selectedSprite))
             return type.cast(this.selectedSprite);
 
         return null;
     }
-
+    /**
+     * Clears selection of sprite.
+     */
     public void clearSelectedSprite() {
         if (this.selectedSprite != null) {
             this.selectedSprite = null;
         }
     }
-
+    /**
+     * Sets selected sprite.
+     * @param selectedSprite Sprite to be selected
+     */
     public void setSelectedSprite(Sprite selectedSprite) {
         this.selectedSprite = selectedSprite;
     }

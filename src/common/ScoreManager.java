@@ -36,27 +36,39 @@ public class ScoreManager {
         this.leftOffset = leftOffset;
         this.topOffset = topOffset;
     }
-
+    /**
+     * Gets level of tower
+     */
     public int getLevel() {
         return level;
     }
-
+    /**
+     * Sets level of tower
+     */
     public void setLevel(int level) {
         this.level = level;
     }
-
+    /**
+     * Gets health of tower
+     */
     public int getHealth() {
         return health;
     }
-
+    /**
+     * Sets health of tower
+     */
     public void setHealth(int health) {
         this.health = health;
     }
-
+    /**
+     * Gets money 
+     */
     public int getMoney() {
         return money;
     }
-
+    /**
+     * Sets money to buy towers
+     */
     public void setMoney(int money) {
         this.money = money;
     }

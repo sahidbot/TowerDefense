@@ -151,35 +151,57 @@ public class TileManager {
             }
         }
     }
-
+    /**
+     * @return Returns tile overlay coordinates
+     */
     public Tile[][] getTilesOverlay() {
         return tilesOverlay;
     }
-
+    /**
+     * @return Return if tile has overlay
+     */
     public boolean hasAnyOverlay() {
         return hasAnyOverlayTile;
     }
-
+    /**
+     * @return Return if map has entry point
+     */
     public boolean hasEntryPoint() {
         return hasEntryPointTile;
     }
-
+    /**
+     * @return Return if map has exit point
+     */
     public boolean hasExitPoint() {
         return hasExitPointTile;
     }
-
+    /**
+     * Sets value of hasAnyOverlayTile property
+     * @param hasAnyOverlayTile Value to be set
+     */
     public void setHasAnyOverlayTile(boolean hasAnyOverlayTile) {
         this.hasAnyOverlayTile = hasAnyOverlayTile;
     }
-
+    /**
+     * Sets value of hasEntryPointTile property
+     * @param hasEntryPointTile Value to be set
+     */
     public void setHasEntryPointTile(boolean hasEntryPointTile) {
         this.hasEntryPointTile = hasEntryPointTile;
     }
-
+    /**
+     * Sets value of hasExitPointTile property
+     * @param hasExitPointTile Value to be set
+     */
     public void setHasExitPointTile(boolean hasExitPointTile) {
         this.hasExitPointTile = hasExitPointTile;
     }
-
+    /**
+     * Method to create tile which can pe placed
+     * @param x X coordinate value
+     * @param y Y coordinate value
+     * @param tile Tile object which is to be placed
+     */
     private Tile createPlaceableTile(int x, int y, Tile tile) {
         // check boundaries
         if (!checkValidBoundaries(x, y))
@@ -209,11 +231,20 @@ public class TileManager {
         Vector2 position = new Vector2(Settings.TILE_WIDTH * x, Settings.TILE_HEIGHT * y);
         return tile.copy(position);
     }
-
+    /**
+     * Method to validate boundaries of tile
+     * @param x X coordinate value
+     * @param y Y coordinate value
+     */
     public boolean checkValidBoundaries(int x, int y) {
         return Helper.checkValidBoundaries(x, y, this.columns - 1, this.rows - 1);
     }
-
+    /**
+     * Method to validate if tile is valid
+     * @param x X coordinate value
+     * @param y Y coordinate value
+     * @param type Sprite Type object containing sprite of tile
+     */
     private boolean matchValidTile(int x, int y, SpriteType type) {
         return checkValidBoundaries(x, y) && tilesOverlay[x][y] != null &&
                 tilesOverlay[x][y].getType() == SpriteType.PATH;

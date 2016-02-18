@@ -46,7 +46,14 @@ public class GameManager extends GameLoop implements Observer {
         sideBar.setAvailableGold(Settings.STARTING_CURRENCY);
         refreshCanBuyTowers();
     }
-
+    /**
+     * Static constructor for GameManager initialize gameplay
+     *
+     * @param root The {@link javafx.scene.Group} to use.
+     * @param rows Number of rows used to determine height of side bar
+     * @param columns Number of columns used to determine width of side bar
+     * @return GameManager main constructor
+     */
     public static GameManager create(Group root, int rows, int columns) {
         double width = (Settings.TILE_WIDTH * columns) + Settings.SIDEBAR_WIDTH;
         double height = Settings.TILE_HEIGHT * rows;
@@ -56,21 +63,32 @@ public class GameManager extends GameLoop implements Observer {
 
         return new GameManager(canvas.getGraphicsContext2D(), new MouseHandler(root.getScene()), rows, columns);
     }
-
+    /**
+    * Loads the Map in TileManager
+    * @param mapData Map data as Array of string
+    */
     public void loadMapData(String[] mapData) {
         Helper.loadTileManagerFromMapData(tileManager, mapData);
     }
-
+    /**
+    * {@inheritDoc}
+    */
     @Override
     protected void update(double delta) {
     }
-
+    /**
+    * Overridden Gameloop clear method to clear contents
+    * {@inheritDoc}
+    */
     @Override
     protected void clear() {
         mouseHandler.clearMouseState();
         gc.clearRect(0, 0, width, height);
     }
-
+    /**
+    * Overridden Gameloop draw method to draw Map and SideBar after each GameLoop iteration
+    * {@inheritDoc}
+    */
     @Override
     protected void draw() {
         tileManager.draw(gc);
@@ -170,7 +188,10 @@ public class GameManager extends GameLoop implements Observer {
 
         tileManagerUpdate(mouseState);
     }
-
+    /**
+    * Method to update state of TileManager. Places new towers on map
+    * @param mouseHandler The mouse handler to user input
+    */
     private void tileManagerUpdate(MouseState mouseState) {
         if (mouseState.getEventType() == MouseEventType.LEFT_CLICK) {
             if (mouseState.getSelectedSprite() != null) {
@@ -229,7 +250,9 @@ public class GameManager extends GameLoop implements Observer {
             }
         }
     }
-
+/**
+* Method to check if enough money is available to buy tower
+*/
     private void refreshCanBuyTowers() {
         for (Tower tower : sideBar.getTowersAvailable()) {
             tower.setCanBuy(tower.getCost() <= sideBar.getAvailableGold());

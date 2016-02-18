@@ -96,7 +96,7 @@ public class Tower extends Tile {
         super(towerImage, position);
     }
 
-    /***
+    /**
      * Method that translates from TowerType to Image
      * @param towerType Tower type to be converted
      * @see TowerType
@@ -119,8 +119,11 @@ public class Tower extends Tile {
         return towerImage;
     }
 
-
-
+    /**
+     * Method that translates from TowerType to Image
+     * @param gc The {@link javafx.scene.canvas.GraphicsContext} to use. All graphics will be placed here
+     * {@inheritDoc}
+     */
     @Override
     public void draw(GraphicsContext gc) {
         gc.drawImage(this.getImage(), getPosition().getX(), getPosition().getY());
@@ -128,7 +131,9 @@ public class Tower extends Tile {
             noMoneySprite.draw(gc);
         }
     }
-
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void update() {
 
@@ -303,4 +308,3 @@ public class Tower extends Tile {
     }
 
     }
-

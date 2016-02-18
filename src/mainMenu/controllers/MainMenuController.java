@@ -59,7 +59,10 @@ public class MainMenuController implements Initializable{
         loadSavedMapList();
         mapListView.setItems(savedMaps);
     }
-
+    /**
+     * Create Map button callback
+     * @param mouseEvent Reference to the control whose event is fired
+     */
     public void onCreateMapClicked(MouseEvent mouseEvent) throws IOException {
         Stage stage = new Stage();
         Parent root = FXMLLoader.load(getClass().getResource("/mainMenu/views/createMapDialogView.fxml"));
@@ -68,7 +71,7 @@ public class MainMenuController implements Initializable{
     }
 
     /**
-     * Ddit map button callback
+     * Edit map button callback
      * @param mouseEvent Reference to the control whose event is fired
      */
     public void onEditMapClicked(MouseEvent mouseEvent) {
@@ -164,7 +167,9 @@ public class MainMenuController implements Initializable{
         btnEditMap.setDisable(selectedMap == null);
         btnStartGame.setDisable(selectedMap == null);
     }
-
+    /**
+     * Method to load saved maps in the directory
+     */
     private void loadSavedMapList() {
         final File folder = new File(Settings.USER_MAP_DIRECTORY);
         File[] listOfFiles = folder.listFiles();

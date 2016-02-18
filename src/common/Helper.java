@@ -102,7 +102,11 @@ public class Helper {
 
         return null;
     }
-
+    /**
+     * Loads selected map into tileManager
+     * @param tileManager TileManager object to create map
+     * @param mapData Loaded map data as Array of string
+     */
     public static void loadTileManagerFromMapData(TileManager tileManager, String[] mapData) {
         try {
             for (int i = 1; i < mapData.length; i++) {

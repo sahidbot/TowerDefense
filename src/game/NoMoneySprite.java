@@ -22,14 +22,17 @@ public class NoMoneySprite extends ImageSprite {
 
     /**
      * Drawing the sprite
-     *
      * @param gc {@link GraphicsContext} to draw on
+     * {@inheritDoc}
      */
     @Override
     public void draw(GraphicsContext gc) {
         gc.drawImage(this.getImage(), position.getX(), position.getY());
     }
 
+        /**
+         * {@inheritDoc}
+         */
     @Override
     public void update() {
 

@@ -21,7 +21,7 @@ public class Tile extends ImageSprite {
 
     /**
      * Constructor to calls ImageSprite Constructor to draw tile
-     * @see ImageSprite#ImageSprite(Image, Vector2, double, double) 
+     * @see ImageSprite#ImageSprite(Image, Vector2, double, double)
      * @param type Type of sprite based on selection
      * @param width Width of tile to be drawn
      * @param height Height of tile to be drawn
@@ -72,38 +72,62 @@ public class Tile extends ImageSprite {
             gc.fillText(getText(), position.getX() + 10, position.getY() + 22);
         }*/
     }
-
+    /**
+    * {@inheritDoc}
+    */
     @Override
     public void update() {
     }
 
     public void update(MouseState mouseState) {
     }
-
+    /**
+    * Indicates whether a tile is draggable
+    * @return true/false
+    */
     public boolean isDraggable() {
         return isDraggable;
     }
-
+    /**
+    * Sets isDraggable as draggable
+    * @param draggable value which is to be set
+    */
     public void setDraggable(boolean draggable) {
         isDraggable = draggable;
     }
-
+    /**
+    * Indicates whether a tile is active
+    * @return true/false
+    */
     public boolean isActive() {
         return isActive;
     }
-
+    /**
+    * Sets isActive as active
+    * @param active value which is to be set
+    */
     public void setActive(boolean active) {
         isActive = active;
     }
-
+    /**
+    * Method to copy a tile
+    * @param Position position at which the tile is to be copied
+    * @return Newly copied tile
+    */
     public Tile copy(Vector2 position) {
         return new Tile(this.type, this.width, this.height, position);
     }
-
+    /**
+    * Returns sprite
+    * @return Type of sprite
+    */
     public SpriteType getType() {
         return type;
     }
-
+    /**
+    * Method to get image offsets of different Sprites
+    * @return Vector@ postion of Sprite
+    */
     public Vector2 getImageOffset() {
         if (type == SpriteType.SCENERY) {
             return new Vector2(0, 64);

@@ -60,13 +60,19 @@ public class Button extends ImageSprite {
         return buttonImage;
     }
 
-
+    /**
+     * Method to draw button on side bar
+     *
+     * @param gc The {@link javafx.scene.canvas.GraphicsContext} to use. All graphics will be placed here
+     */
     @Override
     public void draw(GraphicsContext gc) {
         if(isEnabled())
         gc.drawImage(this.getImage(), getPosition().getX(), getPosition().getY());
     }
-
+    /**
+    * {@inheritDoc}
+    */
     @Override
     public void update() {
 

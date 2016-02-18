@@ -21,15 +21,35 @@ public abstract class Sprite implements Cloneable{
     public double damage;
 
     public boolean canMove = false;
-
+/**
+* Constructor function to initialize Sprite
+* @param width Value of width
+* @param height Value of Height
+* @param position Position represented as Vector2
+*/
     public Sprite(double width, double height, Vector2 position) {
         this(width, height, position, null, 0, 0);
     }
-
+    /**
+    *Overridden constructor mainly for the purpose of creating a Tower
+    * @param width Value of width
+    * @param height Value of Height
+    * @param position Position represented as Vector2
+    * @param health Health points of tower
+    * @param damage Damage dealth by tower
+    */
     public Sprite(double width, double height, Vector2 position, double health, double damage) {
         this(width, height, position, null, health, damage);
     }
-
+    /**
+    *Overridden constructor mainly for the purpose of creating a Tower
+    * @param width Value of width
+    * @param height Value of Height
+    * @param position Position represented as Vector2
+    * @param velocity Velocity of tower canon represented as Vector2
+    * @param health Health points of tower
+    * @param damage Damage dealth by tower
+    */
     public Sprite(double width, double height, Vector2 position, Vector2 velocity, double health, double damage) {
         this.position = position;
         this.velocity = velocity;
@@ -48,39 +68,66 @@ public abstract class Sprite implements Cloneable{
     public boolean isAlive() {
         return Double.compare(health, 0) > 0;
     }
-
+    /**
+     * Get the value of width.
+     * @return Returns the width of sprite.
+     */
     public double getWidth() {
         return width;
     }
-
+    /**
+     * Get the value of height.
+     * @return Returns the height of sprite.
+     */
     public double getHeight() {
         return height;
     }
-
+    /**
+     * Get the position of sprite of height.
+     * @return Returns the position as Vector2 coordinates.
+     */
     public Vector2 getPosition() {
         return position;
     }
-
+    /**
+     * Set the position of sprite from vector
+     * @param position The position at which to be set.
+     */
     public void setPosition(Vector2 position) {
         this.position.setFromVector(position);
     }
-
+    /**
+     * Get the X centre
+     * @return Returns X part of position
+     */
     public double getCenterX() {
         return position.getX() + width * 0.5;
     }
-
+    /**
+     * Get the Y centre
+     * @return Returns Y part of position
+     */
     public double getCenterY() {
         return position.getY() + height * 0.5;
     }
-
+    /**
+     * Get the unique Id
+     * @return Returns the unique Id of sprite
+     */
     public String getUniqueId() {
         return this.uniqueId.toString();
     }
-
+    /**
+     * Generates unique Id for a sprite
+     */
     public void generateNewUniqueId() {
         this.uniqueId = UUID.randomUUID();
     }
-
+    /**
+     * Method to check if sprite is colliding with any other sprite
+     * @param otherSprite The sprite against which newly placed sprite is verified
+     * @return Returns True if colliding otherwise False
+     */
     public boolean collidesWith(Sprite otherSprite) {
         // not per-pixel-collision
         return (otherSprite.position.getX() + otherSprite.getWidth() >= this.position.getX() &&
@@ -88,7 +135,11 @@ public abstract class Sprite implements Cloneable{
                 otherSprite.position.getX() <= this.position.getX() + this.width &&
                 otherSprite.position.getY() <= this.position.getY() + this.height);
     }
-
+    /**
+     * Method to check if sprite is colliding with any other sprite
+     * @param position The position at which the sprite is verified for collision
+     * @return Returns True if colliding otherwise False
+     */
     public boolean collidesWith(Vector2 position) {
         return (position.getX() >= this.position.getX() &&
                 position.getY() >= this.position.getY() &&

@@ -8,7 +8,6 @@ import java.io.*;
 
 /**
  * This class helps to abstract methods the are commonly used through out all classes
- * @author Team 7
  * @version 1.0.0
  */
 public class Helper {

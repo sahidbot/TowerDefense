@@ -28,7 +28,6 @@ import java.util.ResourceBundle;
 
 /**
  * Main to handle operation from main menu UI
- * @author Team 7
  * @version $revision $
  */
 public class MainMenuController implements Initializable{

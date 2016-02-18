@@ -18,8 +18,6 @@ import java.util.concurrent.CountDownLatch;
  * {@literal @}Rule
  * public JavaFXThreadingRule jfxRule = new JavaFXThreadingRule();
  * </pre>
- *
- * @author Team 7
  * @since 1.0.0
  */
 public class JavaFXThreadingRule implements TestRule {

@@ -4,7 +4,6 @@ import javafx.scene.image.Image;
 
 /**
  * This class is used to set or initialize variables such as width, height, margin, image, font, currency e.t.c
- * @author Sahidul Islam.
  */
 public class Settings {
     public static final double TILE_WIDTH = 32;

@@ -9,8 +9,8 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 
 /**
- * Created by Sahidul on 2/13/2016.
  * Represents the side panel that holds the towers and the inspection panel
+ * @version $revision $
  */
 public class SideBar {
 

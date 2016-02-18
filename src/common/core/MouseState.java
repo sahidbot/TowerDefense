@@ -2,7 +2,6 @@ package common.core;
 
 /**
  * The state of the mouse event.
- * @author Team 7
  * @version $revision $
  */
 public class MouseState {

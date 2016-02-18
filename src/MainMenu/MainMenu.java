@@ -25,7 +25,6 @@ import java.io.*;
  * This class is to create main menu UI layout
  * to select different options. like map editor,
  * start game or edit map
- * @author Team 7
  * @version $revision $
  */
 public class MainMenu {

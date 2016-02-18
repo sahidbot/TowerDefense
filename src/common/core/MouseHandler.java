@@ -10,7 +10,6 @@ import java.util.Observable;
 /**
  * Serves as the model for the mouse state which changes from time to time
  * Its hold the mouseState to be notified for changes
- * @author Team 7
  * @version $revision $
  */
 public class MouseHandler extends Observable {

@@ -11,9 +11,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by Monster on 2/14/2016.
  * Represents the inspection panel that shows the stats of the tower and
  * the sell button is the tower is sellable
+ * @version $revision $
  */
 public class InspectionPanel {
 
@@ -116,7 +116,13 @@ public class InspectionPanel {
 
     }
 
-
+    /**
+     * Method to draw text in Inspection panel
+     * @param gc Graphics context to draw on
+     * @param text Text to be drawn
+     * @param position Position at which text will be drawn
+     * @param color Color of text
+     */
     private void drawText(GraphicsContext gc, String text, Vector2 position, Color color) {
         gc.setFill(color);
         gc.fillText(text, position.getX(), position.getY());

@@ -24,7 +24,6 @@ import java.util.ResourceBundle;
 
 /**
  * Controller for handling map editor
- * @author Team 7
  * @version $revision $
  */
 public class CreateMapDialogController implements Initializable {

@@ -2,15 +2,15 @@ package game;
 
 import common.JavaFXThreadingRule;
 import common.core.Vector2;
-import junit.framework.Assert;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 /**
- * Created by Monster on 2/14/2016.
+ * Test Class for SideBar
+ * @version $revision $
  */
 public class SideBarTest {
     @Rule

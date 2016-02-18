@@ -4,10 +4,11 @@ import common.Settings;
 import common.core.ImageSprite;
 import common.core.Vector2;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.image.Image;
 
 /**
- * Created by Monster on 2/15/2016.
+ * Class related to Sprite for
+ * no or less money to buy towers
+ * @version $revision $
  */
 public class NoMoneySprite extends ImageSprite {
     /**

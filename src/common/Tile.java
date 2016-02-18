@@ -12,7 +12,6 @@ import javafx.scene.paint.Color;
  * Class for drawing tiles. Extends ImageSpriteClass
  * Holds methods to get tile status and position
  * and sprites for tiles
- * @author Team 7
  * @version $revision $
  */
 public class Tile extends ImageSprite {

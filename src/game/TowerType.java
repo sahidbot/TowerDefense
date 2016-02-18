@@ -1,7 +1,7 @@
 package game;
 
 /**
- * Created by Monster on 2/14/2016.
+ * Contains different towers
  */
 public enum TowerType {
     SIEGE,

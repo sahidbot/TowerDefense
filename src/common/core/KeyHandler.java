@@ -13,7 +13,6 @@ import java.util.Map;
 /**
  * The class serves as an event handler to respond to presedkeys
  * it stores pressed keys using a map
- * @author Team 7
  * @version $revision $
  */
 public class KeyHandler {

@@ -2,6 +2,7 @@ package common;
 
 /**
  * Types of sprites
+ * @version $revision $
  */
 public enum SpriteType {
     SCENERY,

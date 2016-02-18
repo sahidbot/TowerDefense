@@ -3,7 +3,6 @@ package game;
 import common.*;
 import common.core.*;
 import javafx.scene.Group;
-import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 
@@ -13,7 +12,6 @@ import java.util.Observer;
 /**
  * game manager class implemented as observer
  * has method related to gameplay, towers
- * @author Team 7
  * @version $revision $
  */
 public class GameManager extends GameLoop implements Observer {

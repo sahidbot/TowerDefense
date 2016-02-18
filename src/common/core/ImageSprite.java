@@ -5,7 +5,6 @@ import javafx.scene.image.Image;
 /**
  * This class creates image sprite and extends the Sprite class
  * The class is also responsible for checking if collision occurs with the image
- * @author Team 7
  * @version $revision $
  */
 public abstract class ImageSprite extends Sprite {

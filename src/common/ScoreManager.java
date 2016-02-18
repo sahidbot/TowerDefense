@@ -10,7 +10,6 @@ import javafx.scene.text.FontWeight;
 /**
  * This class manages the Level, Health and Money at gameplay
  * Its holds constants of LEVEL, HEALTH, MONEY TITLE
- * @author Team 7
  * @version $revision $
  */
 public class ScoreManager {

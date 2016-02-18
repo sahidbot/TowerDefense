@@ -8,7 +8,6 @@ import javafx.scene.image.Image;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 /**
- * @author Dele
  * Represents the button and holds the button sprite.
  */
 public class Button extends ImageSprite {

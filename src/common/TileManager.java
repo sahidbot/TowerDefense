@@ -9,8 +9,7 @@ import javafx.scene.canvas.GraphicsContext;
 /**
  * Holds the tiles of type Tile(2dim array) of sceneryTiles and tilesOverlay drawn on the canvas
  * It also hols the rows and columns of type int
- * @author Team 7
- * @version 1.0.0
+ * @version $revision $
  */
 
 public class TileManager {

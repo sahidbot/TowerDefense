@@ -100,6 +100,7 @@ public class GameManager extends GameLoop implements Observer {
 
         if (mouseState.getEventType() == MouseEventType.RIGHT_CLICK) {
             mouseState.clearSelectedSprite();
+            sideBar.getInspectionPanel().setSelectedTower(null);
         }
 
         if (mouseState.getPosition().getX() > tileManager.getWidth()) {
@@ -113,6 +114,14 @@ public class GameManager extends GameLoop implements Observer {
                         // if detected selling tower and sellbutton is clicked
                         sideBar.addAvailableGold(inspectionPanelTower.getRefund());
                         refreshCanBuyTowers();
+
+                        // remove from the tile manager
+                        Vector2 tilePosForSelectedTower = tileManager.getTilePosition(inspectionPanelTower.getPosition());
+                        int x = (int) tilePosForSelectedTower.getX();
+                        int y = (int) tilePosForSelectedTower.getY();
+                        tileManager.getTilesOverlay()[x][y] = null;
+                        mouseState.setSelectedSprite(null);
+                        sideBar.getInspectionPanel().setSelectedTower(null);
                     }
                     else if (sideBar.getInspectionPanel().getUpgradeButton().isEnabled() &&
                             sideBar.getInspectionPanel().getUpgradeButton().collidesWith(mouseState.getPosition())) {
@@ -172,6 +181,8 @@ public class GameManager extends GameLoop implements Observer {
                 int y = (int) pos.getY() - 1;
 
                 Tower selectedTile = mouseState.getSelectedSprite(Tower.class);
+                if (selectedTile != null && !selectedTile.isDraggable())
+                    return;
 
                 if (!tileManager.checkValidBoundaries(x, y))
                     return;
@@ -192,12 +203,12 @@ public class GameManager extends GameLoop implements Observer {
             }
         }
 
-        Vector2 mousePosition = mouseState.getPosition();
+        Vector2 mousePos = mouseState.getPosition();
 
-        if (mousePosition.getX() <= tileManager.getWidth() ||
-                mousePosition.getY() <= tileManager.getHeight()) {
+        if (mousePos.getX() <= tileManager.getWidth() ||
+                mousePos.getY() <= tileManager.getHeight()) {
 
-            Vector2 pos = tileManager.getTilePosition(mousePosition);
+            Vector2 pos = tileManager.getTilePosition(mousePos);
             int x = (int) pos.getX() - 1;
             int y = (int) pos.getY() - 1;
 
@@ -207,7 +218,6 @@ public class GameManager extends GameLoop implements Observer {
 
             if (tileManager.getTilesOverlay()[x][y] == null ||
                     !(tileManager.getTilesOverlay()[x][y] instanceof Tower)) {
-                sideBar.getInspectionPanel().setSelectedTower(null);
                 return;
             }
 

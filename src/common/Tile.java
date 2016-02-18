@@ -18,6 +18,7 @@ import javafx.scene.text.Text;
 public class Tile extends ImageSprite {
     private SpriteType type;
     private boolean isActive = true;
+    private boolean isDraggable = true;
 
     public Tile(SpriteType type, double width, double height, Vector2 position) {
         super(Settings.BACKGROUND_TILE_IMAGE, position);
@@ -59,6 +60,14 @@ public class Tile extends ImageSprite {
     }
 
     public void update(MouseState mouseState) {
+    }
+
+    public boolean isDraggable() {
+        return isDraggable;
+    }
+
+    public void setDraggable(boolean draggable) {
+        isDraggable = draggable;
     }
 
     public boolean isActive() {

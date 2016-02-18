@@ -2,6 +2,7 @@ package mainMenu.controllers;
 
 import common.Helper;
 import common.Settings;
+import game.GameManager;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -15,6 +16,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import map.MapManager;
 
 import java.io.BufferedReader;
@@ -114,7 +116,34 @@ public class MainMenuController implements Initializable{
     }
 
     public void onStartGameClicked(MouseEvent mouseEvent) {
-        System.out.println("start...");
+        try {
+            String selectedMap = (String) mapListView.getSelectionModel().getSelectedItem();
+            if (selectedMap != null) {
+                String mapContent = Helper.loadMap(selectedMap);
+                if (mapContent != null) {
+                    String[] mapData = mapContent.split(System.getProperty("line.separator"));
+
+                    int sIndex = mapData[0].indexOf(",");
+                    int columns = Integer.parseInt(mapData[0].substring(0, sIndex));
+                    int rows = Integer.parseInt(mapData[0].substring(sIndex + 1, mapData[0].length()));
+
+                    Stage stage = new Stage();
+                    Group root = new Group();
+                    Scene scene = new Scene(root);
+                    stage.setScene(scene);
+                    stage.setResizable(false);
+
+                    GameManager gameManager = GameManager.create(root, rows, columns);
+                    gameManager.loadMapData(mapData);
+                    gameManager.start();
+                    stage.show();
+                    stage.setHeight(stage.getHeight() - 12);
+                }
+            }
+        }
+        catch (Exception ex) {
+            System.out.println(ex);
+        }
     }
 
     public void onListViewClicked(MouseEvent event) {

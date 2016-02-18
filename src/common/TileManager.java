@@ -3,6 +3,7 @@ package common;
 import common.core.MouseEventType;
 import common.core.MouseState;
 import common.core.Vector2;
+import game.Tower;
 import javafx.scene.canvas.GraphicsContext;
 
 /**
@@ -116,7 +117,12 @@ public class TileManager {
 
                 Tile tileOverlay = tilesOverlay[x][y];
                 if (tileOverlay != null) {
-                    tileOverlay.draw(gc);
+                    if (tileOverlay instanceof Tower) {
+                        ((Tower) tileOverlay).draw(gc);
+                    }
+                    else {
+                        tileOverlay.draw(gc);
+                    }
                 }
             }
         }
@@ -180,7 +186,7 @@ public class TileManager {
         return tile.copy(position);
     }
 
-    private boolean checkValidBoundaries(int x, int y) {
+    public boolean checkValidBoundaries(int x, int y) {
         return Helper.checkValidBoundaries(x, y, this.columns - 1, this.rows - 1);
     }
 

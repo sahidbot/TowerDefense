@@ -41,12 +41,6 @@ public class Tower extends Tile {
         isActive = false;
         setInitialValues();
         noMoneySprite = new NoMoneySprite(position);
-
-
-
-
-
-
     }
 
     /**

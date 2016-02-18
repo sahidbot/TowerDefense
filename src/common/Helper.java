@@ -89,4 +89,33 @@ public class Helper {
 
         return null;
     }
+
+    public static void loadTileManagerFromMapData(TileManager tileManager, String[] mapData) {
+        try {
+            for (int i = 1; i < mapData.length; i++) {
+                if (mapData[i] == null || mapData[i] == "") {
+                    continue;
+                }
+
+                String[] parts = mapData[i].split(":");
+
+                int sIndex = parts[0].indexOf(",");
+                int x = Integer.parseInt(parts[0].substring(0, sIndex));
+                int y = Integer.parseInt(parts[0].substring(sIndex + 1, parts[0].length()));
+
+                SpriteType type = SpriteType.valueOf(parts[1]);
+                Vector2 position = new Vector2(Settings.TILE_WIDTH * x, Settings.TILE_HEIGHT * y);
+                Tile newTile = new Tile(type, Settings.TILE_WIDTH, Settings.TILE_HEIGHT, position);
+
+                tileManager.getTilesOverlay()[x][y] = newTile;
+            }
+
+            tileManager.setHasAnyOverlayTile(true);
+            tileManager.setHasEntryPointTile(true);
+            tileManager.setHasExitPointTile(true);
+        }
+        catch (Exception ex) {
+            System.out.println(ex.toString());
+        }
+    }
 }

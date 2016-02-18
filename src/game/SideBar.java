@@ -65,11 +65,8 @@ public class SideBar {
         towersAvailable = new Tower[]{
                 new Tower(TowerType.ARROW, generateBuyableTowerPosition(1)),
                 new Tower(TowerType.FROST, generateBuyableTowerPosition(2)),
-                new Tower(TowerType.SIEGE, generateBuyableTowerPosition(3)),
-                new Tower(TowerType.ARROW, generateBuyableTowerPosition(4)),
+                new Tower(TowerType.SIEGE, generateBuyableTowerPosition(3))
         };
-        towersAvailable[3].setActive(true);
-        towersAvailable[3].setCanBuy(false);
     }
 
     /**
@@ -110,7 +107,7 @@ public class SideBar {
         Font currencyFont = Font.font(Settings.FONT_NAME, FontWeight.NORMAL, Settings.FONTSIZE_LINE);
         gc.setFont(currencyFont);
         Vector2 currencyPosition = new Vector2(leftOffset + defaultMargin,
-                topOffset + defaultMargin + shopTitleWidth + defaultMargin + towerWidth + defaultMargin + Settings.FONTSIZE_LINE);
+                topOffset + defaultMargin + shopTitleWidth + defaultMargin + towerWidth + defaultMargin + Settings.FONTSIZE_LINE + 30);
         String currencyLine = "Available: $" + getAvailableGold();
         drawText(gc, currencyLine, currencyPosition, Color.BLACK);
         //Draw inspectionPanel

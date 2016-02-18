@@ -22,31 +22,32 @@ public class InspectionPanel {
     private final double leftOffset;
     private final double topOffset;
     private Tower selectedTower;
-    private  Button sellButton;
+    private Button sellButton;
     private Button upgradeButton;
-
 
 
     /**
      * Default constructor
-     * @param width width of the inspection panel
-     * @param height height of the inspection panel
+     *
+     * @param width      width of the inspection panel
+     * @param height     height of the inspection panel
      * @param leftOffset left offset of the inspection panel
-     * @param topOffset top offset of the inspection panel
+     * @param topOffset  top offset of the inspection panel
      */
     public InspectionPanel(double width, double height, double leftOffset, double topOffset) {
         this.height = height;
         this.leftOffset = leftOffset;
         this.topOffset = topOffset;
         this.width = width;
-        Vector2 sellPosition= new Vector2(leftOffset, topOffset);
-        Vector2 upgradePosition = new Vector2(leftOffset,topOffset);
-        sellButton = new Button(ButtonType.SELL,sellPosition );
-        upgradeButton = new Button (ButtonType.UPGRADE, upgradePosition);
+        Vector2 sellPosition = new Vector2(leftOffset, topOffset);
+        Vector2 upgradePosition = new Vector2(leftOffset, topOffset);
+        sellButton = new Button(ButtonType.SELL, sellPosition);
+        upgradeButton = new Button(ButtonType.UPGRADE, upgradePosition);
     }
 
     /**
      * Gets the selected tower
+     *
      * @return current selected tower
      */
     public Tower getSelectedTower() {
@@ -55,6 +56,7 @@ public class InspectionPanel {
 
     /**
      * Sets the selected tower
+     *
      * @param selectedTower new selected tower
      */
     public void setSelectedTower(Tower selectedTower) {
@@ -63,10 +65,11 @@ public class InspectionPanel {
 
     /**
      * Draws the inspection panel
+     *
      * @param gc target to draw on
      */
     public void draw(GraphicsContext gc) {
-        if(getSelectedTower() != null) {
+        if (getSelectedTower() != null) {
             Font titleFont = Font.font(Settings.FONT_NAME, FontWeight.BOLD, 20);
             Font parametersFont = Font.font(Settings.FONT_NAME, FontWeight.NORMAL, 16);
 
@@ -86,33 +89,32 @@ public class InspectionPanel {
             statLines.add("Rate of Fire: " + getSelectedTower().getRateOfFire());
             statLines.add("Range: " + getSelectedTower().getRange());
             statLines.add("Damage: " + getSelectedTower().getDamage());
-            if(!selectedTower.isActive()){
+            if (!selectedTower.isActive()) {
                 //If tower is not active, we can buy it
                 statLines.add("Cost: " + getSelectedTower().getCost());
-            }
-            else{
+            } else {
                 statLines.add("Upgrade Cost: " + getSelectedTower().getCost());
                 statLines.add("Sell Refund: " + getSelectedTower().getRefund());
 
             }
 
             //draw each line
-            for (int i = 0; i < statLines.size(); i++){
+            for (int i = 0; i < statLines.size(); i++) {
                 drawText(gc, statLines.get(i),
                         new Vector2(titlePosition.getX(), titlePosition.getY() + (i + 1) * linesSeparation),
                         Color.BLACK);
             }
-           getSellButton().setEnabled(selectedTower.isActive());
-                Vector2 newSellButtonPosition = new Vector2(titlePosition.getX(), titlePosition.getY() + linesSeparation + (statLines.size() * linesSeparation));
-                getSellButton().setPosition(newSellButtonPosition);
-                getSellButton().draw(gc);
+            getSellButton().setEnabled(selectedTower.isActive());
+            Vector2 newSellButtonPosition = new Vector2(titlePosition.getX(), titlePosition.getY() + linesSeparation + (statLines.size() * linesSeparation));
+            getSellButton().setPosition(newSellButtonPosition);
+            getSellButton().draw(gc);
             getUpgradeButton().setEnabled(selectedTower.isActive());
-                Vector2 newUpgradeButton = new Vector2(titlePosition.getX() + 128 + 2,  titlePosition.getY() + linesSeparation + (statLines.size() * linesSeparation));
-                getUpgradeButton().setPosition(newUpgradeButton);
-                getUpgradeButton().draw(gc);
-            }
-
+            Vector2 newUpgradeButton = new Vector2(titlePosition.getX() + 128 + 2, titlePosition.getY() + linesSeparation + (statLines.size() * linesSeparation));
+            getUpgradeButton().setPosition(newUpgradeButton);
+            getUpgradeButton().draw(gc);
         }
+
+    }
 
 
     private void drawText(GraphicsContext gc, String text, Vector2 position, Color color) {

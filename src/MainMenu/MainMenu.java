@@ -1,7 +1,6 @@
-package mainMenu;
+package mainmenu;
 
 import common.Settings;
-import common.core.MouseHandler;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
@@ -16,7 +15,6 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.HBoxBuilder;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
-import map.MapManager;
 
 import java.io.*;
 

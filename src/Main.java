@@ -8,7 +8,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.stage.Stage;
-import mainMenu.MainMenu;
+import mainmenu.MainMenu;
 
 import java.io.IOException;
 
@@ -21,7 +21,7 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("/mainMenu/views/mainMenuView.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/mainmenu/views/mainMenuView.fxml"));
         primaryStage.setScene(new Scene(root));
         primaryStage.setTitle("Defense Tower");
         primaryStage.setResizable(false);

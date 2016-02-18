@@ -1,4 +1,4 @@
-package mainMenu.controllers;
+package mainmenu.controllers;
 
 import common.Helper;
 import common.Settings;
@@ -16,12 +16,9 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
 import map.MapManager;
 
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileReader;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -65,7 +62,7 @@ public class MainMenuController implements Initializable{
      */
     public void onCreateMapClicked(MouseEvent mouseEvent) throws IOException {
         Stage stage = new Stage();
-        Parent root = FXMLLoader.load(getClass().getResource("/mainMenu/views/createMapDialogView.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/mainmenu/views/createMapDialogView.fxml"));
         stage.setScene(new Scene(root));
         stage.showAndWait();
     }

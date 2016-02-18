@@ -5,7 +5,7 @@
 <?import javafx.scene.layout.*?>
 
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="258.0" prefWidth="449.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="mainMenu.controllers.CreateMapDialogController">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="258.0" prefWidth="449.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="mainmenu.controllers.CreateMapDialogController">
    <children>
       <Label layoutX="48.0" layoutY="50.0" text="Name" />
       <TextField fx:id="txtName" layoutX="118.0" layoutY="45.0" prefHeight="31.0" prefWidth="295.0" />

@@ -5,7 +5,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.GridPane?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="mainMenu.controllers.MainMenuController">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="mainmenu.controllers.MainMenuController">
    <children>
       <Button fx:id="btnCreateMap" layoutX="43.0" layoutY="36.0" mnemonicParsing="false" onMouseClicked="#onCreateMapClicked" prefHeight="40.0" prefWidth="188.0" text="Create Map" />
       <Button fx:id="btnEditMap" layoutX="43.0" layoutY="99.0" mnemonicParsing="false" onMouseClicked="#onEditMapClicked" prefHeight="40.0" prefWidth="188.0" text="Edit Map" />

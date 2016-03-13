@@ -142,8 +142,7 @@ public class MainMenuController implements Initializable{
                     stage.setScene(scene);
                     stage.setResizable(false);
 
-                    GameManager gameManager = GameManager.create(root, rows, columns);
-                    gameManager.loadMapData(mapData);
+                    GameManager gameManager = GameManager.create(root, rows, columns, mapData);
                     gameManager.start();
                     stage.show();
                     stage.setHeight(stage.getHeight() - 12);

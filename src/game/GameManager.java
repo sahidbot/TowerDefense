@@ -15,8 +15,8 @@ import java.util.Observer;
  * @version $revision $
  */
 public class GameManager extends GameLoop implements Observer {
-    public TileManager tileManager;
-    public MouseHandler mouseHandler;
+    public ITileManager tileManager;
+    public IMouseHandler mouseHandler;
     public SideBar sideBar;
 
     private GraphicsContext gc;
@@ -30,7 +30,7 @@ public class GameManager extends GameLoop implements Observer {
      * @param gc    The {@link javafx.scene.canvas.GraphicsContext} to use. All graphics will be placed here
      * @param mouseHandler The mouse handler to user input
      */
-    public GameManager(GraphicsContext gc, MouseHandler mouseHandler, int rows, int columns) {
+    public GameManager(GraphicsContext gc, IMouseHandler mouseHandler, ITileManager tileManager) {
         this.gc = gc;
         this.width = gc.getCanvas().getWidth();
         this.height = gc.getCanvas().getHeight();
@@ -38,8 +38,7 @@ public class GameManager extends GameLoop implements Observer {
         this.mouseHandler = mouseHandler;
         this.mouseHandler.addObserver(this);
 
-        tileManager = new TileManager();
-        tileManager.createScenery(rows, columns);
+        this.tileManager = tileManager;
 
         sideBar = new SideBar(gc.getCanvas().getWidth() - tileManager.getWidth(),
                 gc.getCanvas().getHeight(), tileManager.getWidth(), 0);
@@ -54,21 +53,17 @@ public class GameManager extends GameLoop implements Observer {
      * @param columns Number of columns used to determine width of side bar
      * @return GameManager main constructor
      */
-    public static GameManager create(Group root, int rows, int columns) {
+    public static GameManager create(Group root, int rows, int columns, String[] mapData) {
         double width = (Settings.TILE_WIDTH * columns) + Settings.SIDEBAR_WIDTH;
         double height = Settings.TILE_HEIGHT * rows;
 
         Canvas canvas = new Canvas(width, height);
         root.getChildren().add(canvas);
 
-        return new GameManager(canvas.getGraphicsContext2D(), new MouseHandler(root.getScene()), rows, columns);
-    }
-    /**
-    * Loads the Map in TileManager
-    * @param mapData Map data as Array of string
-    */
-    public void loadMapData(String[] mapData) {
-        Helper.loadTileManagerFromMapData(tileManager, mapData);
+        TileManager tileManager = new TileManager(mapData);
+        tileManager.createScenery(rows, columns);
+
+        return new GameManager(canvas.getGraphicsContext2D(), new MouseHandler(root.getScene()), tileManager);
     }
     /**
     * {@inheritDoc}
@@ -119,6 +114,7 @@ public class GameManager extends GameLoop implements Observer {
             sideBar.getInspectionPanel().setSelectedTower(null);
         }
 
+        //Mouse clicked on the side panel
         if (mouseState.getPosition().getX() > tileManager.getWidth()) {
             if (mouseState.getEventType() == MouseEventType.LEFT_CLICK) {
                 Tower inspectionPanelTower = sideBar.getInspectionPanel().getSelectedTower();
@@ -190,7 +186,7 @@ public class GameManager extends GameLoop implements Observer {
     }
     /**
     * Method to update state of TileManager. Places new towers on map
-    * @param mouseHandler The mouse handler to user input
+    * @param mouseState The mouse handler to user input
     */
     private void tileManagerUpdate(MouseState mouseState) {
         if (mouseState.getEventType() == MouseEventType.LEFT_CLICK) {
@@ -253,7 +249,7 @@ public class GameManager extends GameLoop implements Observer {
 /**
 * Method to check if enough money is available to buy tower
 */
-    private void refreshCanBuyTowers() {
+    public void refreshCanBuyTowers() {
         for (Tower tower : sideBar.getTowersAvailable()) {
             tower.setCanBuy(tower.getCost() <= sideBar.getAvailableGold());
         }

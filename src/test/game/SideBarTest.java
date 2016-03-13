@@ -1,12 +1,16 @@
-package game;
+package test.game;
 
-import common.JavaFXThreadingRule;
+import game.SideBar;
+import game.Tower;
+import test.JavaFXThreadingRule;
 import common.core.Vector2;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Test Class for SideBar
@@ -20,17 +24,17 @@ public class SideBarTest {
     {
         sidebar = new SideBar(sideBarWidth, sideBarHeight, leftOffset,topOffset, marginOrSeparation, towerWidth, inspectionHeight, shopTitleHeight);
     }
-    private static final double sideBarHeight = 200;
-    private static final double sideBarWidth = 100;
-    private static final double towerWidth = 5;
-    private static final double leftOffset = 10;
-    private static final double topOffset = 15;
-    private static final double marginOrSeparation = 1;
-    private static final double inspectionHeight = 50;
-    private static final double shopTitleHeight = 20;
-    private static SideBar sidebar;
+    private double sideBarHeight = 200;
+    private double sideBarWidth = 100;
+    private double towerWidth = 5;
+    private double leftOffset = 10;
+    private double topOffset = 15;
+    private double marginOrSeparation = 1;
+    private double inspectionHeight = 50;
+    private double shopTitleHeight = 20;
+    private SideBar sidebar;
     @Test
-    public void generateBuyableTowerPositionTests()
+    public void generateBuyableTowerPosition_ExpectedPositionsTest()
     {
         Vector2 firstPostion = sidebar.generateBuyableTowerPosition(1);
         // it should be at leftoffset (10) + marginOrSeparation (1) = 111
@@ -43,5 +47,16 @@ public class SideBarTest {
         assertEquals(17, secondPosition.getX(), 0.001);
         //it should be at margin (1) + topOffset (15) + margin (1) + shopTitleHeight (20) + margin (1) = 38
         assertEquals(38, secondPosition.getY(), 0.001);
+    }
+
+    @Test
+    public void sideBarConstructor_CreatesAvailableTowersNoDuplicatesTest() {
+        Tower[] towersAvailable = sidebar.getTowersAvailable();
+        Boolean duplicates = false;
+        for (int j = 0; j < towersAvailable.length; j++)
+            for (int k = j + 1; k < towersAvailable.length; k++)
+                if (k != j && towersAvailable[k].getTowerType() == towersAvailable[j].getTowerType())
+                    duplicates = true;
+        assertFalse(duplicates);
     }
 }

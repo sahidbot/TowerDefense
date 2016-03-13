@@ -19,7 +19,7 @@ import java.util.Observer;
  *
  */
 public class MapManager extends GameLoop implements Observer {
-    public MouseHandler mouseHandler;
+    public IMouseHandler mouseHandler;
     public TileManager tileManager;
     public SideBar sideBar;
 
@@ -34,9 +34,10 @@ public class MapManager extends GameLoop implements Observer {
 * @param mouseHandler The mouse handler to user input
 * @param name The name of the Map
 * @param rows The number of rows in the Map
+* @param rows The number of rows in the Map
 * @param columns The number of columns in the Map
 */
-    public MapManager(GraphicsContext gc, MouseHandler mouseHandler, String name, int rows, int columns) {
+    public MapManager(GraphicsContext gc, IMouseHandler mouseHandler, String name, int rows, int columns) {
         this.gc = gc;
         this.mapName = name;
         this.width = gc.getCanvas().getWidth();

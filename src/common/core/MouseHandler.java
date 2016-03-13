@@ -12,7 +12,7 @@ import java.util.Observable;
  * Its hold the mouseState to be notified for changes
  * @version $revision $
  */
-public class MouseHandler extends Observable {
+public class MouseHandler extends Observable implements IMouseHandler {
     private MouseState mouseState;
 
     /**

@@ -1,4 +1,4 @@
-package common;
+package test;
 
 import javafx.application.Platform;
 import javafx.embed.swing.JFXPanel;

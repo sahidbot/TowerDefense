@@ -3,6 +3,8 @@ package game;
 import common.Settings;
 import common.core.MouseState;
 import common.core.Vector2;
+import game.towerlogic.Tower;
+import game.towerlogic.TowerType;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;

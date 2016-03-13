@@ -2,6 +2,7 @@ package game;
 
 import common.*;
 import common.core.*;
+import game.towerlogic.Tower;
 import javafx.scene.Group;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;

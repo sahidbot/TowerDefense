@@ -1,7 +1,7 @@
 package test.game;
 
 import game.SideBar;
-import game.Tower;
+import game.towerlogic.Tower;
 import test.JavaFXThreadingRule;
 import common.core.Vector2;
 import org.junit.Before;

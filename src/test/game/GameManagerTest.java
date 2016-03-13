@@ -5,7 +5,7 @@ import common.Tile;
 import common.TileManager;
 import common.core.*;
 import game.GameManager;
-import game.Tower;
+import game.towerlogic.Tower;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;

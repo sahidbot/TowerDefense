@@ -1,8 +1,9 @@
-package game;
+package game.towerlogic;
 
 import common.Settings;
 import common.Tile;
 import common.core.Vector2;
+import game.NoMoneySprite;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
@@ -29,10 +30,13 @@ public class Tower extends Tile {
     private boolean isActive;
     private boolean canBuy;
 
+    private IAttackStrategy attackStrategy;
+
     /**
      * Default constructor
+     *
      * @param towerType Represents the type of tower
-     * @param position Represents the position of the Sprite
+     * @param position  Represents the position of the Sprite
      */
     public Tower(TowerType towerType, Vector2 position) {
         this(imageFrom(towerType), position);
@@ -46,7 +50,7 @@ public class Tower extends Tile {
      * Sets the initial values for tower types
      */
     private void setInitialValues() {
-        switch(towerType){
+        switch (towerType) {
             case FROST:
                 setBaseCost(200);
                 setBaseCostMultiplier(100);
@@ -88,22 +92,24 @@ public class Tower extends Tile {
 
     /**
      * Private constructor that calls super (with an image)
+     *
      * @param towerImage Image to be passed to base class
-     * @param position Position of the sprite on the window;
+     * @param position   Position of the sprite on the window;
      * @see Vector2
-     * */
+     */
     private Tower(Image towerImage, Vector2 position) {
         super(towerImage, position);
     }
 
     /**
      * Method that translates from TowerType to Image
+     *
      * @param towerType Tower type to be converted
      * @see TowerType
      */
     private static Image imageFrom(TowerType towerType) {
         Image towerImage;
-        switch(towerType){
+        switch (towerType) {
             case ARROW:
                 towerImage = Settings.TOWERARROW_TILE_IMAGE;
                 break;
@@ -121,16 +127,18 @@ public class Tower extends Tile {
 
     /**
      * Method that translates from TowerType to Image
+     *
      * @param gc The {@link javafx.scene.canvas.GraphicsContext} to use. All graphics will be placed here
-     * {@inheritDoc}
+     *           {@inheritDoc}
      */
     @Override
     public void draw(GraphicsContext gc) {
         gc.drawImage(this.getImage(), getPosition().getX(), getPosition().getY());
-        if(!isActive() && !isCanBuy()){
+        if (!isActive() && !isCanBuy()) {
             noMoneySprite.draw(gc);
         }
     }
+
     /**
      * {@inheritDoc}
      */
@@ -141,56 +149,68 @@ public class Tower extends Tile {
 
     /**
      * Gets current level of the tower
+     *
      * @return current level
-     * */
-    public int getLevel(){
+     */
+    public int getLevel() {
         return level;
     }
+
     /**
      * Gets current rate of fire depending on the level
+     *
      * @return current rate of fire
-     * */
-    public double getRateOfFire(){
+     */
+    public double getRateOfFire() {
         return rateOfFire + (getLevel() * rateOfFireMultiplier);
     }
+
     /**
      * Gets current cost of the tower for either buying or upgrading it
+     *
      * @return current cost
-     * */
-    public int getCost(){
+     */
+    public int getCost() {
         return baseCost + (getLevel() * baseCostMultiplier);
     }
+
     /**
      * Gets current refund for the tower if available
+     *
      * @return current refund
      */
     public int getRefund() {
         return refundRate + (getLevel() * refundRateMultiplier);
     }
+
     /**
      * Gets current range of the tower depending on the level
+     *
      * @return current range
      */
-    public double getRange(){
+    public double getRange() {
         return range + (getLevel() * rangeMultiplier);
     }
+
     /**
      * Gets current damage of the tower depending on the level
+     *
      * @return current damage
-     * */
+     */
     public double getDamage() {
         return damage + (getLevel() * damageMultiplier);
     }
 
     /**
      * Sets range multiplier
-     * */
+     */
     protected void setRangeMultiplier(double rangeMultiplier) {
         this.rangeMultiplier = rangeMultiplier;
     }
+
     /**
      * Sets current level
-     * */
+     */
     protected void setLevel(int level) {
         this.level = level;
     }
@@ -200,63 +220,69 @@ public class Tower extends Tile {
      *
      * @param levelsToAdd how many levels to add to the current level
      */
-    protected void AddLevel(int levelsToAdd){
+    protected void AddLevel(int levelsToAdd) {
         this.level++;
     }
 
     /**
      * Sets damage multiplier
-     * */
+     */
     protected void setDamageMultiplier(double damageMultiplier) {
         this.damageMultiplier = damageMultiplier;
     }
 
     /**
      * Sets rate of fire multiplier
-     * */
+     */
     protected void setRateOfFireMultiplier(double rateOfFireMultiplier) {
         this.rateOfFireMultiplier = rateOfFireMultiplier;
     }
+
     /**
      * Sets the baste cost multiplier
-     * */
+     */
     protected void setBaseCostMultiplier(int baseCostMultiplier) {
         this.baseCostMultiplier = baseCostMultiplier;
     }
 
     /**
      * Sets the range multiplier
-     * */
+     */
     protected void setRefundRateMultiplier(int refundRateMultiplier) {
         this.refundRateMultiplier = refundRateMultiplier;
     }
+
     /**
      * Sets the rate of fire
-     * */
+     */
     protected void setRateOfFire(double rateOfFire) {
         this.rateOfFire = rateOfFire;
     }
+
     /**
      * Sets the base cost
-     * */
+     */
     protected void setBaseCost(int baseCost) {
         this.baseCost = baseCost;
     }
+
     /**
      * Sets the base refund rate
-     * */
+     */
     protected void setRefundRate(int refundRate) {
         this.refundRate = refundRate;
     }
+
     /**
      * Sets range
-     * */
+     */
     protected void setRange(double range) {
         this.range = range;
     }
+
     /**
      * Sets damage
-     * */
+     */
     protected void setDamage(double damage) {
         this.damage = damage;
     }
@@ -307,4 +333,6 @@ public class Tower extends Tile {
         this.canBuy = canBuy;
     }
 
-    }
+
+
+}

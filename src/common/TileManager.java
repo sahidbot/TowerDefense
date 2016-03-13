@@ -3,7 +3,7 @@ package common;
 import common.core.MouseEventType;
 import common.core.MouseState;
 import common.core.Vector2;
-import game.Tower;
+import game.towerlogic.Tower;
 import javafx.scene.canvas.GraphicsContext;
 
 /**

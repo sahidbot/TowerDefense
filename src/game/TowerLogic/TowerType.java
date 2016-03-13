@@ -1,4 +1,4 @@
-package game;
+package game.towerlogic;
 
 /**
  * Contains different towers

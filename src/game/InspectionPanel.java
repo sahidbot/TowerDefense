@@ -2,6 +2,7 @@ package game;
 
 import common.Settings;
 import common.core.Vector2;
+import game.towerlogic.Tower;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;

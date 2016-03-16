@@ -44,6 +44,7 @@ public class Tower extends Tile {
         isActive = false;
         setInitialValues();
         noMoneySprite = new NoMoneySprite(position);
+        setAttackStrategyEnum(AttackStrategyEnum.LOWESTHP);
     }
 
     /**
@@ -220,7 +221,7 @@ public class Tower extends Tile {
      *
      * @param levelsToAdd how many levels to add to the current level
      */
-    protected void AddLevel(int levelsToAdd) {
+    public void AddLevel(int levelsToAdd) {
         this.level++;
     }
 
@@ -333,6 +334,44 @@ public class Tower extends Tile {
         this.canBuy = canBuy;
     }
 
+    /**
+     * Gets the {@link IAttackStrategy}
+     * @return The value of the strategy
+     */
+    public IAttackStrategy getAttackStrategy() {
+        return attackStrategy;
+    }
 
+    /**
+     * Sets the {@link IAttackStrategy}
+     * @param attackStrategy the setting value
+     */
+    public void setAttackStrategy(IAttackStrategy attackStrategy) {
+        this.attackStrategy = attackStrategy;
+    }
 
+    /**
+     * Sets the {@link IAttackStrategy} using the {@link AttackStrategyEnum} as reference.
+     * @param strategy the strategy to use
+     */
+    public void setAttackStrategyEnum(AttackStrategyEnum strategy){
+        switch (strategy){
+            case CLOSEST:
+                attackStrategy = new AttackClosestStrategy(this);
+                break;
+            case FARTHEST:
+                attackStrategy = new AttackFarthestStrategy(this);
+                break;
+            case LOWESTHP:
+                attackStrategy = new AttackLowestHPStrategy(this);
+                break;
+            default:
+                throw new NotImplementedException();
+
+        }
+    }
+
+    public AttackStrategyEnum getAttackStrategyEnum(){
+        return getAttackStrategy().getTypeIdentifier();
+    }
 }

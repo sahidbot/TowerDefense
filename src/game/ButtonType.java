@@ -6,4 +6,6 @@ package game;
 public enum ButtonType {
     SELL,
     UPGRADE,
+    LEFTARROW,
+    RIGHTARROW,
 }

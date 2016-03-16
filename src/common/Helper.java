@@ -1,6 +1,7 @@
 package common;
 
 import common.core.Vector2;
+import game.towerlogic.AttackStrategyEnum;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 

@@ -53,6 +53,12 @@ public class Button extends ImageSprite {
             case UPGRADE:
                 buttonImage = Settings.UPGRADEBUTTON_TILE_IMAGE;
                 break;
+            case LEFTARROW:
+                buttonImage = Settings.LEFTBUTTON_TILE_IMAGE;
+                break;
+            case RIGHTARROW:
+                buttonImage = Settings.RIGHTBUTTON_TILE_IMAGE;
+                break;
 
             default:
                 throw new NotImplementedException();

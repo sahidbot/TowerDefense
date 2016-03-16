@@ -10,6 +10,14 @@ public class Vector2 {
     private double y;
 
     /**
+     * Initializes a new instance of the Vector structure with x = 0 and y = 0
+     */
+    public Vector2() {
+        x = 0;
+        y = 0;
+    }
+
+    /**
      * Initializes a new instance of the Vector structure.
      *
      * @param x The Vector.x-offset of the new Vector.
@@ -202,5 +210,41 @@ public class Vector2 {
     @Override
     public String toString() {
         return String.valueOf(x) + "," + String.valueOf(y);
+    }
+
+
+
+
+    /**
+     * Utility method to calculate distance between two vectors
+     *
+     * @param source Source vector to calculate distance from
+     * @param destination Destination vector to calculate distance to
+     * @return Distance between both vectors
+     */
+    public static double Distance(Vector2 source, Vector2 destination){
+        double distanceX = destination.getX() - source.getX();
+        double distanceY = destination.getY() - source.getY();
+        return Vector2.Magnitude(new Vector2(distanceX, distanceY));
+
+    }
+
+    /**
+     * Calculates the magnitude of the vector2
+     * @param vector2 Target to calculate magnitude for
+     * @return Magnitude of the vector2
+     */
+    public static double Magnitude(Vector2 vector2) {
+        double ret = Math.pow(vector2.getX(), 2) + Math.pow(vector2.getY(), 2);
+        return Math.sqrt(ret);
+    }
+
+
+    public double distanceTo(Vector2 destination){
+        return Distance(this, destination);
+    }
+
+    public double getMagnitude(){
+        return Magnitude(this);
     }
 }

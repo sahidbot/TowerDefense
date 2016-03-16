@@ -1,5 +1,6 @@
 package game;
 
+import common.Helper;
 import common.Settings;
 import common.core.Vector2;
 import game.towerlogic.Tower;
@@ -10,6 +11,7 @@ import javafx.scene.text.FontWeight;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Vector;
 
 /**
  * Represents the inspection panel that shows the stats of the tower and
@@ -25,6 +27,8 @@ public class InspectionPanel {
     private Tower selectedTower;
     private Button sellButton;
     private Button upgradeButton;
+    private Button leftArrowButton;
+    private Button rightArrowButton;
 
 
     /**
@@ -44,6 +48,8 @@ public class InspectionPanel {
         Vector2 upgradePosition = new Vector2(leftOffset, topOffset);
         sellButton = new Button(ButtonType.SELL, sellPosition);
         upgradeButton = new Button(ButtonType.UPGRADE, upgradePosition);
+        leftArrowButton = new Button(ButtonType.LEFTARROW, new Vector2());
+        rightArrowButton = new Button(ButtonType.RIGHTARROW, new Vector2());
     }
 
     /**
@@ -105,14 +111,46 @@ public class InspectionPanel {
                         new Vector2(titlePosition.getX(), titlePosition.getY() + (i + 1) * linesSeparation),
                         Color.BLACK);
             }
+
+            //Defining current Y position for the following lines
+            double currentYPosition = titlePosition.getY() + linesSeparation + (statLines.size() * linesSeparation);
+
+            //Drawing left arrow for strategySwapping
+            getLeftArrowButton().setEnabled(selectedTower.isActive());
+            Vector2 newLeftArrowButtonPosition = new Vector2(titlePosition.getX(), currentYPosition);
+            getLeftArrowButton().setPosition(newLeftArrowButtonPosition);
+            getLeftArrowButton().draw(gc);
+
+            //Drawing the strategy flavour text
+            if(getSelectedTower().isActive()) {
+                String strategyText = getSelectedTower().getAttackStrategyEnum().ToString();
+                drawText(gc, strategyText,
+                        new Vector2(titlePosition.getX() + getLeftArrowButton().getWidth() + 2,
+                                currentYPosition + linesSeparation),
+                        Color.BLACK);
+            }
+
+            //Drawing right arrow for strategySwapping
+            getRightArrowButton().setEnabled(selectedTower.isActive());
+            Vector2 newRightArrowButtonPosition =
+                    new Vector2(
+                            titlePosition.getX() + getLeftArrowButton().getWidth() + 2 + 192 + 2,
+                            currentYPosition);
+            getRightArrowButton().setPosition(newRightArrowButtonPosition);
+            getRightArrowButton().draw(gc);
+
+            currentYPosition += getRightArrowButton().getWidth() + 2;
+
             getSellButton().setEnabled(selectedTower.isActive());
-            Vector2 newSellButtonPosition = new Vector2(titlePosition.getX(), titlePosition.getY() + linesSeparation + (statLines.size() * linesSeparation));
+            Vector2 newSellButtonPosition = new Vector2(titlePosition.getX(), currentYPosition);
             getSellButton().setPosition(newSellButtonPosition);
             getSellButton().draw(gc);
             getUpgradeButton().setEnabled(selectedTower.isActive());
-            Vector2 newUpgradeButton = new Vector2(titlePosition.getX() + 128 + 2, titlePosition.getY() + linesSeparation + (statLines.size() * linesSeparation));
+            Vector2 newUpgradeButton = new Vector2(titlePosition.getX() + getSellButton().getWidth() + 2, currentYPosition);
             getUpgradeButton().setPosition(newUpgradeButton);
             getUpgradeButton().draw(gc);
+
+
         }
 
     }
@@ -143,5 +181,21 @@ public class InspectionPanel {
 
     public void setSellButton(Button sellButton) {
         this.sellButton = sellButton;
+    }
+
+    public Button getRightArrowButton() {
+        return rightArrowButton;
+    }
+
+    public void setRightArrowButton(Button rightArrowButton) {
+        this.rightArrowButton = rightArrowButton;
+    }
+
+    public Button getLeftArrowButton() {
+        return leftArrowButton;
+    }
+
+    public void setLeftArrowButton(Button leftArrowButton) {
+        this.leftArrowButton = leftArrowButton;
     }
 }

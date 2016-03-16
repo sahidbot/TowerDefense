@@ -22,6 +22,9 @@ public class Settings {
     public static final Image SELLBUTTON_TILE_IMAGE = new Image("/assets/images/SellButton.png");
     public static final Image UPGRADEBUTTON_TILE_IMAGE = new Image("/assets/images/UpgradeButton.png");
 
+    public static final Image LEFTBUTTON_TILE_IMAGE = new Image("/assets/images/LeftArrowButton.png");
+    public static final Image RIGHTBUTTON_TILE_IMAGE = new Image("/assets/images/RightArrowButton.png");
+
     public static final String FONT_NAME = "Courier New";
     public static final int FONTSIZE_TITLE = 28;
     public static final int FONTSIZE_LINE = 16;

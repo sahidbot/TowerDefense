@@ -135,8 +135,7 @@ public class GameManager extends GameLoop implements Observer {
                         tileManager.getTilesOverlay()[x][y] = null;
                         mouseState.setSelectedSprite(null);
                         sideBar.getInspectionPanel().setSelectedTower(null);
-                    }
-                    else if (sideBar.getInspectionPanel().getUpgradeButton().isEnabled() &&
+                    } else if (sideBar.getInspectionPanel().getUpgradeButton().isEnabled() &&
                             sideBar.getInspectionPanel().getUpgradeButton().collidesWith(mouseState.getPosition())) {
                         // if detected upgrade tower and updatebutton is clicked
                         if (sideBar.getAvailableGold() >= inspectionPanelTower.getCost()) {
@@ -144,6 +143,17 @@ public class GameManager extends GameLoop implements Observer {
                             inspectionPanelTower.AddLevel(1);
                             refreshCanBuyTowers();
                         }
+                    }
+
+                    //Check StrategySwapping
+                    else if (sideBar.getInspectionPanel().getLeftArrowButton().isEnabled() &&
+                            sideBar.getInspectionPanel().getLeftArrowButton().collidesWith(mouseState.getPosition())) {
+                        //collision detected
+                        inspectionPanelTower.setAttackStrategyEnum(inspectionPanelTower.getAttackStrategyEnum().next());
+                    }
+                    else if (sideBar.getInspectionPanel().getRightArrowButton().isEnabled() &&
+                            sideBar.getInspectionPanel().getRightArrowButton().collidesWith(mouseState.getPosition())){
+                        inspectionPanelTower.setAttackStrategyEnum(inspectionPanelTower.getAttackStrategyEnum().previous());
                     }
                 }
 
@@ -160,6 +170,9 @@ public class GameManager extends GameLoop implements Observer {
                         break;
                     }
                 }
+
+
+
             }
         }
 

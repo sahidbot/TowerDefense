@@ -72,51 +72,46 @@ public class MainMenuController implements Initializable{
      * @param mouseEvent Reference to the control whose event is fired
      */
     public void onEditMapClicked(MouseEvent mouseEvent) {
-        try {
-            String selectedMap = (String) mapListView.getSelectionModel().getSelectedItem();
-            if (selectedMap != null) {
-                String mapContent = Helper.loadMap(selectedMap);
-                if (mapContent != null) {
-                    String[] mapData = mapContent.split(System.getProperty("line.separator"));
+        String selectedMap = (String) mapListView.getSelectionModel().getSelectedItem();
+        if (selectedMap != null) {
+            String mapContent = Helper.loadMap(selectedMap);
+            if (mapContent != null) {
+                String[] mapData = mapContent.split(System.getProperty("line.separator"));
 
-                    int sIndex = mapData[0].indexOf(",");
-                    int columns = Integer.parseInt(mapData[0].substring(0, sIndex));
-                    int rows = Integer.parseInt(mapData[0].substring(sIndex + 1, mapData[0].length()));
+                int sIndex = mapData[0].indexOf(",");
+                int columns = Integer.parseInt(mapData[0].substring(0, sIndex));
+                int rows = Integer.parseInt(mapData[0].substring(sIndex + 1, mapData[0].length()));
 
-                    Stage stage = new Stage();
-                    Group root = new Group();
-                    Scene scene = new Scene(root);
-                    stage.setScene(scene);
-                    stage.setResizable(false);
+                Stage stage = new Stage();
+                Group root = new Group();
+                Scene scene = new Scene(root);
+                stage.setScene(scene);
+                stage.setResizable(false);
 
-                    MapManager mapManager = MapManager.create(root, selectedMap, rows, columns);
-                    mapManager.loadMapData(mapData);
-                    mapManager.start();
-                    stage.show();
-                    stage.setHeight(stage.getHeight() - 12);
+                MapManager mapManager = MapManager.create(root, selectedMap, rows, columns);
+                mapManager.loadMapData(mapData);
+                mapManager.start();
+                stage.show();
+                stage.setHeight(stage.getHeight() - 12);
 
-                    stage.setOnCloseRequest(event -> {
-                        String newMapData = mapManager.getMapData();
-                        if (newMapData != null) {
-                            Helper.saveMap(selectedMap, newMapData);
+                stage.setOnCloseRequest(event -> {
+                    String newMapData = mapManager.getMapData();
+                    if (newMapData != null) {
+                        Helper.saveMap(selectedMap, newMapData);
 
-                            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                            alert.setTitle("Tower Defense");
-                            alert.setHeaderText("Map saved successfully!");
-                            alert.showAndWait();
-                        }
-                        else {
-                            Alert alert = new Alert(Alert.AlertType.ERROR);
-                            alert.setTitle("Tower Defense");
-                            alert.setHeaderText("Invalid map, cannot save!");
-                            alert.showAndWait();
-                        }
-                    });
-                }
+                        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                        alert.setTitle("Tower Defense");
+                        alert.setHeaderText("Map saved successfully!");
+                        alert.showAndWait();
+                    }
+                    else {
+                        Alert alert = new Alert(Alert.AlertType.ERROR);
+                        alert.setTitle("Tower Defense");
+                        alert.setHeaderText("Invalid map, cannot save!");
+                        alert.showAndWait();
+                    }
+                });
             }
-        }
-        catch (Exception ex) {
-            System.out.println(ex);
         }
     }
 
@@ -125,32 +120,27 @@ public class MainMenuController implements Initializable{
      * @param mouseEvent Reference to the control whose event is fired
      */
     public void onStartGameClicked(MouseEvent mouseEvent) {
-        try {
-            String selectedMap = (String) mapListView.getSelectionModel().getSelectedItem();
-            if (selectedMap != null) {
-                String mapContent = Helper.loadMap(selectedMap);
-                if (mapContent != null) {
-                    String[] mapData = mapContent.split(System.getProperty("line.separator"));
+        String selectedMap = (String) mapListView.getSelectionModel().getSelectedItem();
+        if (selectedMap != null) {
+            String mapContent = Helper.loadMap(selectedMap);
+            if (mapContent != null) {
+                String[] mapData = mapContent.split(System.getProperty("line.separator"));
 
-                    int sIndex = mapData[0].indexOf(",");
-                    int columns = Integer.parseInt(mapData[0].substring(0, sIndex));
-                    int rows = Integer.parseInt(mapData[0].substring(sIndex + 1, mapData[0].length()));
+                int sIndex = mapData[0].indexOf(",");
+                int columns = Integer.parseInt(mapData[0].substring(0, sIndex));
+                int rows = Integer.parseInt(mapData[0].substring(sIndex + 1, mapData[0].length()));
 
-                    Stage stage = new Stage();
-                    Group root = new Group();
-                    Scene scene = new Scene(root);
-                    stage.setScene(scene);
-                    stage.setResizable(false);
+                Stage stage = new Stage();
+                Group root = new Group();
+                Scene scene = new Scene(root);
+                stage.setScene(scene);
+                stage.setResizable(false);
 
-                    GameManager gameManager = GameManager.create(root, rows, columns, mapData);
-                    gameManager.start();
-                    stage.show();
-                    stage.setHeight(stage.getHeight() - 12);
-                }
+                GameManager.getInstance().initialize(root, rows, columns, mapData);
+                GameManager.getInstance().start();
+                stage.show();
+                stage.setHeight(stage.getHeight() - 12);
             }
-        }
-        catch (Exception ex) {
-            System.out.println(ex);
         }
     }
 

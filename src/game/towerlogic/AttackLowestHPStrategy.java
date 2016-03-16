@@ -1,6 +1,5 @@
 package game.towerlogic;
 
-import common.core.Vector2;
 import game.Critter;
 
 import java.util.ArrayList;
@@ -25,10 +24,10 @@ public class AttackLowestHPStrategy extends AttackStrategyBase {
     public List<Critter> doDamage(List<Critter> possibleTargets) {
         Collections.sort(possibleTargets,
                 (o1, o2) ->
-                        (int)(o1.getHp() - o2.getHp())
+                        (int)(o1.getHealthPoints() - o2.getHealthPoints())
         );
         Critter target =  possibleTargets.get(0);
-        target.setHp(target.getHp() - getDamage());
+        target.setHealthPoints(target.getHealthPoints() - getDamage());
         List<Critter> ret = new ArrayList<>();
         ret.add(target);
         return ret;

@@ -19,19 +19,62 @@ public class GameManager extends GameLoop implements Observer {
     public ITileManager tileManager;
     public IMouseHandler mouseHandler;
     public SideBar sideBar;
+    public CritterManager critterManager;
 
+    private static GameManager instance;
     private GraphicsContext gc;
     private double width;
     private double height;
     private Vector2 mousePosition = Vector2.getZero();
+    private boolean isWaveStarted = false;
 
     /**
      * Main constructor for GameManager
-     *
-     * @param gc    The {@link javafx.scene.canvas.GraphicsContext} to use. All graphics will be placed here
-     * @param mouseHandler The mouse handler to user input
      */
-    public GameManager(GraphicsContext gc, IMouseHandler mouseHandler, ITileManager tileManager) {
+    private GameManager() {
+    }
+    /**
+     * Get the instance of game manager.
+     * @return Returns the instance of game manager.
+     */
+    public static GameManager getInstance() {
+        if (instance == null)
+            instance = new GameManager();
+
+        return instance;
+    }
+
+    /**
+     * Initialize the game manager
+     *
+     * @param root The {@link javafx.scene.Group} to use.
+     * @param rows Number of rows used to determine height of side bar
+     * @param columns Number of columns used to determine width of side bar
+     * @param mapData Saved content for the map
+     */
+    public void initialize(Group root, int rows, int columns, String[] mapData)
+    {
+        this.width = (Settings.TILE_WIDTH * columns) + Settings.SIDEBAR_WIDTH;
+        this.height = Settings.TILE_HEIGHT * rows;
+
+        Canvas canvas = new Canvas(width, height);
+        root.getChildren().add(canvas);
+
+        this.tileManager = new TileManager(rows, columns, mapData);
+        this.critterManager = new CritterManager();
+
+        this.gc = canvas.getGraphicsContext2D();
+
+        this.mouseHandler = new MouseHandler(root.getScene());
+        this.mouseHandler.addObserver(this);
+
+        sideBar = new SideBar(gc.getCanvas().getWidth() - tileManager.getWidth(),
+                gc.getCanvas().getHeight(), tileManager.getWidth(), 0);
+        sideBar.setAvailableGold(Settings.STARTING_CURRENCY);
+        refreshCanBuyTowers();
+    }
+
+    public void initialize(GraphicsContext gc, IMouseHandler mouseHandler, ITileManager tileManager) {
         this.gc = gc;
         this.width = gc.getCanvas().getWidth();
         this.height = gc.getCanvas().getHeight();
@@ -47,30 +90,11 @@ public class GameManager extends GameLoop implements Observer {
         refreshCanBuyTowers();
     }
     /**
-     * Static constructor for GameManager initialize gameplay
-     *
-     * @param root The {@link javafx.scene.Group} to use.
-     * @param rows Number of rows used to determine height of side bar
-     * @param columns Number of columns used to determine width of side bar
-     * @return GameManager main constructor
-     */
-    public static GameManager create(Group root, int rows, int columns, String[] mapData) {
-        double width = (Settings.TILE_WIDTH * columns) + Settings.SIDEBAR_WIDTH;
-        double height = Settings.TILE_HEIGHT * rows;
-
-        Canvas canvas = new Canvas(width, height);
-        root.getChildren().add(canvas);
-
-        TileManager tileManager = new TileManager(mapData);
-        tileManager.createScenery(rows, columns);
-
-        return new GameManager(canvas.getGraphicsContext2D(), new MouseHandler(root.getScene()), tileManager);
-    }
-    /**
     * {@inheritDoc}
     */
     @Override
     protected void update(double delta) {
+        towerShoots(delta);
     }
     /**
     * Overridden Gameloop clear method to clear contents
@@ -260,12 +284,20 @@ public class GameManager extends GameLoop implements Observer {
             }
         }
     }
-/**
-* Method to check if enough money is available to buy tower
-*/
+    /**
+    * Method to check if enough money is available to buy tower
+    */
     public void refreshCanBuyTowers() {
         for (Tower tower : sideBar.getTowersAvailable()) {
             tower.setCanBuy(tower.getCost() <= sideBar.getAvailableGold());
         }
+    }
+
+    private void towerShoots(double delta) {
+        // loop through all the towers
+            // check the fire rate
+                // getShootableCritters
+                // make the damage
+                // update the rewards inside the sidebar
     }
 }

@@ -66,22 +66,22 @@ public class AttackFarthestStrategyTest {
 
     @Test
     public void doDamageDoesDamageTest(){
-        fourFourCritter.setHp(100);
+        fourFourCritter.setHealthPoints(100);
         strategy.setDamage(30);
 
         List<Critter> result = strategy.doDamage(zeroZeroCritterList);
-        assertEquals(70, result.get(0).getHp(), 0.001);
+        assertEquals(70, result.get(0).getHealthPoints(), 0.001);
     }
 
     @Test
     public void doDamageDoesDamageToOnlyOneEnemyTest(){
-        zeroZeroCritter.setHp(100);
-        fourFourCritter.setHp(100);
+        zeroZeroCritter.setHealthPoints(100);
+        fourFourCritter.setHealthPoints(100);
         strategy.setDamage(30);
 
         List<Critter> result = strategy.doDamage(crittersorder1);
-        assertEquals(100, zeroZeroCritter.getHp(), 0.001f);
-        assertEquals(70, fourFourCritter.getHp(), 0.001f);
+        assertEquals(100, zeroZeroCritter.getHealthPoints(), 0.001f);
+        assertEquals(70, fourFourCritter.getHealthPoints(), 0.001f);
 
 
     }

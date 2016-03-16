@@ -36,7 +36,7 @@ public class AttackClosestStrategy extends AttackStrategyBase {
                                 - Vector2.Distance(getTower().getPosition(), o2.getPosition()))*1000)
                 );
         Critter target =  possibleTargets.get(0);
-        target.setHp(target.getHp() - getDamage());
+        target.setHealthPoints(target.getHealthPoints() - getDamage());
         List<Critter> ret = new ArrayList<>();
         ret.add(target);
         return ret;

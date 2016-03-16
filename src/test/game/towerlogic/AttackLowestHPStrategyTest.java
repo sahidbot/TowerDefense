@@ -53,14 +53,14 @@ public class AttackLowestHPStrategyTest {
 
     @Test
     public void doDamageSelectsProperTargetTest() {
-        fourFourCritter.setHp(10);
-        zeroZeroCritter.setHp(100);
+        fourFourCritter.setHealthPoints(10);
+        zeroZeroCritter.setHealthPoints(100);
         List<Critter> result = strategy.doDamage(crittersorder1);
         assertEquals(1, result.size());
         assertEquals(fourFourCritter, result.get(0));
 
-        fourFourCritter.setHp(100);
-        zeroZeroCritter.setHp(10);
+        fourFourCritter.setHealthPoints(100);
+        zeroZeroCritter.setHealthPoints(10);
         List<Critter> result2 = strategy.doDamage(crittersorder2);
         assertEquals(1, result2.size());
         assertEquals(fourFourCritter, result.get(0));
@@ -68,9 +68,9 @@ public class AttackLowestHPStrategyTest {
 
     @Test
     public void doDamageDoesDamageTest() {
-        zeroZeroCritter.setHp(100);
+        zeroZeroCritter.setHealthPoints(100);
         strategy.setDamage(10);
         List<Critter> result = strategy.doDamage(zeroZeroCritterList);
-        assertEquals(90, result.get(0).getHp(), 0.001);
+        assertEquals(90, result.get(0).getHealthPoints(), 0.001);
     }
 }

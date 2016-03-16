@@ -108,8 +108,8 @@ public class GameManagerTest {
         tileManager_GetWidth = 64;
         tileManager_GetHeight = 64;
 
-        leGameManager = new GameManager(leCanvas.getGraphicsContext2D(), leMouseHandler, leTileManager);
-
+        leGameManager = GameManager.getInstance();
+        leGameManager.initialize(leCanvas.getGraphicsContext2D(), leMouseHandler, leTileManager);
     }
 
 

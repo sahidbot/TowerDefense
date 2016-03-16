@@ -9,9 +9,12 @@ import common.core.Vector2;
  */
 public class Critter extends Tile {
 
-    private float hp;
+    private float healthPoints;
     private final CritterType critterType;
     private float speed;
+    private float damagePerSecond = 0;
+    private float damagePerSecondDuration = 0;
+    private float frozenDuration = 0;
 
     /**
      * Default Constructor
@@ -29,19 +32,19 @@ public class Critter extends Tile {
     /**
      * returns the value of the current Health Points
      *
-     * @return current hp
+     * @return current healthPoints
      */
-    public float getHp() {
-        return hp;
+    public float getHealthPoints() {
+        return healthPoints;
     }
 
     /**
      * Sets the value of the current Health Points
      *
-     * @param hp new value for hp
+     * @param healthPoints new value for healthPoints
      */
-    public void setHp(float hp) {
-        this.hp = hp;
+    public void setHealthPoints(float healthPoints) {
+        this.healthPoints = healthPoints;
     }
 
     /**

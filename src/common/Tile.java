@@ -111,7 +111,7 @@ public class Tile extends ImageSprite {
     }
     /**
     * Method to copy a tile
-    * @param Position position at which the tile is to be copied
+    * @param position position at which the tile is to be copied
     * @return Newly copied tile
     */
     public Tile copy(Vector2 position) {
@@ -153,79 +153,5 @@ public class Tile extends ImageSprite {
         }
 
         return Vector2.getZero();
-    }
-
-    private Color getFillColor() {
-        Color color;
-
-        switch (type) {
-            case SCENERY:
-            case PATH:
-            case ENTRY_POINT:
-            case EXIT_POINT:
-                color = Color.web("#1c1a1a");
-                break;
-            default:
-                color = Color.BLACK;
-        }
-
-        return color;
-    }
-
-    private Color getStrokeColor() {
-        Color color;
-
-        switch (type) {
-            case SCENERY:
-            case PATH:
-            case ENTRY_POINT:
-            case EXIT_POINT:
-                color = Color.WHITE;
-                break;
-            default:
-                color = Color.BLACK;
-        }
-
-        return color;
-    }
-
-    private Color getTextColor() {
-        Color color;
-
-        switch (type) {
-            case SCENERY:
-            case PATH:
-            case ENTRY_POINT:
-            case EXIT_POINT:
-                color = Color.RED;
-                break;
-            default:
-                color = Color.BLACK;
-        }
-
-        return color;
-    }
-
-    private String getText() {
-        String text;
-
-        switch (type) {
-            case SCENERY:
-                text = "X";
-                break;
-            case PATH:
-                text = "P";
-                break;
-            case ENTRY_POINT:
-                text = "S";
-                break;
-            case EXIT_POINT:
-                text = "E";
-                break;
-            default:
-                text = "";
-        }
-
-        return text;
     }
 }

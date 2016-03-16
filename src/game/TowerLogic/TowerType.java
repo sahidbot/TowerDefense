@@ -6,5 +6,5 @@ package game.towerlogic;
 public enum TowerType {
     SIEGE,
     ARROW,
-    FROST,
+    FROST, AttackType,
 }

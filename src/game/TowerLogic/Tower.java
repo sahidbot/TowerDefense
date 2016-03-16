@@ -3,10 +3,15 @@ package game.towerlogic;
 import common.Settings;
 import common.Tile;
 import common.core.Vector2;
+import game.Critter;
+import game.CritterManager;
 import game.NoMoneySprite;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Represents the tower and holds the tower sprite.
@@ -23,14 +28,15 @@ public class Tower extends Tile {
     private int baseCostMultiplier;
     private int refundRate;
     private int refundRateMultiplier;
-    private double range;
-    private double rangeMultiplier;
+    private int range;
+    private int rangeMultiplier;
     private double damage;
     private double damageMultiplier;
     private boolean isActive;
     private boolean canBuy;
 
     private IAttackStrategy attackStrategy;
+    private AttackEffect attackEffect;
 
     /**
      * Default constructor
@@ -57,36 +63,39 @@ public class Tower extends Tile {
                 setBaseCostMultiplier(100);
                 setDamage(10);
                 setDamageMultiplier(2);
-                setRange(5);
+                setRange(2);
                 setRangeMultiplier(0);
                 setRateOfFire(10);
                 setRateOfFireMultiplier(1);
                 setRefundRate(100);
                 setRefundRateMultiplier(20);
+                attackEffect = AttackEffect.FREEZE;
                 break;
             case SIEGE:
                 setBaseCost(500);
                 setBaseCostMultiplier(200);
                 setDamage(20);
                 setDamageMultiplier(4);
-                setRange(10);
+                setRange(3);
                 setRangeMultiplier(0);
                 setRateOfFire(1);
                 setRateOfFireMultiplier(0);
                 setRefundRate(200);
                 setRefundRateMultiplier(40);
+                attackEffect = AttackEffect.SPLASH;
                 break;
             case ARROW:
                 setBaseCost(200);
                 setBaseCostMultiplier(50);
                 setDamage(1);
                 setDamageMultiplier(0.2);
-                setRange(6);
-                setRangeMultiplier(0.5);
+                setRange(4);
+                setRangeMultiplier(1);
                 setRateOfFire(50);
                 setRateOfFireMultiplier(2.5);
                 setRefundRate(100);
                 setRefundRateMultiplier(30);
+                attackEffect = AttackEffect.BURN;
                 break;
         }
     }
@@ -189,7 +198,7 @@ public class Tower extends Tile {
      *
      * @return current range
      */
-    public double getRange() {
+    public int getRange() {
         return range + (getLevel() * rangeMultiplier);
     }
 
@@ -205,7 +214,7 @@ public class Tower extends Tile {
     /**
      * Sets range multiplier
      */
-    protected void setRangeMultiplier(double rangeMultiplier) {
+    protected void setRangeMultiplier(int rangeMultiplier) {
         this.rangeMultiplier = rangeMultiplier;
     }
 
@@ -277,7 +286,7 @@ public class Tower extends Tile {
     /**
      * Sets range
      */
-    protected void setRange(double range) {
+    protected void setRange(int range) {
         this.range = range;
     }
 
@@ -371,7 +380,85 @@ public class Tower extends Tile {
         }
     }
 
+    /**
+     * Gets the current {@link AttackStrategyEnum}
+     * @return the value
+     */
     public AttackStrategyEnum getAttackStrategyEnum(){
         return getAttackStrategy().getTypeIdentifier();
+    }
+
+    private double currentRateOfFireCount;
+
+    /**
+     * Returns true when it is time to fire and false otherwise.
+     * If it is time to fire, it resets itself and will return false next time.
+     * @param delta The delta time when calling the method
+     * @return Whether or not it is time to fire
+     */
+    public Boolean isTimeToFire(double delta){
+        currentRateOfFireCount -= delta;
+        Boolean ret = currentRateOfFireCount < 0;
+        if(ret) clearRateOfFire();
+        return ret;
+    }
+
+    /**
+     * Clears the flag for isTimeToFire method
+     */
+    public void clearRateOfFire(){
+        currentRateOfFireCount = getRateOfFire();
+    }
+
+    /**
+     * Gets the attack effect
+     * @return Value of attack effect
+     */
+    public AttackEffect getAttackEffect() {
+        return attackEffect;
+    }
+
+    /**
+     * Method that selects and applies damage to critters that are to be damaged
+     * @param critterManager The critter manager to check critters for
+     * @return list of affected critters
+     */
+    public List<Critter> doDamage(CritterManager critterManager){
+        ArrayList<Critter> possibleTargets = critterManager.getShootableCritters(this);
+        return doDamage(critterManager, possibleTargets);
+    }
+
+    /**
+     * Method that selects and applies damage to critters that are to be damaged
+     * @param critterManager The critter manager to check critters for
+     * @param possibleTargets The possible targets if it is available
+     * @return list of affected critters
+     */
+    public List<Critter> doDamage(CritterManager critterManager, ArrayList<Critter> possibleTargets) {
+        List<Critter> ret = new ArrayList<>();
+        List<Critter> targets = attackStrategy.doDamage(possibleTargets);
+        ret.addAll(targets);
+        if(getAttackEffect() == AttackEffect.SPLASH){
+            List<Critter> splashEffectTargets = critterManager.getCritterNeighbours(this, possibleTargets, targets.get(0));
+            ret.addAll(splashEffectTargets);
+            for (Critter leCritter :
+                    splashEffectTargets) {
+                leCritter.setHealthPoints(leCritter.getHealthPoints() - (float)(getDamage() * 0.5));
+                ret.add(leCritter);
+            }
+        }
+        else {
+            for (Critter target :
+                    targets) {
+                if (getAttackEffect() == AttackEffect.BURN) {
+                    target.setDamagePerSecond((float) (getDamage() / (getRateOfFire() * 2)));
+                    target.setDamagePerSecondDuration((float) getRateOfFire());
+                }
+                else if(getAttackEffect() == AttackEffect.FREEZE){
+                    target.setFrozenDuration((float) (getRateOfFire()/2));
+                }
+            }
+        }
+        return ret;
     }
 }

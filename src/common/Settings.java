@@ -24,9 +24,11 @@ public class Settings {
 
     public static final Image LEFTBUTTON_TILE_IMAGE = new Image("/assets/images/LeftArrowButton.png");
     public static final Image RIGHTBUTTON_TILE_IMAGE = new Image("/assets/images/RightArrowButton.png");
+    public static final Image NEWWAVEBUTTON_TILE_IMAGE = new Image("/assets/images/NewWaveButton.png");
 
     public static final String FONT_NAME = "Courier New";
     public static final int FONTSIZE_TITLE = 28;
     public static final int FONTSIZE_LINE = 16;
     public static final int STARTING_CURRENCY = 1000;
+
 }

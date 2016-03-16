@@ -7,7 +7,7 @@ import java.util.Collections;
 import java.util.List;
 
 /**
- * Created by Monster on 3/15/2016.
+ * Strategy that selects teh lowest HP target
  */
 public class AttackLowestHPStrategy extends AttackStrategyBase {
     public AttackLowestHPStrategy(Tower leTower) {

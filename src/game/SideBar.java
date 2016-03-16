@@ -26,7 +26,8 @@ public class SideBar {
     private final double defaultMargin;
     private InspectionPanel inspectionPanel;
     private Tower[] towersAvailable;
-    private int AvailableGold;
+    private int availableGold;
+    private Button newWaveButton;
 
     public Tower selectedTowerForInspection;
 
@@ -55,8 +56,7 @@ public class SideBar {
      * @param shopTitleWidth title width
      */
     public SideBar(double width, double height, double leftOffset, double topOffset, double defaultMargin, double towerWidth,
-                   double inspectionTowerHeight, double shopTitleWidth)
-    {
+                   double inspectionTowerHeight, double shopTitleWidth) {
         this.height = height;
         this.towerWidth = towerWidth;
         this.defaultMargin = defaultMargin;
@@ -65,12 +65,15 @@ public class SideBar {
         this.width = width;
         this.inspectionTowerHeight = inspectionTowerHeight;
         this.shopTitleWidth = shopTitleWidth;
-        inspectionPanel = new InspectionPanel(width, height, leftOffset, height/2);
+        inspectionPanel = new InspectionPanel(width, height, leftOffset, height / 2);
         towersAvailable = new Tower[]{
                 new Tower(TowerType.ARROW, generateBuyableTowerPosition(1)),
                 new Tower(TowerType.FROST, generateBuyableTowerPosition(2)),
                 new Tower(TowerType.SIEGE, generateBuyableTowerPosition(3))
         };
+        Vector2 newWavePosition = new Vector2(leftOffset + 2,
+                topOffset + defaultMargin + shopTitleWidth + defaultMargin + towerWidth + defaultMargin + 2 *Settings.FONTSIZE_LINE + 30);
+        newWaveButton = new Button(ButtonType.NEWWAVE, newWavePosition);
     }
 
     /**
@@ -107,13 +110,17 @@ public class SideBar {
             tower.draw(gc);
         }
 
-        //Draw AvailableGold
+        //Draw availableGold
         Font currencyFont = Font.font(Settings.FONT_NAME, FontWeight.NORMAL, Settings.FONTSIZE_LINE);
         gc.setFont(currencyFont);
         Vector2 currencyPosition = new Vector2(leftOffset + defaultMargin,
                 topOffset + defaultMargin + shopTitleWidth + defaultMargin + towerWidth + defaultMargin + Settings.FONTSIZE_LINE + 30);
         String currencyLine = "Available: $" + getAvailableGold();
         drawText(gc, currencyLine, currencyPosition, Color.BLACK);
+
+        //Draw NewWaveButton
+        newWaveButton.draw(gc);
+
         //Draw inspectionPanel
         inspectionPanel.draw(gc);
 
@@ -142,21 +149,21 @@ public class SideBar {
     }
 
     /**
-     * Gets the current AvailableGold
+     * Gets the current availableGold
      *
-     * @return current AvailableGold
+     * @return current availableGold
      */
     public int getAvailableGold() {
-        return AvailableGold;
+        return availableGold;
     }
 
     /**
-     * Sets the current AvailableGold
+     * Sets the current availableGold
      *
      * @param availableGold
      */
     public void setAvailableGold(int availableGold) {
-        this.AvailableGold = availableGold;
+        this.availableGold = availableGold;
     }
 
     /**
@@ -186,4 +193,7 @@ public class SideBar {
         return inspectionPanel;
     }
 
+    public Button getNewWaveButton() {
+        return newWaveButton;
+    }
 }

@@ -8,7 +8,7 @@ import java.util.Collections;
 import java.util.List;
 
 /**
- * Created by Monster on 3/14/2016.
+ * Strategy that selects the closest target
  */
 public class AttackClosestStrategy extends AttackStrategyBase {
 

@@ -59,7 +59,9 @@ public class Button extends ImageSprite {
             case RIGHTARROW:
                 buttonImage = Settings.RIGHTBUTTON_TILE_IMAGE;
                 break;
-
+            case NEWWAVE:
+                buttonImage = Settings.NEWWAVEBUTTON_TILE_IMAGE;
+                break;
             default:
                 throw new NotImplementedException();
         }

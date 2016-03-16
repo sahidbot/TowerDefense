@@ -7,6 +7,8 @@ import javafx.scene.Group;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -94,6 +96,7 @@ public class GameManager extends GameLoop implements Observer {
     */
     @Override
     protected void update(double delta) {
+        sideBar.getNewWaveButton().setEnabled(!isWaveStarted);
         towerShoots(delta);
     }
     /**
@@ -179,6 +182,12 @@ public class GameManager extends GameLoop implements Observer {
                             sideBar.getInspectionPanel().getRightArrowButton().collidesWith(mouseState.getPosition())){
                         inspectionPanelTower.setAttackStrategyEnum(inspectionPanelTower.getAttackStrategyEnum().previous());
                     }
+
+                    //Check NewWaveButton
+                    else if(sideBar.getNewWaveButton().isEnabled() &&
+                            sideBar.getNewWaveButton().collidesWith(mouseState.getPosition())){
+                        //TODO: Handle NewWave
+                    }
                 }
 
                 //Check towers to buy collision
@@ -197,7 +206,9 @@ public class GameManager extends GameLoop implements Observer {
 
 
 
+
             }
+
         }
 
         if (mouseState.getEventType() == MouseEventType.MOVE) {
@@ -294,10 +305,36 @@ public class GameManager extends GameLoop implements Observer {
     }
 
     private void towerShoots(double delta) {
+        for (Tower leTower:
+                getTowersInScene()) {
+            ArrayList<Critter> possibleTargets = critterManager.getShootableCritters(leTower);
+            if(leTower.isTimeToFire(delta) && possibleTargets.size() > 0){
+                List<Critter> affectedCritters = leTower.doDamage(critterManager, possibleTargets);
+            }
+            else{
+                leTower.clearRateOfFire();
+            }
+
+        }
+        sideBar.addAvailableGold(critterManager.getRewards());
         // loop through all the towers
             // check the fire rate
                 // getShootableCritters
                 // make the damage
                 // update the rewards inside the sidebar
+    }
+
+    private List<Tower> getTowersInScene(){
+        List<Tower> towersInScene = new ArrayList<>();
+        for (Tile[] tileArray:
+                tileManager.getTilesOverlay()){
+            for (Tile tile :
+                    tileArray) {
+                if(tile != null && tile instanceof Tower){
+                    towersInScene.add((Tower)tile);
+                }
+            }
+        }
+        return towersInScene;
     }
 }

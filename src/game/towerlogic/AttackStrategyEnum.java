@@ -3,7 +3,7 @@ package game.towerlogic;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 /**
- * Created by Monster on 3/15/2016.
+ * Enum that respresents the AttackStrategy
  */
 public enum AttackStrategyEnum {
     CLOSEST,
@@ -11,13 +11,23 @@ public enum AttackStrategyEnum {
     LOWESTHP;
 
 
-
     private static AttackStrategyEnum[] vals = values();
+
+    /**
+     * Iterates to the next enum on the list
+     *
+     * @return the next enum
+     */
     public AttackStrategyEnum next()
     {
         return vals[(this.ordinal()+1) % vals.length];
     }
 
+    /**
+     * Returns a readable string
+     *
+     * @return The readable string
+     */
     public String ToString() {
         switch (this){
             case CLOSEST:
@@ -31,6 +41,11 @@ public enum AttackStrategyEnum {
         }
     }
 
+    /**
+     * Iterates to the previous enum
+     *
+     * @return
+     */
     public AttackStrategyEnum previous() {
         if(this.ordinal() == 0){
             return vals[vals.length - 1];

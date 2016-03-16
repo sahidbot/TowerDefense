@@ -73,4 +73,60 @@ public class Critter extends Tile {
     public void setSpeed(float speed) {
         this.speed = speed;
     }
+
+    /**
+     * Adds health points to the current health points
+     * @param toAdd Value to add
+     */
+    public void addHealthPoints(float toAdd){
+        healthPoints += toAdd;
+    }
+
+    /**
+     * Gets the damage per second if applied
+     * @return the value of damage per second
+     */
+    public float getDamagePerSecond() {
+        return damagePerSecond;
+    }
+
+    /**
+     * Gets the damage per second
+     * @param damagePerSecond the new value
+     */
+    public void setDamagePerSecond(float damagePerSecond) {
+        this.damagePerSecond = damagePerSecond;
+    }
+
+    /**
+     * Gets teh duration of the damage per second
+     * @return the value
+     */
+    public float getDamagePerSecondDuration() {
+        return damagePerSecondDuration;
+    }
+
+    /**
+     * Sets teh damage per second duration
+     * @param damagePerSecondDuration the new value for the damage per second
+     */
+    public void setDamagePerSecondDuration(float damagePerSecondDuration) {
+        this.damagePerSecondDuration = damagePerSecondDuration;
+    }
+
+    /**
+     * Gets the frozen duration. If the value is 0, there is no freezing applied
+     * @return the frozen duration
+     */
+    public float getFrozenDuration() {
+        return frozenDuration;
+    }
+
+    /**
+     * Sets teh frozen duration. If the value is 0, there is no freezing applied
+     * @param frozenDuration the new value
+     */
+    public void setFrozenDuration(float frozenDuration) {
+        this.frozenDuration = frozenDuration;
+    }
 }

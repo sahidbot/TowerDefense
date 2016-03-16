@@ -8,7 +8,7 @@ import java.util.Collections;
 import java.util.List;
 
 /**
- * Created by Monster on 3/15/2016.
+ * Strategy that selects the lowest Farthest target
  */
 public class AttackFarthestStrategy extends AttackStrategyBase {
     public AttackFarthestStrategy(Tower leTower) {

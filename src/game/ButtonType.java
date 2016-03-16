@@ -8,4 +8,5 @@ public enum ButtonType {
     UPGRADE,
     LEFTARROW,
     RIGHTARROW,
+    NEWWAVE,
 }

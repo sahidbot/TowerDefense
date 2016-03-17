@@ -27,7 +27,7 @@ public class AttackLowestHPStrategy extends AttackStrategyBase {
                         (int)(o1.getHealthPoints() - o2.getHealthPoints())
         );
         Critter target =  possibleTargets.get(0);
-        target.setHealthPoints(target.getHealthPoints() - getDamage());
+        target.setHealthPoints(target.getHealthPoints() - (float)getTower().getDamage());
         List<Critter> ret = new ArrayList<>();
         ret.add(target);
         return ret;

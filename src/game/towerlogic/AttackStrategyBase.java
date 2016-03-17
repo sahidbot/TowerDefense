@@ -5,8 +5,6 @@ package game.towerlogic;
  */
 public abstract class AttackStrategyBase implements IAttackStrategy {
     private final Tower leTower;
-    private float damage;
-
 
     /**
      * Default constructor that gets the tower for reference
@@ -23,23 +21,4 @@ public abstract class AttackStrategyBase implements IAttackStrategy {
     public Tower getTower() {
         return leTower;
     }
-
-    /**
-     * Sets teh value for damage
-     * @param damage new value for damage
-     */
-    @Override
-    public void setDamage(float damage) {
-        this.damage = damage;
-    }
-
-    /**
-     * Gets teh value for damage
-     * @return value of damage
-     */
-    @Override
-    public float getDamage() {
-        return damage;
-    }
-
 }

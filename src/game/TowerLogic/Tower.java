@@ -2,12 +2,14 @@ package game.towerlogic;
 
 import common.Settings;
 import common.Tile;
+import common.core.Rect;
 import common.core.Vector2;
 import game.Critter;
 import game.CritterManager;
 import game.NoMoneySprite;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
+import javafx.scene.paint.Color;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import java.util.ArrayList;
@@ -62,11 +64,11 @@ public class Tower extends Tile {
                 setBaseCost(200);
                 setBaseCostMultiplier(100);
                 setDamage(10);
-                setDamageMultiplier(2);
+                setDamageMultiplier(7);
                 setRange(2);
                 setRangeMultiplier(0);
-                setRateOfFire(10);
-                setRateOfFireMultiplier(1);
+                setRateOfFire(1);
+                setRateOfFireMultiplier(0);
                 setRefundRate(100);
                 setRefundRateMultiplier(20);
                 attackEffect = AttackEffect.FREEZE;
@@ -74,8 +76,8 @@ public class Tower extends Tile {
             case SIEGE:
                 setBaseCost(500);
                 setBaseCostMultiplier(200);
-                setDamage(20);
-                setDamageMultiplier(4);
+                setDamage(35);
+                setDamageMultiplier(10);
                 setRange(3);
                 setRangeMultiplier(0);
                 setRateOfFire(1);
@@ -87,12 +89,12 @@ public class Tower extends Tile {
             case ARROW:
                 setBaseCost(200);
                 setBaseCostMultiplier(50);
-                setDamage(1);
-                setDamageMultiplier(0.2);
+                setDamage(25);
+                setDamageMultiplier(5);
                 setRange(4);
-                setRangeMultiplier(1);
-                setRateOfFire(50);
-                setRateOfFireMultiplier(2.5);
+                setRangeMultiplier(0);
+                setRateOfFire(0.3);
+                setRateOfFireMultiplier(0);
                 setRefundRate(100);
                 setRefundRateMultiplier(30);
                 attackEffect = AttackEffect.BURN;
@@ -147,6 +149,14 @@ public class Tower extends Tile {
         if (!isActive() && !isCanBuy()) {
             noMoneySprite.draw(gc);
         }
+
+        if (isActive()) {
+            Rect rect = getRangeRect();
+
+            gc.setStroke(Color.RED);
+            gc.strokeRect(rect.getPosition().getX(), rect.getPosition().getY(),
+                    rect.getWidth(), rect.getHeight());
+        }
     }
 
     /**
@@ -156,7 +166,6 @@ public class Tower extends Tile {
     public void update() {
 
     }
-
     /**
      * Gets current level of the tower
      *
@@ -200,6 +209,22 @@ public class Tower extends Tile {
      */
     public int getRange() {
         return range + (getLevel() * rangeMultiplier);
+    }
+
+    /**
+     * Gets the rectangle of current range of the tower depending on the level
+     *
+     * @return current range
+     */
+    public Rect getRangeRect() {
+        double width = getRange() * 2 * getWidth();
+        double height = getRange() * 2 * getHeight();
+
+        double x = position.getX() + (width / 2) - width;
+        double y = position.getY() + (height / 2) - height;
+
+        Rect rect = new Rect(new Vector2(x, y), width, height);
+        return rect;
     }
 
     /**
@@ -293,7 +318,7 @@ public class Tower extends Tile {
     /**
      * Sets damage
      */
-    protected void setDamage(double damage) {
+    public void setDamage(double damage) {
         this.damage = damage;
     }
 
@@ -398,8 +423,12 @@ public class Tower extends Tile {
      */
     public Boolean isTimeToFire(double delta){
         currentRateOfFireCount -= delta;
-        Boolean ret = currentRateOfFireCount < 0;
-        if(ret) clearRateOfFire();
+
+        Boolean ret = currentRateOfFireCount <= 0;
+        if (ret)
+        {
+            clearRateOfFire();
+        }
         return ret;
     }
 
@@ -440,6 +469,8 @@ public class Tower extends Tile {
         ret.addAll(targets);
         if(getAttackEffect() == AttackEffect.SPLASH){
             List<Critter> splashEffectTargets = critterManager.getCritterNeighbours(this, possibleTargets, targets.get(0));
+            System.out.println(splashEffectTargets.size());
+
             ret.addAll(splashEffectTargets);
             for (Critter leCritter :
                     splashEffectTargets) {

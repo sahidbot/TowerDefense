@@ -17,20 +17,6 @@ public interface IAttackStrategy {
     List<Critter> doDamage(List<Critter> possibleTargets);
 
     /**
-     * Set base damage to apply
-     *
-     * @param damage new value for damage
-     */
-    void setDamage(float damage);
-
-    /**
-     * Gets current value of damage
-     *
-     * @return the value of damage
-     */
-    float getDamage();
-
-    /**
      * The {@link AttackStrategyEnum} that is assigned to this strategy
      * @return the value
      */

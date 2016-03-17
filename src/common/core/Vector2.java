@@ -240,10 +240,21 @@ public class Vector2 {
     }
 
 
+    /**
+     * Method for knowing distance
+     *
+     * @param destination represents the destination
+     * @return Returns the destination
+     */
     public double distanceTo(Vector2 destination){
         return Distance(this, destination);
     }
 
+    /**
+     * Method for getting magnitide
+     *
+     * @return returns the magnitude
+     */
     public double getMagnitude(){
         return Magnitude(this);
     }

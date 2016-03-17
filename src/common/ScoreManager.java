@@ -32,6 +32,12 @@ public class ScoreManager {
     private static final String MOUSE_LEFT_CLICK_TITLE = "Mouse Left";
     private static final String MOUSE_RIGHT_CLICK_TITLE = "Mouse Right";
 
+    /**
+     * Default Constructor
+     *
+     * @param leftOffset represent the lef most position
+     * @param topOffset represents the top axis position
+     */
     public ScoreManager(double leftOffset, double topOffset) {
         this.leftOffset = leftOffset;
         this.topOffset = topOffset;
@@ -73,6 +79,11 @@ public class ScoreManager {
         this.money = money;
     }
 
+    /**
+     * This method is responsible for updating the position of the mouse
+     *
+     * @param mouseState represents the state of a mouse at any given time
+     */
     public void updateMousePosition(MouseState mouseState) {
         /*this.mousePosition.setFromVector(mouseState.getMousePosition());
 

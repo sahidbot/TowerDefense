@@ -12,6 +12,7 @@ public abstract class ImageSprite extends Sprite {
 
     /**
      * This constructor is used to create a sprite on the grid
+     *
      * @param image: holds the image sprite of type Image
      * @param position: stores the position(type Vector2) of the image on the grid
      */
@@ -21,6 +22,7 @@ public abstract class ImageSprite extends Sprite {
 
     /**
      *Overridden constructor mainly for the purpose of creating a Tower
+     *
      * @param health: holds the health/lives of the Tower
      * @param damage: hold the level of damage of a Tower
      */
@@ -33,11 +35,22 @@ public abstract class ImageSprite extends Sprite {
         this.image = image;
     }
 
+    /**
+     * Method for checking if two Sprite collides
+     *
+     * @param otherSprite represents the sprite to be checked
+     * @return Returns a boolean value of the evaluated result
+     */
     public boolean collidesWith(ImageSprite otherSprite) {
         // not per-pixel-collision
         return super.collidesWith(otherSprite);
     }
 
+    /**
+     * Method for getting the Image
+     *
+     * @return Returns the current image
+     */
     public Image getImage() {
         return this.image;
     }

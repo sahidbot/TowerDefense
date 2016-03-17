@@ -18,6 +18,11 @@ import java.util.Map;
 public class KeyHandler {
     private Map<KeyCode, Boolean> pressedKyes;
 
+    /**
+     * Default Constructor
+     *
+     * @param scene represents the Scene
+     */
     public KeyHandler(Scene scene) {
         pressedKyes = new Hashtable<KeyCode, Boolean>();
 

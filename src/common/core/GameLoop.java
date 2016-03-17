@@ -38,7 +38,20 @@ public abstract class GameLoop {
         timer.start();
     }
 
+    /**
+     * Method for updating game and map
+     *
+     * @param delta represents the time difference
+     */
     protected abstract void update(double delta);
+
+    /**
+     * Method for drawing objects
+     */
     protected abstract void draw();
+
+    /**
+     * Method for clearing objects
+     */
     protected abstract void clear();
 }

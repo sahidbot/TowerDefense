@@ -123,6 +123,7 @@ public abstract class Sprite implements Cloneable{
     }
     /**
      * Method to check if sprite is colliding with any other sprite
+     *
      * @param otherSprite The sprite against which newly placed sprite is verified
      * @return Returns True if colliding otherwise False
      */
@@ -135,6 +136,7 @@ public abstract class Sprite implements Cloneable{
     }
     /**
      * Method to check if sprite is colliding with any other points
+     *
      * @param position The position at which the sprite is verified for collision
      * @return Returns True if colliding otherwise False
      */
@@ -147,6 +149,7 @@ public abstract class Sprite implements Cloneable{
 
     /**
      * Method to check if sprite is colliding with any other rectangle
+     *
      * @param position The position at which the sprite is verified for collision
      * @param size The size of the rectangle
      * @return Returns True if colliding otherwise False
@@ -159,6 +162,7 @@ public abstract class Sprite implements Cloneable{
     }
     /**
      * Method to check if sprite is colliding with any other sprite
+     *
      * @param rect The rectangle to verify with
      * @return Returns True if colliding otherwise False
      */
@@ -177,10 +181,23 @@ public abstract class Sprite implements Cloneable{
         health = 0;
     }
 
+    /**
+     * Inherited method for drawing a Sprite in graphic context
+     *
+     * @param gc represents the graphic context
+     */
     public abstract void draw(GraphicsContext gc);
 
+    /**
+     * Inherited method for updating
+     */
     public abstract void update();
 
+    /**
+     * This method checks if the id two Sprite object are the same
+     *
+     * @return returns the evaluated boolean result
+     */
     public boolean equals(Sprite obj) {
         return this.getUniqueId().equals(obj.getUniqueId());
     }

@@ -28,15 +28,15 @@ public class MapManager extends GameLoop implements Observer {
     private double width;
     private double height;
     private Vector2 mousePosition = Vector2.getZero();
-/**
-* Constructor to initializze Map
-* @param gc The {@link javafx.scene.canvas.GraphicsContext} to use. All graphics will be placed here
-* @param mouseHandler The mouse handler to user input
-* @param name The name of the Map
-* @param rows The number of rows in the Map
-* @param rows The number of rows in the Map
-* @param columns The number of columns in the Map
-*/
+    /**
+     * Constructor to initializze Map
+     * @param gc The {@link javafx.scene.canvas.GraphicsContext} to use. All graphics will be placed here
+     * @param mouseHandler The mouse handler to user input
+     * @param name The name of the Map
+     * @param rows The number of rows in the Map
+     * @param rows The number of rows in the Map
+     * @param columns The number of columns in the Map
+     */
     public MapManager(GraphicsContext gc, IMouseHandler mouseHandler, String name, int rows, int columns) {
         this.gc = gc;
         this.mapName = name;
@@ -51,13 +51,13 @@ public class MapManager extends GameLoop implements Observer {
 
         this.sideBar = new SideBar(Settings.TILE_WIDTH, Settings.TILE_HEIGHT, tileManager.getWidth(), 0);
     }
-/**
-* Static constructor to draw Map
-* @param root The {@link javafx.scene.Group} to use
-* @param name The name of the Map
-* @param rows The number of rows in the Map
-* @param columns The number of columns in the Map
-*/
+    /**
+     * Static constructor to draw Map
+     * @param root The {@link javafx.scene.Group} to use
+     * @param name The name of the Map
+     * @param rows The number of rows in the Map
+     * @param columns The number of columns in the Map
+     */
     public static MapManager create(Group root, String name, int rows, int columns) {
         double width = (Settings.TILE_WIDTH * columns) + Settings.SIDEBAR_WIDTH;
         double height = Settings.TILE_HEIGHT * rows;
@@ -67,10 +67,10 @@ public class MapManager extends GameLoop implements Observer {
 
         return new MapManager(canvas.getGraphicsContext2D(), new MouseHandler(root.getScene()), name, rows, columns);
     }
-/**
-* Method to get data of saved Maps that is to be loaded.
-* @return Contents of saved map as a string
-*/
+    /**
+     * Method to get data of saved Maps that is to be loaded.
+     * @return Contents of saved map as a string
+     */
     public String getMapData() {
         if (tileManager.hasAnyOverlay() &&
                 tileManager.hasEntryPoint() &&
@@ -97,10 +97,10 @@ public class MapManager extends GameLoop implements Observer {
 
         return null;
     }
-/**
-* Loads the Map in TileManager
-* @param mapData Map data as Array of string
-*/
+    /**
+     * Loads the Map in TileManager
+     * @param mapData Map data as Array of string
+     */
     public void loadMapData(String[] mapData) {
         Helper.loadTileManagerFromMapData(tileManager, mapData);
     }
@@ -134,24 +134,24 @@ public class MapManager extends GameLoop implements Observer {
             this.mousePosition = mouseState.getPosition();
         }
     }
-/**
-* {@inheritDoc}
-*/
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected void update(double delta) {
     }
     /**
-    * Overridden Gameloop clear method to clear contents
-    * {@inheritDoc}
-    */
+     * Overridden Gameloop clear method to clear contents
+     * {@inheritDoc}
+     */
     @Override
     protected void clear() {
         gc.clearRect(0, 0, width, height);
     }
-/**
-* Overridden Gameloop draw method to draw Map and SideBar after each GameLoop iteration
-* {@inheritDoc}
-*/
+    /**
+     * Overridden Gameloop draw method to draw Map and SideBar after each GameLoop iteration
+     * {@inheritDoc}
+     */
     @Override
     protected void draw() {
         tileManager.draw(gc);

@@ -25,13 +25,13 @@ public class SideBar {
     private boolean inspectionHidden = true;
 
     private List<Tile> tiles;
-/**
- * Constructor to initialize SideBar
- * @param tileWidth The width of the tile
- * @param tileHeight The height of the tile 
- * @param leftOffset Left offset value for tile
- * @param topOffset Top offset value for tile
- */
+    /**
+     * Constructor to initialize SideBar
+     * @param tileWidth The width of the tile
+     * @param tileHeight The height of the tile
+     * @param leftOffset Left offset value for tile
+     * @param topOffset Top offset value for tile
+     */
     public SideBar(double tileWidth, double tileHeight, double leftOffset, double topOffset) {
         this.leftOffset = leftOffset;
         this.topOffset = topOffset;
@@ -52,11 +52,11 @@ public class SideBar {
         tiles.add(tileEntry);
         tiles.add(tileExit);
     }
-/**
- * Method to update the state of SideBar
- * according to current mouse state
- * @param mouseState The current state of mouse
- */
+    /**
+     * Method to update the state of SideBar
+     * according to current mouse state
+     * @param mouseState The current state of mouse
+     */
     public void update(MouseState mouseState) {
         for (int i = 0; i < tiles.size(); i++) {
             Tile tile = tiles.get(i);
@@ -72,10 +72,10 @@ public class SideBar {
             }
         }
     }
-/**
- * Method to draw graphics in SideBar
- * @param gc The {@link javafx.scene.canvas.GraphicsContext} to use. All graphics will be placed here
- */
+    /**
+     * Method to draw graphics in SideBar
+     * @param gc The {@link javafx.scene.canvas.GraphicsContext} to use. All graphics will be placed here
+     */
     public void draw(GraphicsContext gc) {
         for (int i = 0; i < tiles.size(); i++) {
             Tile tile = tiles.get(i);
@@ -83,11 +83,11 @@ public class SideBar {
             Helper.drawText(gc, "X", tile.getPosition(), Color.RED);
         }
     }
-/**
- * Method to enable/disable tiles in SideBar
- * @param type The tile whose state is to be changed
- * @param value True/False. To Set state according to the value.
- */
+    /**
+     * Method to enable/disable tiles in SideBar
+     * @param type The tile whose state is to be changed
+     * @param value True/False. To Set state according to the value.
+     */
     public void setActive(SpriteType type, boolean value) {
         for (Tile tile : tiles) {
             if (tile.getType() == type) {

@@ -19,8 +19,6 @@ public abstract class Sprite implements Cloneable{
 
     public double health;
     public double damage;
-
-    public boolean canMove = false;
 /**
 * Constructor function to initialize Sprite
 * @param width Value of width
@@ -136,7 +134,7 @@ public abstract class Sprite implements Cloneable{
                 otherSprite.position.getY() <= this.position.getY() + this.height);
     }
     /**
-     * Method to check if sprite is colliding with any other sprite
+     * Method to check if sprite is colliding with any other points
      * @param position The position at which the sprite is verified for collision
      * @return Returns True if colliding otherwise False
      */
@@ -147,6 +145,30 @@ public abstract class Sprite implements Cloneable{
                 position.getY() <= this.position.getY() + this.height);
     }
 
+    /**
+     * Method to check if sprite is colliding with any other rectangle
+     * @param position The position at which the sprite is verified for collision
+     * @param size The size of the rectangle
+     * @return Returns True if colliding otherwise False
+     */
+    public boolean collidesWith(Vector2 position, Vector2 size) {
+        return (position.getX() + size.getX() >= this.position.getX() &&
+                position.getY() + size.getY() >= this.position.getY() &&
+                position.getX() <= this.position.getX() + this.width &&
+                position.getY() <= this.position.getY() + this.height);
+    }
+    /**
+     * Method to check if sprite is colliding with any other sprite
+     * @param rect The rectangle to verify with
+     * @return Returns True if colliding otherwise False
+     */
+    public boolean collidesWith(Rect rect) {
+        // not per-pixel-collision
+        return (rect.getPosition().getX() + rect.getWidth() >= this.position.getX() &&
+                rect.getPosition().getY() + rect.getHeight() >= this.position.getY() &&
+                rect.getPosition().getX() <= this.position.getX() + this.width &&
+                rect.getPosition().getY() <= this.position.getY() + this.height);
+    }
     /**
      * This method kills a sprite by changing its health to 0
      */

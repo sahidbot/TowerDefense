@@ -51,4 +51,9 @@ public interface ITileManager extends IDrawable {
      * @return whether or not it is within the boundaries
      */
     boolean checkValidBoundaries(int x, int y);
+
+    /**
+     * Clear the towers
+     */
+    void clearTowers();
 }

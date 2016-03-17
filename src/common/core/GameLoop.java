@@ -25,7 +25,7 @@ public abstract class GameLoop {
             timer = new AnimationTimer() {
                 @Override
                 public void handle(long now) {
-                    delta = (now - lastTime) * 1000000 * 1000; // second
+                    delta = ((double) now - (double) lastTime) / 1000000000.0; // second
                     lastTime = now;
 
                     update(delta);

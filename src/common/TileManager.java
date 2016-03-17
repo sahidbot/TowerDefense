@@ -170,12 +170,18 @@ public class TileManager implements ITileManager {
 
                 Tile tileOverlay = tilesOverlay[x][y];
                 if (tileOverlay != null) {
-                    if (tileOverlay instanceof Tower) {
-                        ((Tower) tileOverlay).draw(gc);
-                    }
-                    else {
-                        tileOverlay.draw(gc);
-                    }
+                    tileOverlay.draw(gc);
+                }
+            }
+        }
+
+        // towers
+        for (int x = 0; x < columns; x++) {
+            for (int y = 0; y < rows; y++) {
+                Tile tileOverlay = tilesOverlay[x][y];
+                if (tileOverlay != null &&
+                        tileOverlay instanceof Tower) {
+                    ((Tower) tileOverlay).draw(gc);
                 }
             }
         }
@@ -268,6 +274,22 @@ public class TileManager implements ITileManager {
     public boolean checkValidBoundaries(int x, int y) {
         return Helper.checkValidBoundaries(x, y, this.columns - 1, this.rows - 1);
     }
+
+    /**
+     * Clear the towers
+     */
+    public void clearTowers() {
+        for (int x = 0; x < columns; x++) {
+            for (int y = 0; y < rows; y++) {
+                Tile tileOverlay = tilesOverlay[x][y];
+                if (tileOverlay != null &&
+                        tileOverlay instanceof Tower) {
+                    tilesOverlay[x][y] = null;
+                }
+            }
+        }
+    }
+
     /**
      * Method to validate if tile is valid
      * @param x X coordinate value

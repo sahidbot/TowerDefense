@@ -234,7 +234,8 @@ public class CritterManager {
         Vector2 curPos = critter.getPosition();
 
         //double distanceTraveled = 10 * delta;
-        double distanceTraveled = critter.getSpeed();
+        double distanceTraveled = critter.getSpeed() +
+                GameManager.getInstance().getLevel() - 1;
         double newX = curPos.getX();
         double newY = curPos.getY();
 

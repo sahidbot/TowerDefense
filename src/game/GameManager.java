@@ -34,6 +34,7 @@ public class GameManager extends GameLoop implements Observer {
     private Vector2 mousePosition = Vector2.getZero();
     private boolean isWaveStarted = false;
     private boolean isGameEnd = false;
+    private int level = 1;
 
     /**
      * Main constructor for GameManager
@@ -79,6 +80,10 @@ public class GameManager extends GameLoop implements Observer {
                 gc.getCanvas().getHeight(), tileManager.getWidth(), 0);
         sideBar.setAvailableGold(Settings.STARTING_CURRENCY);
         refreshCanBuyTowers();
+
+        isGameEnd = false;
+        isWaveStarted = false;
+        level = 1;
     }
 
     /**
@@ -102,6 +107,10 @@ public class GameManager extends GameLoop implements Observer {
                 gc.getCanvas().getHeight(), tileManager.getWidth(), 0);
         sideBar.setAvailableGold(Settings.STARTING_CURRENCY);
         refreshCanBuyTowers();
+
+        isGameEnd = false;
+        isWaveStarted = false;
+        level = 1;
     }
 
     /**
@@ -123,6 +132,18 @@ public class GameManager extends GameLoop implements Observer {
      */
     public void endWave() {
         isWaveStarted = false;
+
+        if (this.level < 2)
+            this.level++;
+    }
+
+    /**
+     * Get the current game level
+     *
+     * @return Returns the current level of the game
+     */
+    public int getLevel() {
+        return this.level;
     }
 
     /**

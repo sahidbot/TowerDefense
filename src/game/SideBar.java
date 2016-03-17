@@ -195,6 +195,10 @@ public class SideBar {
         return inspectionPanel;
     }
 
+    /**
+     * Gets the new wave button.
+     * @return The button
+     */
     public Button getNewWaveButton() {
         return newWaveButton;
     }

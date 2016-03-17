@@ -206,18 +206,6 @@ public class GameManagerTest {
         assertTrue(Tower.class.isInstance(leTowerTile));
     }
 
-    @Test
-    public void update_UpgradeBoughtTowerTest(){
-        Tower towerToSelect = leGameManager.sideBar.getTowersAvailable()[0];
-        int towerCost = towerToSelect.getCost();
-        leGameManager.sideBar.setAvailableGold(towerCost);
-        Vector2 towerPosition = towerToSelect.getPosition();
-        mouseState_GetMouseState.setPosition(towerPosition.getX() + 1, towerPosition.getY() + 1);
-        mouseState_GetMouseState.setEventType(MouseEventType.LEFT_CLICK);
-        runUpdate();
-
-    }
-
 
     private void runUpdate() {
         leGameManager.update(leMouseHandler, mouseState_GetMouseState);

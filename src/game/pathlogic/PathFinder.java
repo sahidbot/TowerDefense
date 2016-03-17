@@ -71,6 +71,13 @@ public class PathFinder {
         return minPath;
     }
 
+    /**
+     * Adds an edge to the current graph
+     * @param graph Graph to add the edge to
+     * @param tile Source tile
+     * @param x X position of the destination tile
+     * @param y Y position of the destination tile
+     */
     private void addEdge(Graph<Tile> graph, Tile tile, int x, int y) {
         if (x < 0 || x >= rows || y < 0 || y >= columns)
         {

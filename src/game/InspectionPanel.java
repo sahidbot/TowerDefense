@@ -167,34 +167,74 @@ public class InspectionPanel {
         gc.fillText(text, position.getX(), position.getY());
     }
 
+    /**
+     * Method to get a button that has been upgraded
+     *
+     * @return Returns the upgraded Button
+     */
     public Button getUpgradeButton() {
         return upgradeButton;
     }
 
+    /**
+     * Method to set the upgraded button
+     *
+     * @param upgradeButton represents the upgraded Button
+     */
     public void setUpgradeButton(Button upgradeButton) {
         this.upgradeButton = upgradeButton;
     }
 
+    /**
+     * Method to get a  sell button
+     *
+     * @return Returns the sell Button
+     */
     public Button getSellButton() {
         return sellButton;
     }
 
+    /**
+     * Method to set the sell button
+     *
+     * @param sellButton represents the sell Button
+     */
     public void setSellButton(Button sellButton) {
         this.sellButton = sellButton;
     }
 
+    /**
+     * Method to get the right arrow button
+     *
+     * @return Returns the right arrow Button
+     */
     public Button getRightArrowButton() {
         return rightArrowButton;
     }
 
+    /**
+     * Method to set the right arrow button
+     *
+     * @param rightArrowButton represents the right arrow Button
+     */
     public void setRightArrowButton(Button rightArrowButton) {
         this.rightArrowButton = rightArrowButton;
     }
 
+    /**
+     * Method to get the left arrow button
+     *
+     * @return Returns the left arrow Button
+     */
     public Button getLeftArrowButton() {
         return leftArrowButton;
     }
 
+    /**
+     * Method to set the left arrow button
+     *
+     * @param leftArrowButton represents the right arrow Button
+     */
     public void setLeftArrowButton(Button leftArrowButton) {
         this.leftArrowButton = leftArrowButton;
     }

@@ -81,6 +81,13 @@ public class GameManager extends GameLoop implements Observer {
         refreshCanBuyTowers();
     }
 
+    /**
+     * Initialize the game manager, overloaded method
+     *
+     * @param gc The graphic context.
+     * @param mouseHandler represents the mouse handle to user input
+     * @param tileManager The tile manager gets the tile properties
+     */
     public void initialize(GraphicsContext gc, IMouseHandler mouseHandler, TileManager tileManager) {
         this.gc = gc;
         this.width = gc.getCanvas().getWidth();
@@ -287,6 +294,7 @@ public class GameManager extends GameLoop implements Observer {
 
         tileManagerUpdate(mouseState);
     }
+
     /**
     * Method to update state of TileManager. Places new towers on map
     * @param mouseState The mouse handler to user input
@@ -349,6 +357,7 @@ public class GameManager extends GameLoop implements Observer {
             }
         }
     }
+
     /**
     * Method to check if enough money is available to buy tower
     */
@@ -358,6 +367,11 @@ public class GameManager extends GameLoop implements Observer {
         }
     }
 
+    /**
+     * Method for shooting Critters
+     *
+     * @param delta represents the changes in time
+     */
     private void towerShoots(double delta) {
         for (Tower leTower: getTowersInScene()) {
             ArrayList<Critter> possibleTargets = critterManager.getShootableCritters(leTower);
@@ -379,6 +393,11 @@ public class GameManager extends GameLoop implements Observer {
                 // update the rewards inside the sidebar
     }
 
+    /**
+     * Method for getting the tower in the scene
+     *
+     * @return Returns the Tower in the scene
+     */
     private List<Tower> getTowersInScene(){
         List<Tower> towersInScene = new ArrayList<>();
         for (Tile[] tileArray:

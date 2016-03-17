@@ -1,6 +1,5 @@
 package game;
 
-import common.Helper;
 import common.Settings;
 import common.core.Vector2;
 import game.towerlogic.Tower;
@@ -11,7 +10,6 @@ import javafx.scene.text.FontWeight;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Vector;
 
 /**
  * Represents the inspection panel that shows the stats of the tower and
@@ -96,6 +94,7 @@ public class InspectionPanel {
             statLines.add("Rate of Fire: " + getSelectedTower().getRateOfFire());
             statLines.add("Range: " + getSelectedTower().getRange());
             statLines.add("Damage: " + getSelectedTower().getDamage());
+            statLines.add("Special Effect: " + getSelectedTower().getAttackEffect().toString());
             if (!selectedTower.isActive()) {
                 //If tower is not active, we can buy it
                 statLines.add("Cost: " + getSelectedTower().getCost());
@@ -122,8 +121,8 @@ public class InspectionPanel {
             getLeftArrowButton().draw(gc);
 
             //Drawing the strategy flavour text
-            if(getSelectedTower().isActive()) {
-                String strategyText = getSelectedTower().getAttackStrategyEnum().ToString();
+            if (getSelectedTower().isActive()) {
+                String strategyText = getSelectedTower().getAttackStrategyEnum().toString();
                 drawText(gc, strategyText,
                         new Vector2(titlePosition.getX() + getLeftArrowButton().getWidth() + 2,
                                 currentYPosition + linesSeparation),
@@ -157,10 +156,11 @@ public class InspectionPanel {
 
     /**
      * Method to draw text in Inspection panel
-     * @param gc Graphics context to draw on
-     * @param text Text to be drawn
+     *
+     * @param gc       Graphics context to draw on
+     * @param text     Text to be drawn
      * @param position Position at which text will be drawn
-     * @param color Color of text
+     * @param color    Color of text
      */
     private void drawText(GraphicsContext gc, String text, Vector2 position, Color color) {
         gc.setFill(color);

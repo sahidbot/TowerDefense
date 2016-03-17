@@ -35,8 +35,10 @@ public class GameManager extends GameLoop implements Observer {
      */
     private GameManager() {
     }
+
     /**
      * Get the instance of game manager.
+     *
      * @return Returns the instance of game manager.
      */
     public static GameManager getInstance() {
@@ -49,13 +51,12 @@ public class GameManager extends GameLoop implements Observer {
     /**
      * Initialize the game manager
      *
-     * @param root The {@link javafx.scene.Group} to use.
-     * @param rows Number of rows used to determine height of side bar
+     * @param root    The {@link javafx.scene.Group} to use.
+     * @param rows    Number of rows used to determine height of side bar
      * @param columns Number of columns used to determine width of side bar
      * @param mapData Saved content for the map
      */
-    public void initialize(Group root, int rows, int columns, String[] mapData)
-    {
+    public void initialize(Group root, int rows, int columns, String[] mapData) {
         this.width = (Settings.TILE_WIDTH * columns) + Settings.SIDEBAR_WIDTH;
         this.height = Settings.TILE_HEIGHT * rows;
 
@@ -91,27 +92,30 @@ public class GameManager extends GameLoop implements Observer {
         sideBar.setAvailableGold(Settings.STARTING_CURRENCY);
         refreshCanBuyTowers();
     }
+
     /**
-    * {@inheritDoc}
-    */
+     * {@inheritDoc}
+     */
     @Override
     protected void update(double delta) {
         sideBar.getNewWaveButton().setEnabled(!isWaveStarted);
         towerShoots(delta);
     }
+
     /**
-    * Overridden Gameloop clear method to clear contents
-    * {@inheritDoc}
-    */
+     * Overridden Gameloop clear method to clear contents
+     * {@inheritDoc}
+     */
     @Override
     protected void clear() {
         mouseHandler.clearMouseState();
         gc.clearRect(0, 0, width, height);
     }
+
     /**
-    * Overridden Gameloop draw method to draw Map and SideBar after each GameLoop iteration
-    * {@inheritDoc}
-    */
+     * Overridden Gameloop draw method to draw Map and SideBar after each GameLoop iteration
+     * {@inheritDoc}
+     */
     @Override
     protected void draw() {
         tileManager.draw(gc);
@@ -177,15 +181,14 @@ public class GameManager extends GameLoop implements Observer {
                             sideBar.getInspectionPanel().getLeftArrowButton().collidesWith(mouseState.getPosition())) {
                         //collision detected
                         inspectionPanelTower.setAttackStrategyEnum(inspectionPanelTower.getAttackStrategyEnum().next());
-                    }
-                    else if (sideBar.getInspectionPanel().getRightArrowButton().isEnabled() &&
-                            sideBar.getInspectionPanel().getRightArrowButton().collidesWith(mouseState.getPosition())){
+                    } else if (sideBar.getInspectionPanel().getRightArrowButton().isEnabled() &&
+                            sideBar.getInspectionPanel().getRightArrowButton().collidesWith(mouseState.getPosition())) {
                         inspectionPanelTower.setAttackStrategyEnum(inspectionPanelTower.getAttackStrategyEnum().previous());
                     }
 
                     //Check NewWaveButton
-                    else if(sideBar.getNewWaveButton().isEnabled() &&
-                            sideBar.getNewWaveButton().collidesWith(mouseState.getPosition())){
+                    else if (sideBar.getNewWaveButton().isEnabled() &&
+                            sideBar.getNewWaveButton().collidesWith(mouseState.getPosition())) {
                         //TODO: Handle NewWave
                     }
                 }
@@ -205,8 +208,6 @@ public class GameManager extends GameLoop implements Observer {
                 }
 
 
-
-
             }
 
         }
@@ -218,8 +219,7 @@ public class GameManager extends GameLoop implements Observer {
             Sprite selectedSprite = mouseState.getSelectedSprite();
             if (selectedSprite != null && selectedSprite instanceof Tower) {
                 sideBar.getInspectionPanel().setSelectedTower((Tower) selectedSprite);
-            }
-            else if (selectedSprite == null) {
+            } else if (selectedSprite == null) {
                 Tower foundTower = null;
                 for (Tower tower : sideBar.getTowersAvailable()) {
                     if (tower.collidesWith(mouseState.getPosition())) {
@@ -233,10 +233,12 @@ public class GameManager extends GameLoop implements Observer {
 
         tileManagerUpdate(mouseState);
     }
+
     /**
-    * Method to update state of TileManager. Places new towers on map
-    * @param mouseState The mouse handler to user input
-    */
+     * Method to update state of TileManager. Places new towers on map
+     *
+     * @param mouseState The mouse handler to user input
+     */
     private void tileManagerUpdate(MouseState mouseState) {
         if (mouseState.getEventType() == MouseEventType.LEFT_CLICK) {
             if (mouseState.getSelectedSprite() != null) {
@@ -289,15 +291,15 @@ public class GameManager extends GameLoop implements Observer {
 
             if (mouseState.getEventType() == MouseEventType.MOVE) {
                 sideBar.getInspectionPanel().setSelectedTower(tower);
-            }
-            else if (mouseState.getEventType() == MouseEventType.LEFT_CLICK) {
+            } else if (mouseState.getEventType() == MouseEventType.LEFT_CLICK) {
                 mouseState.setSelectedSprite(tower);
             }
         }
     }
+
     /**
-    * Method to check if enough money is available to buy tower
-    */
+     * Method to check if enough money is available to buy tower
+     */
     public void refreshCanBuyTowers() {
         for (Tower tower : sideBar.getTowersAvailable()) {
             tower.setCanBuy(tower.getCost() <= sideBar.getAvailableGold());
@@ -305,33 +307,32 @@ public class GameManager extends GameLoop implements Observer {
     }
 
     private void towerShoots(double delta) {
-        for (Tower leTower:
+        for (Tower leTower :
                 getTowersInScene()) {
             ArrayList<Critter> possibleTargets = critterManager.getShootableCritters(leTower);
-            if(leTower.isTimeToFire(delta) && possibleTargets.size() > 0){
+            if (leTower.isTimeToFire(delta) && possibleTargets.size() > 0) {
                 List<Critter> affectedCritters = leTower.doDamage(critterManager, possibleTargets);
-            }
-            else{
+            } else {
                 leTower.clearRateOfFire();
             }
 
         }
         sideBar.addAvailableGold(critterManager.getRewards());
         // loop through all the towers
-            // check the fire rate
-                // getShootableCritters
-                // make the damage
-                // update the rewards inside the sidebar
+        // check the fire rate
+        // getShootableCritters
+        // make the damage
+        // update the rewards inside the sidebar
     }
 
-    private List<Tower> getTowersInScene(){
+    private List<Tower> getTowersInScene() {
         List<Tower> towersInScene = new ArrayList<>();
-        for (Tile[] tileArray:
-                tileManager.getTilesOverlay()){
+        for (Tile[] tileArray :
+                tileManager.getTilesOverlay()) {
             for (Tile tile :
                     tileArray) {
-                if(tile != null && tile instanceof Tower){
-                    towersInScene.add((Tower)tile);
+                if (tile != null && tile instanceof Tower) {
+                    towersInScene.add((Tower) tile);
                 }
             }
         }

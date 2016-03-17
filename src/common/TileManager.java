@@ -21,9 +21,18 @@ public class TileManager implements ITileManager {
     private boolean hasEntryPointTile;
     private boolean hasExitPointTile;
 
+    /**
+     * Default constructor
+     */
     public TileManager(){
     }
 
+    /**
+     * Main constructor
+     * @param rows Number of rows to hold
+     * @param columns Number of columns to hold
+     * @param mapData Data if available
+     */
     public TileManager(int rows, int columns, String[] mapData){
         createScenery(rows, columns);
 

@@ -42,6 +42,10 @@ public class Rect {
         return position;
     }
 
+    /**
+     * Printer friendly values of the rectangle
+     * @return The printer friendly string
+     */
     @Override
     public String toString() {
         return "X: " + position.getX() + ", " +

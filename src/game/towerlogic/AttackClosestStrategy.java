@@ -41,7 +41,10 @@ public class AttackClosestStrategy extends AttackStrategyBase {
         ret.add(target);
         return ret;
     }
-
+    /**
+     * Method to get identifier type
+     * @return an Enum of Closest
+     */
     @Override
     public AttackStrategyEnum getTypeIdentifier() {
         return AttackStrategyEnum.CLOSEST;

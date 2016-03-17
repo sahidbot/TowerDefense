@@ -32,6 +32,10 @@ public class AttackLowestHPStrategy extends AttackStrategyBase {
         ret.add(target);
         return ret;
     }
+    /**
+     * Method to get identifier type
+     * @return an Enum of LowestHP
+     */
 
     @Override
     public AttackStrategyEnum getTypeIdentifier() {

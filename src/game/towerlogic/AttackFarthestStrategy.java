@@ -34,7 +34,10 @@ public class AttackFarthestStrategy extends AttackStrategyBase {
         ret.add(target);
         return ret;
     }
-
+    /**
+     * Method to get identifier type
+     * @return an Enum of Farthest
+     */
     @Override
     public AttackStrategyEnum getTypeIdentifier() {
         return AttackStrategyEnum.FARTHEST;

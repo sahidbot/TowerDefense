@@ -119,16 +119,19 @@ public class CreateMapDialogController implements Initializable {
      * @param oldValue old value of textfield
      * @param newValue new value that is to be checked for numeric
      */
-    private void checkNumericValue(TextField text, String oldValue, String newValue) {
+    public Boolean checkNumericValue(TextField text, String oldValue, String newValue) {
         try {
             if (newValue.matches("\\d*")) {
                 int value = Integer.parseInt(newValue);
+                return true;
             } else {
                 text.setText(oldValue);
+                return false;
             }
         }
         catch (Exception ex) {
             System.out.println(ex.toString());
+            return false;
         }
     }
 }

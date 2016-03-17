@@ -78,15 +78,16 @@ public class PathFinder {
      * @param x X position of the destination tile
      * @param y Y position of the destination tile
      */
-    private void addEdge(Graph<Tile> graph, Tile tile, int x, int y) {
+    public Boolean addEdge(Graph<Tile> graph, Tile tile, int x, int y) {
         if (x < 0 || x >= rows || y < 0 || y >= columns)
         {
-            return;
+            return false;
         }
 
         Tile tile2 = tiles[x][y];
         if (tile2 != null) {
             graph.addEdge(tile, tile2);
         }
+        return true;
     }
 }

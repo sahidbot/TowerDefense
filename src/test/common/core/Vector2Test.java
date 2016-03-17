@@ -1,13 +1,11 @@
 package test.common.core;
 
 import common.core.Vector2;
-import common.TileManager;
-import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import test.JavaFXThreadingRule;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 /**
  * Created by Monster on 3/14/2016.

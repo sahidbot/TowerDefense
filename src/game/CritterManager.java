@@ -43,6 +43,11 @@ public class CritterManager {
                 GameManager.getInstance().tileManager.getTilePosition(pathList.getLast().getPosition());
     }
 
+    public void SetCritterList(ArrayList<Critter> critterList)
+    {
+        critters = critterList;
+    }
+
     /**
      * Get the critter that are in tower's shooting range.
      *

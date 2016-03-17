@@ -28,7 +28,7 @@ public enum AttackStrategyEnum {
      *
      * @return The readable string
      */
-    public String ToString() {
+    public String toString() {
         switch (this){
             case CLOSEST:
                 return "Closest Enemy";

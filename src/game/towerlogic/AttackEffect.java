@@ -14,7 +14,7 @@ public enum AttackEffect {
      * Returns a readable string from the value
      * @return readable string
      */
-    public String ToString(){
+    public String toString(){
         switch (this){
             case BURN:
                 return "Burn";

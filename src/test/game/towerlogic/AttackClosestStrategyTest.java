@@ -67,7 +67,7 @@ public class AttackClosestStrategyTest {
     @Test
     public void doDamageDoesDamageTest(){
         zeroZeroCritter.setHealthPoints(100);
-        strategy.setDamage(30);
+        tower.setDamage(30);
 
         List<Critter> result = strategy.doDamage(zeroZeroCritterList);
         assertEquals(70, result.get(0).getHealthPoints(), 0.001);
@@ -77,7 +77,7 @@ public class AttackClosestStrategyTest {
     public void doDamageDoesDamageToOnlyOneEnemyTest(){
         zeroZeroCritter.setHealthPoints(100);
         fourFourCritter.setHealthPoints(100);
-        strategy.setDamage(30);
+        tower.setDamage(30);
 
         List<Critter> result = strategy.doDamage(crittersorder1);
         assertEquals(100, zeroZeroCritter.getHealthPoints(), 0.001f);

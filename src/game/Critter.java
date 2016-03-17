@@ -1,23 +1,37 @@
 package game;
 
+import common.Settings;
 import common.SpriteType;
 import common.Tile;
 import common.core.Vector2;
+import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.image.Image;
 
 /**
  * Class that represents a critter in the game.
  */
 public class Critter extends Tile {
+    private float healthPoints = 100;
+    private float goldValue = 50;
 
-    private float healthPoints;
     private final CritterType critterType;
-    private float speed;
+    private float speed = 1;
     private float damagePerSecond = 0;
     private float damagePerSecondDuration = 0;
     private float frozenDuration = 0;
 
     /**
      * Default Constructor
+     *
+     * @param position Represent the initial position of the sprite
+     * @param critterType Type of the critter
+     */
+    public Critter(Vector2 position, CritterType critterType) {
+        super(imageFrom(critterType), position);
+        this.critterType = critterType;
+    }
+    /**
+     * Default Constructor for tests
      *
      * @param width represents the width of the sprite
      * @param height represents the height of the sprite
@@ -28,6 +42,33 @@ public class Critter extends Tile {
         this.critterType = critterType;
     }
 
+    /**
+     * Get the gold value for the critter.
+     *
+     * @return Returns the gold value
+     */
+    public float getGoldValue() {
+        return goldValue;
+    }
+    /**
+     * Method that translates from TowerType to Image
+     *
+     * @param critterType Type of the critter
+     * @return Image of the critter
+     */
+    private static Image imageFrom(CritterType critterType) {
+        return Settings.CRITTER_TILE_IMAGE_1;
+    }
+
+    /**
+     * Method that translates from CritterType to Image
+     *
+     * @param gc The {@link javafx.scene.canvas.GraphicsContext} to use. All graphics will be placed here
+     */
+    @Override
+    public void draw(GraphicsContext gc) {
+        gc.drawImage(this.getImage(), getPosition().getX(), getPosition().getY());
+    }
 
     /**
      * returns the value of the current Health Points
@@ -128,5 +169,37 @@ public class Critter extends Tile {
      */
     public void setFrozenDuration(float frozenDuration) {
         this.frozenDuration = frozenDuration;
+    }
+
+    /**
+     * Check whether the critter can move.
+     *
+     * @return Returns true if it can move, or false
+     */
+    public boolean canMove() {
+        return frozenDuration <= 0;
+    }
+
+    /**
+     * Update the critters for every ticks
+     * @param delta Delta time value from game loop
+     */
+    public void update(double delta) {
+        // damage per second
+        if (damagePerSecondDuration >= 0) {
+            healthPoints -= delta * damagePerSecond;
+            damagePerSecondDuration -= delta;
+        }
+        else {
+            damagePerSecondDuration = 0;
+        }
+
+        // frozen duration
+        if (frozenDuration >= 0) {
+            frozenDuration -= delta;
+        }
+        else {
+            frozenDuration = 0;
+        }
     }
 }

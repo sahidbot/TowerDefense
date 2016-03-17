@@ -69,7 +69,7 @@ public class AttackLowestHPStrategyTest {
     @Test
     public void doDamageDoesDamageTest() {
         zeroZeroCritter.setHealthPoints(100);
-        strategy.setDamage(10);
+        tower.setDamage(10);
         List<Critter> result = strategy.doDamage(zeroZeroCritterList);
         assertEquals(90, result.get(0).getHealthPoints(), 0.001);
     }

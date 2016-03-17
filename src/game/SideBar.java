@@ -119,7 +119,9 @@ public class SideBar {
         drawText(gc, currencyLine, currencyPosition, Color.BLACK);
 
         //Draw NewWaveButton
-        newWaveButton.draw(gc);
+        if (!GameManager.getInstance().isGameEnded()) {
+            newWaveButton.draw(gc);
+        }
 
         //Draw inspectionPanel
         inspectionPanel.draw(gc);

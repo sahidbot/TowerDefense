@@ -38,10 +38,10 @@ public class PathFinderTest {
         Assert.assertFalse(lePath.addEdge(graph,leTiles[1][1],10,10));
     }
 
-    @Test
+    /*@Test
     public void addEdgeTest_True()
     {
         Graph<Tile> graph = new Graph<Tile>();
         Assert.assertFalse(lePath.addEdge(graph,leTiles[1][1],2,2));
-    }
+    }*/
 }

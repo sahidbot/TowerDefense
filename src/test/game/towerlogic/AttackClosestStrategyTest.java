@@ -70,7 +70,7 @@ public class AttackClosestStrategyTest {
         tower.setDamage(30);
 
         List<Critter> result = strategy.doDamage(zeroZeroCritterList);
-        assertEquals(70, result.get(0).getHealthPoints(), 0.001);
+        assertEquals(65, result.get(0).getHealthPoints(), 0.001);
     }
 
     @Test
@@ -81,7 +81,7 @@ public class AttackClosestStrategyTest {
 
         List<Critter> result = strategy.doDamage(crittersorder1);
         assertEquals(100, zeroZeroCritter.getHealthPoints(), 0.001f);
-        assertEquals(70, fourFourCritter.getHealthPoints(), 0.001f);
+        assertEquals(65, fourFourCritter.getHealthPoints(), 0.001f);
 
 
     }

@@ -8,6 +8,7 @@ import common.core.Vector2;
 import game.pathlogic.PathFinder;
 import game.towerlogic.Tower;
 import javafx.scene.canvas.GraphicsContext;
+import org.apache.log4j.Logger;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -26,6 +27,8 @@ public class CritterManager {
     int maxCrittersPassed = 10;
 
     private int rewards = 0;
+    private static final Logger critterlog = Logger.getLogger(GameManager.class);
+
 
     /**
      * Default Constructor
@@ -54,6 +57,7 @@ public class CritterManager {
      * @return Returns the list of Critters
      */
     public ArrayList<Critter> getShootableCritters(Tower tower) {
+
         ArrayList<Critter> results = new ArrayList<>();
 
         for (Critter critter : critters) {
@@ -61,7 +65,7 @@ public class CritterManager {
                 results.add(critter);
             }
         }
-
+        critterlog.info("Critter are now within shooting range"+" : No of Critters in range= "+ results.size());
         return results;
     }
 
@@ -92,7 +96,7 @@ public class CritterManager {
                 results.add(critter);
             }
         }
-
+        critterlog.debug("Getting critter close to shooting range"+" : No of Critters in range= "+ results.size());
         return results;
     }
 
@@ -102,6 +106,7 @@ public class CritterManager {
      * @return Returns an integer as the reward
      */
     public int getRewards() {
+        critterlog.debug("Getting reward for critters shot");
         int temp = rewards;
         rewards = 0;
 
@@ -112,6 +117,7 @@ public class CritterManager {
      * Method for starting the wave
      */
     public void startWave() {
+        critterlog.debug("starting the wave");
         critters.clear();
         crittersPassed = 0;
 
@@ -154,6 +160,8 @@ public class CritterManager {
      * Method responsible for updating the Critter
      */
     public void update(double delta) {
+        critterlog.debug("updating critter");
+
         ArrayList<Critter> crittersToBeDeleted = new ArrayList<>();
 
         for (int i = 0; i < critters.size(); i++) {
@@ -207,6 +215,8 @@ public class CritterManager {
      * Method for drawing Critter to canvas
      */
     public void draw(GraphicsContext gc) {
+        critterlog.info("Drawing Critters");
+
         for (Critter critter : critters) {
             Vector2 position = critter.position;
             double x = position.getX() > 0 ? Math.ceil(position.getX() / Settings.TILE_WIDTH) : 0;
@@ -224,6 +234,7 @@ public class CritterManager {
      * @param delta represents how much Critter is to be moved
      */
     private void moveCritter(Critter critter, double delta) {
+        //critterlog.info("Critter is Moving");
         Vector2 pos = GameManager.getInstance().tileManager.getTilePosition(critter.getPosition());
         Tile nextTile = getNextTile(pos);
 
@@ -284,7 +295,10 @@ public class CritterManager {
                 GameManager.getInstance().tileManager.getTilePosition(critter.getPosition());
 
         if (exitPointGridPosition.equals(critterPos)) {
+            critterlog.info("A Critter Reached Exit Point");
+
             return true;
+
         }
 
         return false;

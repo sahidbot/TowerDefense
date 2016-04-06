@@ -8,6 +8,7 @@ import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.stage.Stage;
+import org.apache.log4j.Logger;
 
 import java.util.Observable;
 import java.util.Observer;
@@ -22,6 +23,7 @@ public class MapManager extends GameLoop implements Observer {
     public IMouseHandler mouseHandler;
     public TileManager tileManager;
     public SideBar sideBar;
+    private static final Logger mapmanagerlog = Logger.getLogger(MapManager.class);
 
     private GraphicsContext gc;
     private String mapName;
@@ -59,12 +61,13 @@ public class MapManager extends GameLoop implements Observer {
      * @param columns The number of columns in the Map
      */
     public static MapManager create(Group root, String name, int rows, int columns) {
+        mapmanagerlog.info("Mapmanager instance was created");
+
         double width = (Settings.TILE_WIDTH * columns) + Settings.SIDEBAR_WIDTH;
         double height = Settings.TILE_HEIGHT * rows;
 
         Canvas canvas = new Canvas(width, height);
         root.getChildren().add(canvas);
-
         return new MapManager(canvas.getGraphicsContext2D(), new MouseHandler(root.getScene()), name, rows, columns);
     }
     /**
@@ -146,6 +149,7 @@ public class MapManager extends GameLoop implements Observer {
      */
     @Override
     protected void clear() {
+        mapmanagerlog.info("Map Contents Cleared");
         gc.clearRect(0, 0, width, height);
     }
     /**

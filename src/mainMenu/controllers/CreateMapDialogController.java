@@ -10,6 +10,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import map.MapManager;
+import org.apache.log4j.Logger;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -25,6 +26,7 @@ public class CreateMapDialogController implements Initializable {
     private TextField txtRows;
     @FXML
     private TextField txtColumns;
+    private static final Logger mapcreatorlog = Logger.getLogger(CreateMapDialogController.class);
 
     /**
      * Called to initialize a controller after its root element has been
@@ -54,6 +56,7 @@ public class CreateMapDialogController implements Initializable {
      * @param mouseEvent Reference to the control whose event is fired
      */
     public void onCreateNewClicked(MouseEvent mouseEvent) {
+        mapcreatorlog.info("Create New Map Clicked");
         if (!txtName.getText().equals("") &&
                 !txtRows.getText().equals("") &&
                 !txtColumns.getText().equals("")) {
@@ -61,6 +64,7 @@ public class CreateMapDialogController implements Initializable {
                 int rows = Integer.parseInt(txtRows.getText());
                 int columns = Integer.parseInt(txtColumns.getText());
                 String mapName = txtName.getText();
+                mapcreatorlog.info("Reading new map info");
 
                 if (columns < 10 || columns > 30 || rows < 18 || rows > 24) {
                     Alert alert = new Alert(Alert.AlertType.INFORMATION);
@@ -84,9 +88,11 @@ public class CreateMapDialogController implements Initializable {
                 stage.setOnCloseRequest(event -> {
                     try {
                         String mapData = mapManager.getMapData();
+                        mapcreatorlog.info("Reading map data");
                         if (mapData != null) {
                             Helper.saveMap(mapName, mapData);
 
+                            mapcreatorlog.info("Map saved successfully!");
                             Alert alert = new Alert(Alert.AlertType.INFORMATION);
                             alert.setTitle("Tower Defense");
                             alert.setHeaderText("Map saved successfully!");
@@ -95,6 +101,7 @@ public class CreateMapDialogController implements Initializable {
                             ((Stage) txtName.getScene().getWindow()).close();
                         }
                         else {
+                            mapcreatorlog.info("Unsucessful! Message: Invalid map");
                             Alert alert = new Alert(Alert.AlertType.ERROR);
                             alert.setTitle("Tower Defense");
                             alert.setHeaderText("Invalid map, cannot save!");
@@ -102,11 +109,13 @@ public class CreateMapDialogController implements Initializable {
                         }
                     }
                     catch (Exception ex) {
+                        mapcreatorlog.error("Error while reading map data. Message: "+ ex.getMessage());
                         System.out.println(ex);
                     }
                 });
             }
             catch (Exception ex) {
+                mapcreatorlog.error("Error while reading map information. Message: "+ ex.getMessage());
                 System.out.println(ex.toString());
             }
         }
@@ -122,6 +131,7 @@ public class CreateMapDialogController implements Initializable {
     public Boolean checkNumericValue(TextField text, String oldValue, String newValue) {
         try {
             if (newValue.matches("\\d*")) {
+                mapcreatorlog.info("Reading values entered for map creation. Value= "+newValue);
                 int value = Integer.parseInt(newValue);
                 return true;
             } else {
@@ -130,6 +140,7 @@ public class CreateMapDialogController implements Initializable {
             }
         }
         catch (Exception ex) {
+            mapcreatorlog.error("Error while reading values. Message: "+ ex.getMessage());
             System.out.println(ex.toString());
             return false;
         }

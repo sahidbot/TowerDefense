@@ -10,6 +10,7 @@ import game.NoMoneySprite;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
+import org.apache.log4j.Logger;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import java.util.ArrayList;
@@ -39,6 +40,7 @@ public class Tower extends Tile {
 
     private IAttackStrategy attackStrategy;
     private AttackEffect attackEffect;
+    private static final Logger towerLog = Logger.getLogger(Tower.class);
 
     /**
      * Default constructor
@@ -59,6 +61,7 @@ public class Tower extends Tile {
      * Sets the initial values for tower types
      */
     private void setInitialValues() {
+        towerLog.info("Setting Towers initial values");
         switch (towerType) {
             case FROST:
                 setBaseCost(200);
@@ -120,6 +123,7 @@ public class Tower extends Tile {
      * @see TowerType
      */
     private static Image imageFrom(TowerType towerType) {
+        towerLog.info("Transferring tower type to corresponding image");
         Image towerImage;
         switch (towerType) {
             case ARROW:
@@ -145,6 +149,7 @@ public class Tower extends Tile {
      */
     @Override
     public void draw(GraphicsContext gc) {
+        towerLog.info(this.towerType.toString()+" tower is drawn");
         gc.drawImage(this.getImage(), getPosition().getX(), getPosition().getY());
         if (!isActive() && !isCanBuy()) {
             noMoneySprite.draw(gc);
@@ -181,7 +186,10 @@ public class Tower extends Tile {
      * @return current rate of fire
      */
     public double getRateOfFire() {
-        return rateOfFire + (getLevel() * rateOfFireMultiplier);
+
+        double rateOfFireResult = rateOfFire + (getLevel() * rateOfFireMultiplier);
+        towerLog.info("The current firing rate of the tower: "+this.getTowerType().toString()+" is "+rateOfFireResult);
+        return rateOfFireResult;
     }
 
     /**
@@ -190,7 +198,10 @@ public class Tower extends Tile {
      * @return current cost
      */
     public int getCost() {
-        return baseCost + (getLevel() * baseCostMultiplier);
+
+        int costResult = baseCost + (getLevel() * baseCostMultiplier);
+        towerLog.info("The current cost of the tower: "+this.getTowerType().toString()+" is "+costResult);
+        return costResult;
     }
 
     /**
@@ -208,7 +219,9 @@ public class Tower extends Tile {
      * @return current range
      */
     public int getRange() {
-        return range + (getLevel() * rangeMultiplier);
+        int rangeResult = range + (getLevel() * rangeMultiplier);
+        towerLog.info("The current range of the tower: "+this.getTowerType().toString()+" is "+rangeResult);
+        return rangeResult;
     }
 
     /**
@@ -224,6 +237,7 @@ public class Tower extends Tile {
         double y = position.getY() + (height / 2) - height;
 
         Rect rect = new Rect(new Vector2(x, y), width, height);
+        towerLog.info("The current rectangle range of the tower: "+this.getTowerType().toString()+" is "+rect.toString());
         return rect;
     }
 
@@ -233,7 +247,9 @@ public class Tower extends Tile {
      * @return current damage
      */
     public double getDamage() {
-        return damage + (getLevel() * damageMultiplier);
+        double damageResult = damage + (getLevel() * damageMultiplier);
+        towerLog.info("The current damage of the tower: "+this.getTowerType().toString()+" is "+damageResult);
+        return damageResult;
     }
 
     /**
@@ -388,8 +404,8 @@ public class Tower extends Tile {
      * Sets the {@link IAttackStrategy} using the {@link AttackStrategyEnum} as reference.
      * @param strategy the strategy to use
      */
-    public void setAttackStrategyEnum(AttackStrategyEnum strategy){
-        switch (strategy){
+    public void setAttackStrategyEnum(AttackStrategyEnum strategy) {
+        switch (strategy) {
             case CLOSEST:
                 attackStrategy = new AttackClosestStrategy(this);
                 break;
@@ -402,7 +418,9 @@ public class Tower extends Tile {
             default:
                 throw new NotImplementedException();
 
-        }
+                }
+            towerLog.info("The tower: " + this.getTowerType().toString() + " is now using:  " +strategy.toString()+" strategy");
+
     }
 
     /**

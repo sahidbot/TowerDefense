@@ -9,6 +9,7 @@ import common.core.MouseState;
 import common.core.Vector2;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
+import org.apache.log4j.Logger;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,6 +24,7 @@ public class SideBar {
     private double topOffset;
     private Vector2 sampleTextPos;
     private boolean inspectionHidden = true;
+    private static final Logger sidebarlog = Logger.getLogger(SideBar.class);
 
     private List<Tile> tiles;
     /**
@@ -77,6 +79,7 @@ public class SideBar {
      * @param gc The {@link javafx.scene.canvas.GraphicsContext} to use. All graphics will be placed here
      */
     public void draw(GraphicsContext gc) {
+        sidebarlog.info("SideBar is drawn");
         for (int i = 0; i < tiles.size(); i++) {
             Tile tile = tiles.get(i);
             tile.draw(gc);
@@ -89,6 +92,7 @@ public class SideBar {
      * @param value True/False. To Set state according to the value.
      */
     public void setActive(SpriteType type, boolean value) {
+        sidebarlog.info("The SpriteType "+type+" is set to active");
         for (Tile tile : tiles) {
             if (tile.getType() == type) {
                 tile.setActive(value);

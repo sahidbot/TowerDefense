@@ -7,6 +7,7 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
+import org.apache.log4j.Logger;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,6 +28,7 @@ public class InspectionPanel {
     private Button upgradeButton;
     private Button leftArrowButton;
     private Button rightArrowButton;
+    private static final Logger ipanelog= Logger.getLogger(InspectionPanel.class) ;
 
 
     /**
@@ -65,6 +67,7 @@ public class InspectionPanel {
      * @param selectedTower new selected tower
      */
     public void setSelectedTower(Tower selectedTower) {
+        //ipanelog.info(this.selectedTower.toString()+ " was selected to be displayed on the Inspection Panel");
         this.selectedTower = selectedTower;
     }
 
@@ -86,6 +89,7 @@ public class InspectionPanel {
             Vector2 titlePosition = new Vector2(leftOffset,
                     topOffset);
             drawText(gc, towerTitle, titlePosition, Color.BLACK);
+            ipanelog.info("The Inspection Panel is drawn");
 
             //Setup stat lines
             List<String> statLines = new ArrayList<String>();

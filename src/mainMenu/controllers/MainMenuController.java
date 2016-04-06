@@ -17,6 +17,7 @@ import javafx.scene.control.ListView;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import map.MapManager;
+import org.apache.log4j.Logger;
 
 import java.io.File;
 import java.io.IOException;
@@ -38,6 +39,7 @@ public class MainMenuController implements Initializable{
     private ListView mapListView;
 
     private ObservableList<String> savedMaps;
+    private static final Logger maplog = Logger.getLogger(MainMenuController.class);
 
     /**
      * Called to initialize a controller after its root element has been
@@ -61,6 +63,7 @@ public class MainMenuController implements Initializable{
      * @param mouseEvent Reference to the control whose event is fired
      */
     public void onCreateMapClicked(MouseEvent mouseEvent) throws IOException {
+        maplog.info("Create Map Button Clicked");
         Stage stage = new Stage();
         Parent root = FXMLLoader.load(getClass().getResource("/mainmenu/views/createMapDialogView.fxml"));
         stage.setScene(new Scene(root));
@@ -72,6 +75,7 @@ public class MainMenuController implements Initializable{
      * @param mouseEvent Reference to the control whose event is fired
      */
     public void onEditMapClicked(MouseEvent mouseEvent) {
+        maplog.info("Edit Map Button Clicked");
         String selectedMap = (String) mapListView.getSelectionModel().getSelectedItem();
         if (selectedMap != null) {
             String mapContent = Helper.loadMap(selectedMap);
@@ -99,6 +103,7 @@ public class MainMenuController implements Initializable{
                     if (newMapData != null) {
                         Helper.saveMap(selectedMap, newMapData);
 
+                        maplog.info("Map saved successfully!");
                         Alert alert = new Alert(Alert.AlertType.INFORMATION);
                         alert.setTitle("Tower Defense");
                         alert.setHeaderText("Map saved successfully!");
@@ -107,6 +112,7 @@ public class MainMenuController implements Initializable{
                         loadSavedMapList();
                     }
                     else {
+                        maplog.info("Unsucessful! Message: Invalid map");
                         Alert alert = new Alert(Alert.AlertType.ERROR);
                         alert.setTitle("Tower Defense");
                         alert.setHeaderText("Invalid map, cannot save!");
@@ -122,6 +128,7 @@ public class MainMenuController implements Initializable{
      * @param mouseEvent Reference to the control whose event is fired
      */
     public void onStartGameClicked(MouseEvent mouseEvent) {
+        maplog.info("Start Game Button Clicked");
         String selectedMap = (String) mapListView.getSelectionModel().getSelectedItem();
         if (selectedMap != null) {
             String mapContent = Helper.loadMap(selectedMap);
@@ -154,6 +161,8 @@ public class MainMenuController implements Initializable{
         String selectedMap = (String) mapListView.getSelectionModel().getSelectedItem();
         btnEditMap.setDisable(selectedMap == null);
         btnStartGame.setDisable(selectedMap == null);
+        maplog.info(selectedMap.toString()+" was selected");
+
     }
     /**
      * Method to load saved maps in the directory
@@ -164,5 +173,7 @@ public class MainMenuController implements Initializable{
         for (File map : listOfFiles) {
             savedMaps.add(map.getName());
         }
+        maplog.info(folder.getPath()+" loaded");
+
     }
 }

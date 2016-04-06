@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
+import org.apache.log4j.Logger;
 
 /**
  * game manager class implemented as observer
@@ -35,16 +36,17 @@ public class GameManager extends GameLoop implements Observer {
     private boolean isWaveStarted = false;
     private boolean isGameEnd = false;
     private int level = 1;
+    private static final Logger gamelog = Logger.getLogger(GameManager.class);
 
     /**
      * Main constructor for GameManager
      */
     private GameManager() {
     }
-    /**
-     * Get the instance of game manager.
-     * @return Returns the instance of game manager.
-     */
+        /**
+         * Get the instance of game manager.
+         * @return Returns the instance of game manager.
+         */
     public static GameManager getInstance() {
         if (instance == null)
             instance = new GameManager();
@@ -60,8 +62,9 @@ public class GameManager extends GameLoop implements Observer {
      * @param columns Number of columns used to determine width of side bar
      * @param mapData Saved content for the map
      */
-    public void initialize(Group root, int rows, int columns, String[] mapData)
-    {
+    public void initialize(Group root, int rows, int columns, String[] mapData) {
+        gamelog.debug("Initializing Game Manager");
+
         this.width = (Settings.TILE_WIDTH * columns) + Settings.SIDEBAR_WIDTH;
         this.height = Settings.TILE_HEIGHT * rows;
 
@@ -126,6 +129,8 @@ public class GameManager extends GameLoop implements Observer {
 
         isWaveStarted = true;
         critterManager.startWave();
+
+        gamelog.info("New Wave Started");
     }
     /**
      * End the current wave
@@ -135,6 +140,8 @@ public class GameManager extends GameLoop implements Observer {
 
         if (this.level < 2)
             this.level++;
+        gamelog.info("Wave Ended");
+
     }
 
     /**
@@ -152,6 +159,9 @@ public class GameManager extends GameLoop implements Observer {
     public void endGame() {
         endWave();
         isGameEnd = true;
+        gamelog.info("Game Ended");
+
+
     }
 
     /**
@@ -167,11 +177,13 @@ public class GameManager extends GameLoop implements Observer {
     */
     @Override
     protected void update(double delta) {
+        gamelog.debug("CritterManager Updated At the Start of New Wave");
         sideBar.getNewWaveButton().setEnabled(!isWaveStarted);
         towerShoots(delta);
 
         if (isWaveStarted) {
             critterManager.update(delta);
+
         }
     }
     /**
@@ -222,6 +234,7 @@ public class GameManager extends GameLoop implements Observer {
      */
     @Override
     public void update(Observable o, Object arg) {
+        gamelog.info("Updating Mouse State");
         MouseState mouseState = (MouseState) arg;
 
         if (mouseState.getEventType() == MouseEventType.RIGHT_CLICK) {
@@ -321,6 +334,7 @@ public class GameManager extends GameLoop implements Observer {
     * @param mouseState The mouse handler to user input
     */
     private void tileManagerUpdate(MouseState mouseState) {
+        gamelog.debug("Updating TileMangaer State");
         if (mouseState.getEventType() == MouseEventType.LEFT_CLICK) {
             if (mouseState.getSelectedSprite() != null) {
                 Vector2 pos = tileManager.getTilePosition(mouseState.getPosition());
@@ -383,8 +397,10 @@ public class GameManager extends GameLoop implements Observer {
     * Method to check if enough money is available to buy tower
     */
     public void refreshCanBuyTowers() {
+        gamelog.debug("Refreshing Tower Availability");
         for (Tower tower : sideBar.getTowersAvailable()) {
             tower.setCanBuy(tower.getCost() <= sideBar.getAvailableGold());
+
         }
     }
 
@@ -394,11 +410,14 @@ public class GameManager extends GameLoop implements Observer {
      * @param delta represents the changes in time
      */
     private void towerShoots(double delta) {
+        gamelog.info("Towers Shooting at Critters");
+
         for (Tower leTower: getTowersInScene()) {
             ArrayList<Critter> possibleTargets = critterManager.getShootableCritters(leTower);
 
             if(leTower.isTimeToFire(delta) && possibleTargets.size() > 0){
                 List<Critter> affectedCritters = leTower.doDamage(critterManager, possibleTargets);
+
             }
             else if (possibleTargets.size() == 0){
                 leTower.clearRateOfFire();

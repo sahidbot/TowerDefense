@@ -5,6 +5,7 @@ import common.core.ImageSprite;
 import common.core.Vector2;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
+import org.apache.log4j.Logger;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 /**
@@ -13,6 +14,7 @@ import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 public class Button extends ImageSprite {
     public ButtonType buttonType;
     private boolean isEnabled;
+    private static final Logger buttonlog = Logger.getLogger(Button.class);
 
 
     /**
@@ -45,6 +47,7 @@ public class Button extends ImageSprite {
      * @see ButtonType
      */
     private static Image imageFrom(ButtonType buttonType) {
+
         Image buttonImage;
         switch (buttonType) {
             case SELL:
@@ -65,6 +68,7 @@ public class Button extends ImageSprite {
             default:
                 throw new NotImplementedException();
         }
+        //buttonlog.info("Button is going through Image Conversion");
         return buttonImage;
     }
 
@@ -75,6 +79,7 @@ public class Button extends ImageSprite {
      */
     @Override
     public void draw(GraphicsContext gc) {
+        buttonlog.info(buttonType.toString()+" Button is drawn");
         if(isEnabled())
         gc.drawImage(this.getImage(), getPosition().getX(), getPosition().getY());
     }
@@ -97,6 +102,7 @@ public class Button extends ImageSprite {
      * @param enabled is the new value
      */
     public void setEnabled(boolean enabled) {
+        buttonlog.info(buttonType.toString()+" is set to enabled");
         isEnabled = enabled;
     }
 }

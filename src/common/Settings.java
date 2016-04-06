@@ -32,5 +32,6 @@ public class Settings {
     public static final int FONTSIZE_TITLE = 28;
     public static final int FONTSIZE_LINE = 16;
     public static final int STARTING_CURRENCY = 1000;
+    public static final int NUMBERTOFLOGLINESIN_INSPECTIONPANEL = 10;
 
 }

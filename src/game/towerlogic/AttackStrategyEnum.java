@@ -8,8 +8,9 @@ import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 public enum AttackStrategyEnum {
     CLOSEST,
     FARTHEST,
-    LOWESTHP;
-
+    LOWESTHP,
+    NEARESTTOENDPOINT,
+    HIGHESTHP;
 
     private static AttackStrategyEnum[] vals = values();
 
@@ -31,11 +32,15 @@ public enum AttackStrategyEnum {
     public String toString() {
         switch (this){
             case CLOSEST:
-                return "Closest Enemy";
+                return "Closest to Tower";
             case FARTHEST:
-                return "Farthest Enemy";
+                return "Farthest From Tower";
             case LOWESTHP:
-                return "Lowest Hp Enemy";
+                return "Lowest Hp ";
+            case NEARESTTOENDPOINT:
+                return "Closest to Exit";
+            case HIGHESTHP:
+                return "Highest HP";
             default:
                 throw new NotImplementedException();
         }

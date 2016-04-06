@@ -10,6 +10,9 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 
+import java.util.LinkedList;
+import java.util.Queue;
+
 /**
  * Represents the side panel that holds the towers and the inspection panel
  * @version $revision $
@@ -28,6 +31,7 @@ public class SideBar {
     private Tower[] towersAvailable;
     private int availableGold;
     private Button newWaveButton;
+
 
     public Tower selectedTowerForInspection;
 
@@ -202,4 +206,7 @@ public class SideBar {
     public Button getNewWaveButton() {
         return newWaveButton;
     }
+
+
+
 }

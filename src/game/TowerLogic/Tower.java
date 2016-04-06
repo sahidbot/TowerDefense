@@ -37,6 +37,7 @@ public class Tower extends Tile {
     private double damageMultiplier;
     private boolean isActive;
     private boolean canBuy;
+    private AttackStrategyFactory strategyFactory;
 
     private IAttackStrategy attackStrategy;
     private AttackEffect attackEffect;
@@ -54,6 +55,7 @@ public class Tower extends Tile {
         isActive = false;
         setInitialValues();
         noMoneySprite = new NoMoneySprite(position);
+        strategyFactory = new AttackStrategyFactory();
         setAttackStrategyEnum(AttackStrategyEnum.LOWESTHP);
     }
 
@@ -405,21 +407,8 @@ public class Tower extends Tile {
      * @param strategy the strategy to use
      */
     public void setAttackStrategyEnum(AttackStrategyEnum strategy) {
-        switch (strategy) {
-            case CLOSEST:
-                attackStrategy = new AttackClosestStrategy(this);
-                break;
-            case FARTHEST:
-                attackStrategy = new AttackFarthestStrategy(this);
-                break;
-            case LOWESTHP:
-                attackStrategy = new AttackLowestHPStrategy(this);
-                break;
-            default:
-                throw new NotImplementedException();
-
-                }
-            towerLog.info("The tower: " + this.getTowerType().toString() + " is now using:  " +strategy.toString()+" strategy");
+        attackStrategy = strategyFactory.getAttackStrategy(strategy, this);
+        towerLog.info("The tower: " + this.getTowerType().toString() + " is now using:  " +strategy.toString()+" strategy");
 
     }
 

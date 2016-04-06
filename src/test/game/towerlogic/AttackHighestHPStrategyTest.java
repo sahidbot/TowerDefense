@@ -3,6 +3,7 @@ package test.game.towerlogic;
 import common.core.Vector2;
 import game.Critter;
 import game.CritterType;
+import game.towerlogic.AttackHighestHPStrategy;
 import game.towerlogic.AttackLowestHPStrategy;
 import game.towerlogic.Tower;
 import game.towerlogic.TowerType;
@@ -17,9 +18,10 @@ import java.util.List;
 import static org.junit.Assert.*;
 
 /**
- * Created by Monster on 3/15/2016.
+ * Created by Monster on 4/6/2016.
  */
-public class AttackLowestHPStrategyTest {
+public class AttackHighestHPStrategyTest {
+
     @Rule
     public JavaFXThreadingRule javafxRule = new JavaFXThreadingRule();
     private ArrayList<Critter> crittersorder1;
@@ -27,7 +29,7 @@ public class AttackLowestHPStrategyTest {
     private Critter zeroZeroCritter;
     private Critter fourFourCritter;
     private Tower tower;
-    AttackLowestHPStrategy strategy;
+    AttackHighestHPStrategy strategy;
     private ArrayList<Critter> zeroZeroCritterList;
 
     @Before
@@ -48,7 +50,7 @@ public class AttackLowestHPStrategyTest {
         crittersorder2.add(zeroZeroCritter);
 
         tower = new Tower(TowerType.ARROW, new Vector2(3, 3));
-        strategy = new AttackLowestHPStrategy(tower);
+        strategy = new AttackHighestHPStrategy(tower);
     }
 
     @Test
@@ -57,20 +59,13 @@ public class AttackLowestHPStrategyTest {
         zeroZeroCritter.setHealthPoints(100);
         List<Critter> result = strategy.doDamage(crittersorder1);
         assertEquals(1, result.size());
-        assertEquals(fourFourCritter, result.get(0));
+        assertEquals(zeroZeroCritter, result.get(0));
 
         fourFourCritter.setHealthPoints(100);
         zeroZeroCritter.setHealthPoints(10);
         List<Critter> result2 = strategy.doDamage(crittersorder2);
         assertEquals(1, result2.size());
-        assertEquals(zeroZeroCritter, result2.get(0));
+        assertEquals(fourFourCritter, result2.get(0));
     }
 
-    @Test
-    public void doDamageDoesDamageTest() {
-        zeroZeroCritter.setHealthPoints(100);
-        tower.setDamage(10);
-        List<Critter> result = strategy.doDamage(zeroZeroCritterList);
-        assertEquals(85, result.get(0).getHealthPoints(), 0.001);
-    }
 }

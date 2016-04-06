@@ -10,7 +10,9 @@ import javafx.scene.text.FontWeight;
 import org.apache.log4j.Logger;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Queue;
 
 /**
  * Represents the inspection panel that shows the stats of the tower and
@@ -29,6 +31,7 @@ public class InspectionPanel {
     private Button leftArrowButton;
     private Button rightArrowButton;
     private static final Logger ipanelog= Logger.getLogger(InspectionPanel.class) ;
+    private Queue<String> logQueue;
 
 
     /**
@@ -50,6 +53,7 @@ public class InspectionPanel {
         upgradeButton = new Button(ButtonType.UPGRADE, upgradePosition);
         leftArrowButton = new Button(ButtonType.LEFTARROW, new Vector2());
         rightArrowButton = new Button(ButtonType.RIGHTARROW, new Vector2());
+        logQueue = new LinkedList<>();
     }
 
     /**
@@ -80,9 +84,11 @@ public class InspectionPanel {
         if (getSelectedTower() != null) {
             Font titleFont = Font.font(Settings.FONT_NAME, FontWeight.BOLD, 20);
             Font parametersFont = Font.font(Settings.FONT_NAME, FontWeight.NORMAL, 16);
+            Font logFont = Font.font(Settings.FONT_NAME, FontWeight.NORMAL, 12);
 
             float titleSeparation = 24;
             float linesSeparation = 17;
+            float logSeparation = 13;
 
             gc.setFont(titleFont);
             String towerTitle = getSelectedTower().getTowerType().name() + " TOWER";
@@ -152,7 +158,15 @@ public class InspectionPanel {
             Vector2 newUpgradeButton = new Vector2(titlePosition.getX() + getSellButton().getWidth() + 2, currentYPosition);
             getUpgradeButton().setPosition(newUpgradeButton);
             getUpgradeButton().draw(gc);
-
+            
+            //DrawLogs
+            currentYPosition += getUpgradeButton().getHeight() + 2 + logSeparation;
+            for (int i = 0; i< logQueue.size(); i++){
+                String toDraw = logQueue.remove();
+                drawText(gc,toDraw, new Vector2(titlePosition.getX() ,currentYPosition + i* logSeparation), Color.BLACK);
+                logQueue.add(toDraw);
+            }
+            
 
         }
 
@@ -241,5 +255,23 @@ public class InspectionPanel {
      */
     public void setLeftArrowButton(Button leftArrowButton) {
         this.leftArrowButton = leftArrowButton;
+    }
+
+    /**
+     * Adds a new line to the log. The maximum number of logs is 10 at the moment.
+     * @param newLog New log line
+     */
+    public void addLog(String newLog){
+        if(logQueue.size() > Settings.NUMBERTOFLOGLINESIN_INSPECTIONPANEL){
+            logQueue.remove();
+        }
+        logQueue.add(newLog);
+    }
+
+    /**
+     * Clears the current log
+     */
+    public void clearLog(){
+        logQueue.clear();
     }
 }

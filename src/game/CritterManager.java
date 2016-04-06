@@ -177,8 +177,11 @@ public class CritterManager {
             critter.update(delta);
 
             // critter movement
-            if (critter.canMove()) {
+            if (!critter.isFrozen()) {
                 moveCritter(critter, delta);
+            }
+            else{
+                moveCritter(critter, delta * 0.5);
             }
 
             // check if critter reached to end
@@ -210,6 +213,7 @@ public class CritterManager {
         // update the currency
         GameManager.getInstance().sideBar.addAvailableGold(getRewards());
     }
+
 
     /**
      * Method for drawing Critter to canvas
@@ -262,6 +266,8 @@ public class CritterManager {
 
         critter.getPosition().setXY(newX, newY);
     }
+
+
 
     /**
      * Get the next tile .

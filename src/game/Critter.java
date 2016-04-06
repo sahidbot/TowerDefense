@@ -179,12 +179,12 @@ public class Critter extends Tile {
     }
 
     /**
-     * Check whether the critter can move.
+     * Check whether the critter is frozen
      *
-     * @return Returns true if it can move, or false
+     * @return Returns the value
      */
-    public boolean canMove() {
-        return frozenDuration <= 0;
+    public boolean isFrozen() {
+        return frozenDuration >= 0;
     }
 
     /**

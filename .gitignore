@@ -124,3 +124,7 @@ Icon
 Network Trash Folder
 Temporary Items
 .apdisk
+
+#log4j
+log/
+logs/

@@ -39,6 +39,14 @@ public abstract class GameLoop {
     }
 
     /**
+     * Stop the game loop
+     */
+    public void stop() {
+        timer.stop();
+        running = false;
+    }
+
+    /**
      * Method for updating game and map
      *
      * @param delta represents the time difference

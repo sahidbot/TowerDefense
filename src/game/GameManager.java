@@ -43,10 +43,11 @@ public class GameManager extends GameLoop implements Observer {
      */
     private GameManager() {
     }
-        /**
-         * Get the instance of game manager.
-         * @return Returns the instance of game manager.
-         */
+
+    /**
+     * Get the instance of game manager.
+     * @return Returns the instance of game manager.
+     */
     public static GameManager getInstance() {
         if (instance == null)
             instance = new GameManager();
@@ -137,11 +138,7 @@ public class GameManager extends GameLoop implements Observer {
      */
     public void endWave() {
         isWaveStarted = false;
-
-        if (this.level < 2)
-            this.level++;
-        gamelog.info("Wave Ended");
-
+        this.level++;
     }
 
     /**
@@ -160,8 +157,6 @@ public class GameManager extends GameLoop implements Observer {
         endWave();
         isGameEnd = true;
         gamelog.info("Game Ended");
-
-
     }
 
     /**
@@ -183,7 +178,6 @@ public class GameManager extends GameLoop implements Observer {
 
         if (isWaveStarted) {
             critterManager.update(delta);
-
         }
     }
     /**
@@ -400,7 +394,6 @@ public class GameManager extends GameLoop implements Observer {
         gamelog.debug("Refreshing Tower Availability");
         for (Tower tower : sideBar.getTowersAvailable()) {
             tower.setCanBuy(tower.getCost() <= sideBar.getAvailableGold());
-
         }
     }
 
@@ -417,7 +410,6 @@ public class GameManager extends GameLoop implements Observer {
 
             if(leTower.isTimeToFire(delta) && possibleTargets.size() > 0){
                 List<Critter> affectedCritters = leTower.doDamage(critterManager, possibleTargets);
-
             }
             else if (possibleTargets.size() == 0){
                 leTower.clearRateOfFire();

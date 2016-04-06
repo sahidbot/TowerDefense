@@ -20,7 +20,7 @@ import java.util.concurrent.ThreadLocalRandom;
 public class CritterManager {
     private ArrayList<Critter> critters;
     private LinkedList<Tile> pathList;
-    private Vector2 exitPointGridPosition;
+    private Tile exitPointTile;
 
     private int rows, columns;
     int crittersPassed = 0;
@@ -42,8 +42,7 @@ public class CritterManager {
         this.rows = pathFinder.rows;
         this.columns = pathFinder.columns;
 
-        exitPointGridPosition =
-                GameManager.getInstance().tileManager.getTilePosition(pathList.getLast().getPosition());
+        exitPointTile = pathList.getLast();
     }
 
     public void SetCritterList(ArrayList<Critter> critterList)
@@ -123,9 +122,17 @@ public class CritterManager {
 
         int min = 30;
         int max = 50;
-
         int randomNum = ThreadLocalRandom.current().nextInt((max - min) + 1) + min;
 
+        spawnCritters(randomNum);
+    }
+
+    /**
+     * Spawn the specified number of critters
+     *
+     * @param n Number of critters to spawn
+     */
+    private void spawnCritters(int n) {
         Tile start = pathList.get(0);
         Tile second = pathList.get(1);
 
@@ -143,8 +150,9 @@ public class CritterManager {
         Vector2 position = new Vector2();
         position.setFromVector(start.getPosition());
 
-        for (int i = 0; i < randomNum; i++) {
+        for (int i = 0; i < n; i++) {
             Critter critter = new Critter(position, CritterType.AIR);
+            critter.setNextPathTile(start);
             critters.add(critter);
 
             if (isVerticalSpawn) {
@@ -238,9 +246,7 @@ public class CritterManager {
      * @param delta represents how much Critter is to be moved
      */
     private void moveCritter(Critter critter, double delta, double percentage) {
-        //critterlog.info("Critter is Moving");
-        Vector2 pos = GameManager.getInstance().tileManager.getTilePosition(critter.getPosition());
-        Tile nextTile = getNextTile(pos);
+        Tile nextTile = getNextTile(critter);
 
         if (nextTile == null)
             return;
@@ -275,22 +281,32 @@ public class CritterManager {
     /**
      * Get the next tile .
      *
-     * @param pos represent the position of the
+     * @param critter The critter object
      * @return Returns the Tile
      */
-    private Tile getNextTile(Vector2 pos) {
-        for (int i = 0; i < pathList.size(); i++) {
-            Tile tile = pathList.get(i);
-            if (tile.getType() != SpriteType.EXIT_POINT) {
-                Vector2 tilePos = GameManager.getInstance().tileManager.getTilePosition(tile.getPosition());
-                if (pos.equals(tilePos) && i < pathList.size() - 1)
-                {
-                    return pathList.get(i + 1);
-                }
+    private Tile getNextTile(Critter critter) {
+        int index = pathList.indexOf(critter.getNextPathTile());
+        if (index < pathList.size() - 1) {
+            if (collidesWith(critter, critter.getNextPathTile())) {
+                critter.setNextPathTile(pathList.get(index + 1));
             }
         }
 
-        return pathList.get(0);
+        return critter.getNextPathTile();
+    }
+
+    /**
+     * Check the collision with critter and tile
+     * @param critter Instance of the critter
+     * @param tile Instance of the tile
+     * @return Returns true or false
+     */
+    private boolean collidesWith(Critter critter, Tile tile) {
+        Vector2 pos = tile.getPosition();
+        pos = new Vector2(pos.getX() + (Settings.TILE_WIDTH / 2),
+                pos.getY() + (Settings.TILE_HEIGHT / 2));
+
+        return critter.collidesWith(pos);
     }
 
     /**
@@ -300,20 +316,9 @@ public class CritterManager {
      * @return Returns a boolean value has the result
      */
     private boolean isReachedToExitPoint(Critter critter) {
-        Vector2 critterPos =
-                GameManager.getInstance().tileManager.getTilePosition(critter.getPosition());
-
-        if (exitPointGridPosition.equals(critterPos)) {
-            critterlog.info("A Critter Reached Exit Point");
-
+        if (collidesWith(critter, exitPointTile))
             return true;
-
-        }
 
         return false;
     }
-
-    // end logic
-    // damage per second
-    // frozen duration
 }

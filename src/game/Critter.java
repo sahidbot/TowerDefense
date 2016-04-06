@@ -20,6 +20,7 @@ public class Critter extends Tile {
     private float damagePerSecondDuration = 0;
     private float frozenDuration = 0;
 
+    private Tile nextPathTile;
     private CritterHealthBar healthBar;
 
     /**
@@ -185,6 +186,33 @@ public class Critter extends Tile {
      */
     public boolean isFrozen() {
         return frozenDuration > 0;
+    }
+
+    /**
+     * Check whether the critter can move.
+     *
+     * @return Returns true if it can move, or false
+     */
+    public boolean canMove() {
+        return frozenDuration <= 0;
+    }
+
+    /**
+     * Get the next path tile
+     *
+     * @return Tile of the path
+     */
+    public Tile getNextPathTile() {
+        return nextPathTile;
+    }
+
+    /**
+     * Set the next path tile
+     *
+     * @param nextPathTile Tile of the path
+     */
+    public void setNextPathTile(Tile nextPathTile) {
+        this.nextPathTile = nextPathTile;
     }
 
     /**

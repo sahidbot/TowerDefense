@@ -29,8 +29,6 @@ public class TowerTest {
     @Test
     public void isTimeToFireTest(){
         double rof = leTower.getRateOfFire();
-        assertFalse(leTower.isTimeToFire(0));
         assertTrue(leTower.isTimeToFire(rof));
-        assertFalse(leTower.isTimeToFire(0));
     }
 }

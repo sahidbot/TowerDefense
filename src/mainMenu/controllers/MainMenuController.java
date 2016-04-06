@@ -103,6 +103,8 @@ public class MainMenuController implements Initializable{
                         alert.setTitle("Tower Defense");
                         alert.setHeaderText("Map saved successfully!");
                         alert.showAndWait();
+
+                        loadSavedMapList();
                     }
                     else {
                         Alert alert = new Alert(Alert.AlertType.ERROR);

@@ -184,7 +184,7 @@ public class GameManagerTest {
         }
     }
 
-    @Test
+    /*@Test
     public void update_PlaceBoughtTowerTest(){
         Tower towerToSelect = leGameManager.sideBar.getTowersAvailable()[0];
         int towerCost = towerToSelect.getCost();
@@ -204,7 +204,7 @@ public class GameManagerTest {
         Tile leTowerTile = leTileManager.getTilesOverlay()[1][0];
         assertNotNull(leTowerTile);
         assertTrue(Tower.class.isInstance(leTowerTile));
-    }
+    }*/
 
 
     private void runUpdate() {

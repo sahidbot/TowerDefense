@@ -178,10 +178,10 @@ public class CritterManager {
 
             // critter movement
             if (!critter.isFrozen()) {
-                moveCritter(critter, delta);
+                moveCritter(critter, delta, 1);
             }
             else{
-                moveCritter(critter, delta * 0.5);
+                moveCritter(critter, delta, 0.5);
             }
 
             // check if critter reached to end
@@ -237,7 +237,7 @@ public class CritterManager {
      * @param  critter represents the Critter to be moved
      * @param delta represents how much Critter is to be moved
      */
-    private void moveCritter(Critter critter, double delta) {
+    private void moveCritter(Critter critter, double delta, double percentage) {
         //critterlog.info("Critter is Moving");
         Vector2 pos = GameManager.getInstance().tileManager.getTilePosition(critter.getPosition());
         Tile nextTile = getNextTile(pos);
@@ -251,6 +251,9 @@ public class CritterManager {
         //double distanceTraveled = 10 * delta;
         double distanceTraveled = critter.getSpeed() +
                 GameManager.getInstance().getLevel() - 1;
+
+        distanceTraveled *= percentage;
+
         double newX = curPos.getX();
         double newY = curPos.getY();
 

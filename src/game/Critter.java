@@ -184,7 +184,7 @@ public class Critter extends Tile {
      * @return Returns the value
      */
     public boolean isFrozen() {
-        return frozenDuration >= 0;
+        return frozenDuration > 0;
     }
 
     /**

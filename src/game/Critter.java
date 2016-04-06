@@ -20,6 +20,8 @@ public class Critter extends Tile {
     private float damagePerSecondDuration = 0;
     private float frozenDuration = 0;
 
+    private CritterHealthBar healthBar;
+
     /**
      * Default Constructor
      *
@@ -29,6 +31,7 @@ public class Critter extends Tile {
     public Critter(Vector2 position, CritterType critterType) {
         super(imageFrom(critterType), position);
         this.critterType = critterType;
+        healthBar = new CritterHealthBar(position, healthPoints);
     }
     /**
      * Default Constructor for tests
@@ -40,6 +43,7 @@ public class Critter extends Tile {
     public Critter(double width, double height, Vector2 position, CritterType critterType) {
         super(SpriteType.CRITTER, width, height, position);
         this.critterType = critterType;
+        healthBar = new CritterHealthBar(position, healthPoints);
     }
 
     /**
@@ -68,6 +72,7 @@ public class Critter extends Tile {
     @Override
     public void draw(GraphicsContext gc) {
         gc.drawImage(this.getImage(), getPosition().getX(), getPosition().getY());
+        healthBar.draw(gc);
     }
 
     /**
@@ -86,6 +91,7 @@ public class Critter extends Tile {
      */
     public void setHealthPoints(float healthPoints) {
         this.healthPoints = healthPoints;
+        this.healthBar.updateHealthPoints(healthPoints);
     }
 
     /**
@@ -121,6 +127,7 @@ public class Critter extends Tile {
      */
     public void addHealthPoints(float toAdd){
         healthPoints += toAdd;
+        healthBar.updateHealthPoints(healthPoints);
     }
 
     /**
@@ -187,7 +194,7 @@ public class Critter extends Tile {
     public void update(double delta) {
         // damage per second
         if (damagePerSecondDuration >= 0) {
-            healthPoints -= delta * damagePerSecond;
+            setHealthPoints((float) (healthPoints - (delta * damagePerSecond)));
             damagePerSecondDuration -= delta;
         }
         else {

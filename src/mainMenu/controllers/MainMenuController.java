@@ -201,10 +201,13 @@ public class MainMenuController implements Initializable{
      * @param loadSavedGame check whether to load previous state
      */
     private void loadGameManager(boolean loadSavedGame) throws IOException {
+        LOGGER.info("Loading GameManager");
         String selectedMap = (String) mapListView.getSelectionModel().getSelectedItem();
         if (selectedMap != null) {
+            LOGGER.info("Detected a selected map");
             String mapContent = Helper.loadMap(selectedMap);
             if (mapContent != null) {
+                LOGGER.info("Information in map file is valid. Loading Map");
                 String[] mapData = mapContent.split(System.getProperty("line.separator"));
 
                 int sIndex = mapData[0].indexOf(",");
@@ -217,8 +220,10 @@ public class MainMenuController implements Initializable{
                 stage.setScene(scene);
                 stage.setResizable(false);
 
+                LOGGER.info("Loading game manager");
                 GameManager.getInstance().initialize(root, rows, columns, mapData);
                 if (loadSavedGame) {
+                    LOGGER.info("Loading saved game");
                     GameManager.getInstance().setSaveGameState(loadGameState(selectedMap));
                 }
                 GameManager.getInstance().start();
@@ -226,9 +231,14 @@ public class MainMenuController implements Initializable{
                 stage.setHeight(stage.getHeight() - 12);
 
                 stage.setOnCloseRequest(event -> {
+                    LOGGER.info("Detected close request");
                     GameManager.getInstance().stop();
+                    LOGGER.info("Attempting to save game state");
                     saveGameState(selectedMap);
                 });
+            }
+            else{
+                LOGGER.error("Failed to load map file");
             }
         }
     }
@@ -242,10 +252,13 @@ public class MainMenuController implements Initializable{
         GameState gameState = GameManager.getInstance().getSaveGameState();
         if (gameState.towers.size() > 0 ||
                 gameState.level > 1) {
+            LOGGER.info("Saving game state");
             Gson gson = new GsonBuilder().setPrettyPrinting().create();
             String json = gson.toJson(gameState);
-
             Helper.saveGameState(mapName, json);
+        }
+        else{
+            LOGGER.warn("Nothing to save");
         }
     }
 
@@ -256,9 +269,11 @@ public class MainMenuController implements Initializable{
      * @return returns the instance of the game state
      */
     private GameState loadGameState(String mapName) throws IOException {
+        LOGGER.info("Checking if there is a load file");
         File file = new File(Settings.USER_GAME_STATE_DIRECTORY + "/" + mapName);
 
         if (file.exists()) {
+            LOGGER.info("Load file found, attempting to load");
             StringBuilder sb = new StringBuilder();
 
             BufferedReader br = new BufferedReader(new FileReader(file));
@@ -277,7 +292,7 @@ public class MainMenuController implements Initializable{
 
             return gameState;
         }
-
+        LOGGER.info("Load file not present");
         return null;
     }
 }

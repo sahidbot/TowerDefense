@@ -221,6 +221,7 @@ public class GameManager extends GameLoop implements Observer {
                     (tileManager.getHeight() / 2) - 30);
             Helper.drawText(gc, "GAME OVER", textPosition, Color.RED);
         }
+        sideBar.getInspectionPanel().drawTowerLogText(sideBar.getInspectionPanel().getSelectedTower());
     }
 
     /**
@@ -334,7 +335,7 @@ public class GameManager extends GameLoop implements Observer {
                 Tower foundTower = null;
                 for (Tower tower : sideBar.getTowersAvailable()) {
                     if (tower.collidesWith(mouseState.getPosition())) {
-                        LOGGER.info("Detected hovering on tower: " + tower.getUniqueId());
+                        LOGGER.info("Detected hovering on tower: " + tower.getTowerHeaderLog());
                         foundTower = tower;
                         break;
                     }
@@ -426,19 +427,20 @@ public class GameManager extends GameLoop implements Observer {
      * @param delta represents the changes in time
      */
     private void towerShoots(double delta) {
-        for (Tower leTower: getTowersInScene()) {
+        for (Tower leTower : getTowersInScene()) {
             ArrayList<Critter> possibleTargets = critterManager.getShootableCritters(leTower);
 
-            if(leTower.isTimeToFire(delta) && possibleTargets.size() > 0) {
-                LOGGER.info("No of Critters in shooting range: " + possibleTargets.size());
+            if (leTower.isTimeToFire(delta) && possibleTargets.size() > 0) {
                 List<Critter> affectedCritters = leTower.doDamage(critterManager, possibleTargets);
-                LOGGER.info("No of affected Critters: " + affectedCritters.size());
-            }
-            else if (possibleTargets.size() == 0){
+            } else if (possibleTargets.size() == 0) {
                 leTower.clearRateOfFire();
             }
         }
-        sideBar.addAvailableGold(critterManager.getRewards());
+        int rewards = critterManager.getRewards();
+        if (rewards > 0) {
+            LOGGER.info("Collecting rewards");
+            sideBar.addAvailableGold(rewards);
+        }
         refreshCanBuyTowers();
     }
 

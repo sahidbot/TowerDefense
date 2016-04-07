@@ -14,7 +14,7 @@ import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 public class Button extends ImageSprite {
     public ButtonType buttonType;
     private boolean isEnabled;
-    private static final Logger buttonlog = Logger.getLogger(Button.class);
+    private static final Logger LOGGER = Logger.getLogger(Button.class);
 
 
     /**
@@ -68,7 +68,7 @@ public class Button extends ImageSprite {
             default:
                 throw new NotImplementedException();
         }
-        //buttonlog.info("Button is going through Image Conversion");
+        //LOGGER.info("Button is going through Image Conversion");
         return buttonImage;
     }
 
@@ -79,7 +79,6 @@ public class Button extends ImageSprite {
      */
     @Override
     public void draw(GraphicsContext gc) {
-        buttonlog.info(buttonType.toString()+" Button is drawn");
         if(isEnabled())
         gc.drawImage(this.getImage(), getPosition().getX(), getPosition().getY());
     }
@@ -102,7 +101,12 @@ public class Button extends ImageSprite {
      * @param enabled is the new value
      */
     public void setEnabled(boolean enabled) {
-        buttonlog.info(buttonType.toString()+" is set to enabled");
+        if (isEnabled != enabled) {
+            if (enabled)
+                LOGGER.info(buttonType.toString() + " is enabled");
+            else
+                LOGGER.info(buttonType.toString() + " is disabled");
+        }
         isEnabled = enabled;
     }
 }

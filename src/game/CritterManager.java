@@ -1,7 +1,6 @@
 package game;
 
 import common.Settings;
-import common.SpriteType;
 import common.Tile;
 import common.core.Rect;
 import common.core.Vector2;
@@ -27,7 +26,7 @@ public class CritterManager {
     int maxCrittersPassed = 10;
 
     private int rewards = 0;
-    private static final Logger critterlog = Logger.getLogger(GameManager.class);
+    private static final Logger LOGGER = Logger.getLogger(GameManager.class);
 
 
     /**
@@ -45,8 +44,12 @@ public class CritterManager {
         exitPointTile = pathList.getLast();
     }
 
-    public void SetCritterList(ArrayList<Critter> critterList)
-    {
+    /**
+     * Set critter list
+     *
+     * @param critterList List of critters
+     */
+    public void setCritterList(ArrayList<Critter> critterList) {
         critters = critterList;
     }
 
@@ -56,7 +59,6 @@ public class CritterManager {
      * @return Returns the list of Critters
      */
     public ArrayList<Critter> getShootableCritters(Tower tower) {
-
         ArrayList<Critter> results = new ArrayList<>();
 
         for (Critter critter : critters) {
@@ -64,7 +66,6 @@ public class CritterManager {
                 results.add(critter);
             }
         }
-        critterlog.info("Critter are now within shooting range"+" : No of Critters in range= "+ results.size());
         return results;
     }
 
@@ -95,7 +96,6 @@ public class CritterManager {
                 results.add(critter);
             }
         }
-        critterlog.debug("Getting critter close to shooting range"+" : No of Critters in range= "+ results.size());
         return results;
     }
 
@@ -105,7 +105,6 @@ public class CritterManager {
      * @return Returns an integer as the reward
      */
     public int getRewards() {
-        critterlog.debug("Getting reward for critters shot");
         int temp = rewards;
         rewards = 0;
 
@@ -116,7 +115,7 @@ public class CritterManager {
      * Method for starting the wave
      */
     public void startWave() {
-        critterlog.debug("starting the wave");
+        LOGGER.debug("starting the wave");
         critters.clear();
         crittersPassed = 0;
 
@@ -124,6 +123,7 @@ public class CritterManager {
         int max = 50;
         int randomNum = ThreadLocalRandom.current().nextInt((max - min) + 1) + min;
 
+        LOGGER.info(randomNum + " number of critters spawned");
         spawnCritters(randomNum);
     }
 
@@ -168,8 +168,6 @@ public class CritterManager {
      * Method responsible for updating the Critter
      */
     public void update(double delta) {
-        critterlog.debug("updating critter");
-
         ArrayList<Critter> crittersToBeDeleted = new ArrayList<>();
 
         for (int i = 0; i < critters.size(); i++) {
@@ -227,8 +225,6 @@ public class CritterManager {
      * Method for drawing Critter to canvas
      */
     public void draw(GraphicsContext gc) {
-        critterlog.info("Drawing Critters");
-
         for (Critter critter : critters) {
             Vector2 position = critter.position;
             double x = position.getX() > 0 ? Math.ceil(position.getX() / Settings.TILE_WIDTH) : 0;
@@ -275,8 +271,6 @@ public class CritterManager {
 
         critter.getPosition().setXY(newX, newY);
     }
-
-
 
     /**
      * Get the next tile .

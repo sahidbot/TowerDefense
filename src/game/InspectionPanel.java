@@ -30,9 +30,9 @@ public class InspectionPanel {
     private Button upgradeButton;
     private Button leftArrowButton;
     private Button rightArrowButton;
-    private static final Logger ipanelog= Logger.getLogger(InspectionPanel.class) ;
     private Queue<String> logQueue;
 
+    private static final Logger LOGGER = Logger.getLogger(InspectionPanel.class);
 
     /**
      * Default constructor
@@ -71,7 +71,16 @@ public class InspectionPanel {
      * @param selectedTower new selected tower
      */
     public void setSelectedTower(Tower selectedTower) {
-        //ipanelog.info(this.selectedTower.toString()+ " was selected to be displayed on the Inspection Panel");
+        if (selectedTower != this.selectedTower) {
+            if (this.selectedTower != null) {
+                LOGGER.info("Selected tower changed from: " + this.selectedTower.getTowerType());
+            }
+
+            if (selectedTower != null) {
+                LOGGER.info("Selected tower changed to: " + selectedTower.getTowerType());
+            }
+        }
+
         this.selectedTower = selectedTower;
     }
 
@@ -95,7 +104,6 @@ public class InspectionPanel {
             Vector2 titlePosition = new Vector2(leftOffset,
                     topOffset);
             drawText(gc, towerTitle, titlePosition, Color.BLACK);
-            ipanelog.info("The Inspection Panel is drawn");
 
             //Setup stat lines
             List<String> statLines = new ArrayList<String>();

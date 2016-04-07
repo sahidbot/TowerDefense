@@ -36,7 +36,7 @@ public class GameManager extends GameLoop implements Observer {
     private boolean isWaveStarted = false;
     private boolean isGameEnd = false;
     private int level = 1;
-    private static final Logger gamelog = Logger.getLogger(GameManager.class);
+    private static final Logger LOGGER = Logger.getLogger(GameManager.class);
 
     /**
      * Main constructor for GameManager
@@ -64,7 +64,7 @@ public class GameManager extends GameLoop implements Observer {
      * @param mapData Saved content for the map
      */
     public void initialize(Group root, int rows, int columns, String[] mapData) {
-        gamelog.debug("Initializing Game Manager");
+        LOGGER.debug("Initializing Game Manager");
 
         this.width = (Settings.TILE_WIDTH * columns) + Settings.SIDEBAR_WIDTH;
         this.height = Settings.TILE_HEIGHT * rows;
@@ -131,7 +131,7 @@ public class GameManager extends GameLoop implements Observer {
         isWaveStarted = true;
         critterManager.startWave();
 
-        gamelog.info("New Wave Started");
+        LOGGER.info("Starting new wave");
     }
     /**
      * End the current wave
@@ -139,6 +139,8 @@ public class GameManager extends GameLoop implements Observer {
     public void endWave() {
         isWaveStarted = false;
         this.level++;
+        LOGGER.info("Finished wave");
+        LOGGER.info("Level upgraded to: " + level);
     }
 
     /**
@@ -156,7 +158,7 @@ public class GameManager extends GameLoop implements Observer {
     public void endGame() {
         endWave();
         isGameEnd = true;
-        gamelog.info("Game Ended");
+        LOGGER.info("Game Ended");
     }
 
     /**
@@ -172,7 +174,6 @@ public class GameManager extends GameLoop implements Observer {
     */
     @Override
     protected void update(double delta) {
-        gamelog.debug("CritterManager Updated At the Start of New Wave");
         sideBar.getNewWaveButton().setEnabled(!isWaveStarted);
         towerShoots(delta);
 
@@ -228,10 +229,12 @@ public class GameManager extends GameLoop implements Observer {
      */
     @Override
     public void update(Observable o, Object arg) {
-        gamelog.info("Updating Mouse State");
         MouseState mouseState = (MouseState) arg;
 
         if (mouseState.getEventType() == MouseEventType.RIGHT_CLICK) {
+            if (mouseState.getSelectedSprite() != null) {
+                LOGGER.info("Clearing selected tower: " + mouseState.getSelectedSprite().getUniqueId());
+            }
             mouseState.clearSelectedSprite();
             sideBar.getInspectionPanel().setSelectedTower(null);
         }
@@ -328,7 +331,6 @@ public class GameManager extends GameLoop implements Observer {
     * @param mouseState The mouse handler to user input
     */
     private void tileManagerUpdate(MouseState mouseState) {
-        gamelog.debug("Updating TileMangaer State");
         if (mouseState.getEventType() == MouseEventType.LEFT_CLICK) {
             if (mouseState.getSelectedSprite() != null) {
                 Vector2 pos = tileManager.getTilePosition(mouseState.getPosition());
@@ -355,6 +357,11 @@ public class GameManager extends GameLoop implements Observer {
                 sideBar.setAvailableGold(sideBar.getAvailableGold() - selectedTile.getCost());
                 refreshCanBuyTowers();
                 mouseState.clearSelectedSprite();
+
+                LOGGER.debug("Placed a new tower at position: " + position.toString());
+            }
+            else {
+                LOGGER.debug("Cannot place tower at position: " + mouseState.getPosition().toString());
             }
         }
 
@@ -391,7 +398,6 @@ public class GameManager extends GameLoop implements Observer {
     * Method to check if enough money is available to buy tower
     */
     public void refreshCanBuyTowers() {
-        gamelog.debug("Refreshing Tower Availability");
         for (Tower tower : sideBar.getTowersAvailable()) {
             tower.setCanBuy(tower.getCost() <= sideBar.getAvailableGold());
         }
@@ -403,13 +409,13 @@ public class GameManager extends GameLoop implements Observer {
      * @param delta represents the changes in time
      */
     private void towerShoots(double delta) {
-        gamelog.info("Towers Shooting at Critters");
-
         for (Tower leTower: getTowersInScene()) {
             ArrayList<Critter> possibleTargets = critterManager.getShootableCritters(leTower);
 
-            if(leTower.isTimeToFire(delta) && possibleTargets.size() > 0){
+            if(leTower.isTimeToFire(delta) && possibleTargets.size() > 0) {
+                LOGGER.info("No of Critters in shooting range: " + possibleTargets.size());
                 List<Critter> affectedCritters = leTower.doDamage(critterManager, possibleTargets);
+                LOGGER.info("No of affected Critters: " + affectedCritters.size());
             }
             else if (possibleTargets.size() == 0){
                 leTower.clearRateOfFire();

@@ -206,7 +206,4 @@ public class SideBar {
     public Button getNewWaveButton() {
         return newWaveButton;
     }
-
-
-
 }

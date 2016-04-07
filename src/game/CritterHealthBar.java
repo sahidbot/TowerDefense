@@ -72,7 +72,7 @@ public class CritterHealthBar {
      * @param value Value range between 0 to 1
      * @return Returns the color
      */
-    private Color getBlendedColor(double value) {
+    public Color getBlendedColor(double value) {
         java.awt.Color color = new java.awt.Color(
                 java.awt.Color.HSBtoRGB((float)value/3f, 1f, 1f));
         return Color.rgb(color.getRed(), color.getGreen(), color.getBlue());

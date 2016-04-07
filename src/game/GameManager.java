@@ -516,7 +516,7 @@ public class GameManager extends GameLoop implements Observer {
             Tower tower = new Tower(ts.towerType, position);
             tower.setAttackStrategyEnum(ts.strategy);
             tower.setLevel(ts.level);
-            tower.setUniqueId(UUID.fromString(ts.id));
+            tower.setUniqueId(ts.id);
 
             tower.setActive(true);
             tower.setDraggable(false);

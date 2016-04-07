@@ -2,6 +2,7 @@ package common.core;
 
 import javafx.scene.canvas.GraphicsContext;
 
+import java.nio.ByteBuffer;
 import java.util.UUID;
 
 /**
@@ -9,7 +10,7 @@ import java.util.UUID;
  * @version $revision $
  */
 public abstract class Sprite implements Cloneable{
-    private UUID uniqueId = UUID.randomUUID();
+    private String uniqueId = null;
 
     protected double width;
     protected double height;
@@ -113,6 +114,9 @@ public abstract class Sprite implements Cloneable{
      * @return Returns the unique Id of sprite
      */
     public String getUniqueId() {
+        if (this.uniqueId == null) {
+            generateNewUniqueId();
+        }
         return this.uniqueId.toString();
     }
 
@@ -121,7 +125,7 @@ public abstract class Sprite implements Cloneable{
      *
      * @param id Unique id
      */
-    public void setUniqueId(UUID id) {
+    public void setUniqueId(String id) {
         this.uniqueId = id;
     }
 
@@ -129,7 +133,9 @@ public abstract class Sprite implements Cloneable{
      * Generates unique Id for a sprite
      */
     public void generateNewUniqueId() {
-        this.uniqueId = UUID.randomUUID();
+        UUID uuid = UUID.randomUUID();
+        long l = ByteBuffer.wrap(uuid.toString().getBytes()).getLong();
+        this.uniqueId = Long.toString(l, Character.MAX_RADIX);
     }
     /**
      * Method to check if sprite is colliding with any other sprite

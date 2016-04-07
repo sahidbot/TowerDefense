@@ -129,4 +129,4 @@ Temporary Items
 logs/
 
 #saved game
-/userData/gameStates/
+userData/gameStates/

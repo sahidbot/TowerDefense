@@ -169,13 +169,17 @@ public class GameManagerTest {
     }
 
     @Test
-    public void refreshCanBuyTowersTest(){
+    public void refreshCanBuyTowersTest_False(){
         leGameManager.sideBar.setAvailableGold(0);
         leGameManager.refreshCanBuyTowers();
         for (Tower tower :
                 leGameManager.sideBar.getTowersAvailable())  {
             assertFalse(tower.isCanBuy());
         }
+    }
+    @Test
+    public void refreshCanBuyTowerTest_True()
+    {
         leGameManager.sideBar.setAvailableGold(1000);
         leGameManager.refreshCanBuyTowers();
         for (Tower tower :
@@ -183,7 +187,6 @@ public class GameManagerTest {
             assertTrue(tower.isCanBuy());
         }
     }
-
     /*@Test
     public void update_PlaceBoughtTowerTest(){
         Tower towerToSelect = leGameManager.sideBar.getTowersAvailable()[0];

@@ -1,16 +1,15 @@
 package test.game;
 
+import common.core.Vector2;
 import game.SideBar;
 import game.towerlogic.Tower;
-import test.JavaFXThreadingRule;
-import common.core.Vector2;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
+import test.JavaFXThreadingRule;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
 
 /**
  * Test Class for SideBar
@@ -59,4 +58,11 @@ public class SideBarTest {
                     duplicates = true;
         assertFalse(duplicates);
     }
+
+    @Test
+    public void sideBarConstructor_AllTowersAvailableTest(){
+        Tower[] towersAvailable = sidebar.getTowersAvailable();
+        assertEquals(3,towersAvailable.length);
+    }
+
 }

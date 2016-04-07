@@ -1,0 +1,22 @@
+{
+  "towers": [
+    {
+      "id": "e7c04f85-f7aa-4e35-9b43-b008f0b7c7bf",
+      "posX": 11,
+      "posY": 4,
+      "towerType": "ARROW",
+      "strategy": "LOWESTHP",
+      "level": 1
+    },
+    {
+      "id": "e3e3194b-7e2e-42cf-a8fb-317dcffdcc74",
+      "posX": 18,
+      "posY": 12,
+      "towerType": "SIEGE",
+      "strategy": "LOWESTHP",
+      "level": 1
+    }
+  ],
+  "level": 1,
+  "availableGold": 1350
+}

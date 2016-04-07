@@ -14,8 +14,11 @@ import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import test.JavaFXThreadingRule;
-
+import common.core.Rect;
 import java.util.ArrayList;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Created by saddamtahir on 2016-03-17.
@@ -55,5 +58,50 @@ public class CritterManagerTest {
     {
         ArrayList<Critter> returnList = leCritterManager.getShootableCritters(leTower);
         Assert.assertTrue(returnList.size() > 0);
+    }
+
+    @Test
+    public void getCrittersNeighboursTest()
+    {
+        ArrayList<Critter> returnList = leCritterManager.getCritterNeighbours(leTower,leCritters, new Critter(new Vector2(3, 3), CritterType.GROUND));
+        assertEquals(2,returnList.size());
+    }
+
+    @Test
+    public void getSplashRectangleWidthTest()
+    {
+        Vector2 splashVector = new Vector2(2, 2);
+        Rect splashArea = leCritterManager.getSplashRectangle(96, splashVector);
+        assertEquals(192,splashArea.getWidth(),0.001);
+    }
+
+    @Test
+    public void getSplashRectangleHeightTest()
+    {
+        Vector2 splashVector = new Vector2(3, 2);
+        Rect splashArea = leCritterManager.getSplashRectangle(96, splashVector);
+        assertEquals(192,splashArea.getHeight(),0.001);
+    }
+
+    @Test
+    public void getNextTileTest()
+    {
+        Vector2 critterVector = new Vector2(3, 2);
+        Vector2 tilePosition = new Vector2(1.0,1.0);
+        Tile leTile = new Tile(SpriteType.SCENERY,2.0,2.0,tilePosition);
+        Critter critter = new Critter(critterVector,CritterType.GROUND);
+        critter.setNextPathTile(leTile);
+        Tile tile = leCritterManager.getNextTile(critter);
+        assertEquals(SpriteType.ENTRY_POINT,tile.getType());
+    }
+
+    @Test
+    public void isReachedToExitPointTest()
+    {
+        Vector2 critterVector = new Vector2(3, 2);
+        Critter critter = new Critter(critterVector,CritterType.GROUND);
+        Boolean result = leCritterManager.isReachedToExitPoint(critter);
+        assertTrue(result);
+
     }
 }

@@ -95,4 +95,13 @@ public class AttackNearestToEndPointTest {
         assertEquals(1, targets2.size());
         assertEquals(zeroOneCritter, targets2.get(0));
     }
+
+    @Test
+    public void doDamageDoesDamageTest() {
+        zeroOneCritter.setHealthPoints(100);
+        tower.setDamage(10);
+        List<Critter> result = strategy.doDamage(crittersorder1);
+        assertEquals(85, result.get(0).getHealthPoints(), 0.001);
+    }
 }
+

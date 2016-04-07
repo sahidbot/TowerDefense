@@ -5,7 +5,7 @@ import org.junit.Rule;
 import org.junit.Test;
 import test.JavaFXThreadingRule;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 
 /**
  * Created by Monster on 3/14/2016.
@@ -38,4 +38,34 @@ public class Vector2Test {
         assertEquals(result, result2, 0.001);
 
     }
+
+    @Test
+    public void addVectorTest()
+    {
+        Vector2 oneOne = new Vector2(1,1);
+        Vector2 fourFive = new Vector2(4,5);
+        oneOne.add(fourFive);
+        Vector2 result = new Vector2(5.0,6.0);
+        assertEquals(result.getX(),oneOne.getX(),0.001);
+        assertEquals(result.getY(),oneOne.getY(),0.001);
+    }
+
+    @Test
+    public void equalsTest_True()
+    {
+        Vector2 oneOne = new Vector2(1,1);
+        Vector2 fourFive = new Vector2(1,1);
+        Boolean result =  oneOne.equals(fourFive);
+        assertTrue(result);
+    }
+
+    @Test
+    public void equalsTest_False()
+    {
+        Vector2 oneOne = new Vector2(1,1);
+        Vector2 fourFive = new Vector2(4,5);
+        Boolean result =  oneOne.equals(fourFive);
+        assertFalse(result);
+    }
 }
+

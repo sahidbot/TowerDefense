@@ -281,7 +281,7 @@ public class CritterManager {
      * @param critter The critter object
      * @return Returns the Tile
      */
-    private Tile getNextTile(Critter critter) {
+    public Tile getNextTile(Critter critter) {
         int index = pathList.indexOf(critter.getNextPathTile());
         if (index < pathList.size() - 1) {
             if (collidesWith(critter, critter.getNextPathTile())) {
@@ -312,10 +312,16 @@ public class CritterManager {
      * @param critter is the Critter to be checked
      * @return Returns a boolean value has the result
      */
-    private boolean isReachedToExitPoint(Critter critter) {
+    public boolean isReachedToExitPoint(Critter critter) {
         if (collidesWith(critter, exitPointTile))
             return true;
 
         return false;
+    }
+
+    public Rect getSplashRectangle(double splashRange, Vector2 vector)
+    {
+        Rect splashArea = new Rect(vector, splashRange * 2, splashRange * 2);
+        return splashArea;
     }
 }

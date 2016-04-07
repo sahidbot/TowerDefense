@@ -277,6 +277,12 @@ public class InspectionPanel {
      * Clears the current log
      */
     public void clearLog(){
+
         logQueue.clear();
+    }
+
+    public double getCurrentYPosition(double tilePositionYComponent, double linesSeparation, double statLines)
+    {
+        return (tilePositionYComponent + linesSeparation + (statLines * linesSeparation));
     }
 }

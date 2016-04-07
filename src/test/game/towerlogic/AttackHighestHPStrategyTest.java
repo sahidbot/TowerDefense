@@ -4,7 +4,6 @@ import common.core.Vector2;
 import game.Critter;
 import game.CritterType;
 import game.towerlogic.AttackHighestHPStrategy;
-import game.towerlogic.AttackLowestHPStrategy;
 import game.towerlogic.Tower;
 import game.towerlogic.TowerType;
 import org.junit.Before;
@@ -15,7 +14,7 @@ import test.JavaFXThreadingRule;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 /**
  * Created by Monster on 4/6/2016.
@@ -68,4 +67,25 @@ public class AttackHighestHPStrategyTest {
         assertEquals(fourFourCritter, result2.get(0));
     }
 
+    @Test
+    public void doDamageDoesDamageToOnlyOneEnemyTest(){
+        zeroZeroCritter.setHealthPoints(100);
+        fourFourCritter.setHealthPoints(100);
+        tower.setDamage(30);
+
+        List<Critter> result = strategy.doDamage(crittersorder1);
+        assertEquals(65, zeroZeroCritter.getHealthPoints(), 0.001f);
+        assertEquals(100, fourFourCritter.getHealthPoints(), 0.001f);
+
+
+    }
+
+    @Test
+    public void doDamageDoesDamageTest(){
+        fourFourCritter.setHealthPoints(100);
+        tower.setDamage(30);
+
+        List<Critter> result = strategy.doDamage(zeroZeroCritterList);
+        assertEquals(65, result.get(0).getHealthPoints(), 0.001);
+    }
 }

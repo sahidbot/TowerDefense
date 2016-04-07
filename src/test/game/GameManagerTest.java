@@ -103,6 +103,7 @@ public class GameManagerTest {
         tileManager_GetTilesOverlay[1][0] = new Tile(SpriteType.SCENERY,32,32,new Vector2(32,0));
         tileManager_GetTilesOverlay[0][1] = new Tile(SpriteType.PATH, 32,32,new Vector2(0,32));
         tileManager_GetTilesOverlay[1][1] = new Tile(SpriteType.SCENERY, 32, 32, new Vector2(32,32));
+        tileManager_GetTilesOverlay[1][0] = new Tile(SpriteType.TOWER,32,32,new Vector2(32,0));
         tileManager_GetRows = 2;
         tileManager_GetColumns = 2;
         tileManager_GetWidth = 64;
@@ -186,6 +187,14 @@ public class GameManagerTest {
                 leGameManager.sideBar.getTowersAvailable()){
             assertTrue(tower.isCanBuy());
         }
+    }
+
+    @Test
+    public void getTowersInSceneTest()
+    {
+        List<Tower> towersInScene = new ArrayList<>();
+       towersInScene =  leGameManager.getTowersInScene();
+        assertEquals(0,towersInScene.size());
     }
     /*@Test
     public void update_PlaceBoughtTowerTest(){

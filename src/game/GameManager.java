@@ -1,6 +1,9 @@
 package game;
 
-import common.*;
+import common.Helper;
+import common.Settings;
+import common.Tile;
+import common.TileManager;
 import common.core.*;
 import game.gamestate.GameState;
 import game.gamestate.TowerState;
@@ -12,10 +15,9 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
+import org.apache.log4j.Logger;
 
 import java.util.*;
-
-import org.apache.log4j.Logger;
 
 /**
  * game manager class implemented as observer
@@ -445,7 +447,7 @@ public class GameManager extends GameLoop implements Observer {
      *
      * @return Returns the Tower in the scene
      */
-    private List<Tower> getTowersInScene(){
+    public List<Tower> getTowersInScene(){
         List<Tower> towersInScene = new ArrayList<>();
         for (Tile[] tileArray:
                 tileManager.getTilesOverlay()){

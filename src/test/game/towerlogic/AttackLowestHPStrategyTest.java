@@ -73,4 +73,17 @@ public class AttackLowestHPStrategyTest {
         List<Critter> result = strategy.doDamage(zeroZeroCritterList);
         assertEquals(85, result.get(0).getHealthPoints(), 0.001);
     }
+
+    @Test
+    public void doDamageDoesDamageToOnlyOneEnemyTest(){
+        zeroZeroCritter.setHealthPoints(100);
+        fourFourCritter.setHealthPoints(100);
+        tower.setDamage(30);
+
+        List<Critter> result = strategy.doDamage(crittersorder1);
+        assertEquals(65, zeroZeroCritter.getHealthPoints(), 0.001f);
+        assertEquals(100, fourFourCritter.getHealthPoints(), 0.001f);
+
+
+    }
 }

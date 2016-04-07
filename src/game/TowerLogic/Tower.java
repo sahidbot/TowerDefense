@@ -264,7 +264,7 @@ public class Tower extends Tile {
     /**
      * Sets current level
      */
-    protected void setLevel(int level) {
+    public void setLevel(int level) {
         this.level = level;
     }
 
@@ -408,8 +408,7 @@ public class Tower extends Tile {
      */
     public void setAttackStrategyEnum(AttackStrategyEnum strategy) {
         attackStrategy = strategyFactory.getAttackStrategy(strategy, this);
-        towerLog.info("The tower: " + this.getTowerType().toString() + " is now using:  " +strategy.toString()+" strategy");
-
+        towerLog.info(getUniqueId() + ": The tower: " + this.getTowerType().toString() + " is now using:  " +strategy.toString()+" strategy");
     }
 
     /**

@@ -115,6 +115,16 @@ public abstract class Sprite implements Cloneable{
     public String getUniqueId() {
         return this.uniqueId.toString();
     }
+
+    /**
+     * Set the unique id for the sprite
+     *
+     * @param id Unique id
+     */
+    public void setUniqueId(UUID id) {
+        this.uniqueId = id;
+    }
+
     /**
      * Generates unique Id for a sprite
      */

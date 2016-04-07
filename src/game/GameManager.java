@@ -2,6 +2,8 @@ package game;
 
 import common.*;
 import common.core.*;
+import game.gamestate.GameState;
+import game.gamestate.TowerState;
 import game.pathlogic.PathFinder;
 import game.towerlogic.Tower;
 import javafx.scene.Group;
@@ -11,10 +13,8 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Observable;
-import java.util.Observer;
+import java.util.*;
+
 import org.apache.log4j.Logger;
 
 /**
@@ -417,12 +417,6 @@ public class GameManager extends GameLoop implements Observer {
         }
         sideBar.addAvailableGold(critterManager.getRewards());
         refreshCanBuyTowers();
-
-        // loop through all the towers
-            // check the fire rate
-                // getShootableCritters
-                // make the damage
-                // update the rewards inside the sidebar
     }
 
     /**
@@ -442,5 +436,63 @@ public class GameManager extends GameLoop implements Observer {
             }
         }
         return towersInScene;
+    }
+
+    /**
+     * Get the game state to serialize
+     *
+     * @return Returns an instance of the game state
+     */
+    public GameState getSaveGameState() {
+        GameState state = new GameState();
+        state.level = getLevel();
+        state.availableGold = sideBar.getAvailableGold();
+
+        for (int x = 0; x < tileManager.getColumns(); x++) {
+            for (int y = 0; y < tileManager.getRows(); y++) {
+                if (tileManager.getTilesOverlay()[x][y] instanceof Tower) {
+                    Tower tower = (Tower) tileManager.getTilesOverlay()[x][y];
+                    if (tower != null) {
+                        TowerState towerState = new TowerState();
+                        towerState.id = tower.getUniqueId();
+                        towerState.towerType = tower.getTowerType();
+                        towerState.strategy = tower.getAttackStrategyEnum();
+                        towerState.posX = x;
+                        towerState.posY = y;
+                        towerState.level = tower.getLevel();
+
+                        state.towers.add(towerState);
+                    }
+                }
+            }
+        }
+
+        return state;
+    }
+
+    /**
+     * Set the game state to resume the game
+     *
+     * @param state Instance of the game state
+     */
+    public void setSaveGameState(GameState state) {
+        if (state == null) return;
+
+        this.level = state.level;
+        sideBar.setAvailableGold(state.availableGold);
+
+        for (TowerState ts : state.towers) {
+            Vector2 position = new Vector2(Settings.TILE_WIDTH * ts.posX,
+                    Settings.TILE_HEIGHT * ts.posY);
+            Tower tower = new Tower(ts.towerType, position);
+            tower.setAttackStrategyEnum(ts.strategy);
+            tower.setLevel(ts.level);
+            tower.setUniqueId(UUID.fromString(ts.id));
+
+            tower.setActive(true);
+            tower.setDraggable(false);
+
+            tileManager.getTilesOverlay()[ts.posX][ts.posY] = tower;
+        }
     }
 }

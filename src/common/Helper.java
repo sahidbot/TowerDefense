@@ -1,7 +1,6 @@
 package common;
 
 import common.core.Vector2;
-import game.towerlogic.AttackStrategyEnum;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 
@@ -70,6 +69,22 @@ public class Helper {
         try {
             BufferedWriter out = new BufferedWriter(new FileWriter(Settings.USER_MAP_DIRECTORY + "/" + mapName));
             out.write(mapContents);
+            out.close();
+        } catch (IOException e) {
+            System.out.println(e.toString());
+        }
+    }
+
+    /**
+     * method to save game state
+     *
+     * @param mapName name of map to be saved
+     * @param gameContents map file contents as string
+     */
+    public static void saveGameState(String mapName, String gameContents) {
+        try {
+            BufferedWriter out = new BufferedWriter(new FileWriter(Settings.USER_GAME_STATE_DIRECTORY + "/" + mapName));
+            out.write(gameContents);
             out.close();
         } catch (IOException e) {
             System.out.println(e.toString());

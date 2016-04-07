@@ -12,7 +12,8 @@ public class Settings {
     public static final double DEFAULT_MARGIN = 10;
     public static final double SIDEBAR_WIDTH = 300;
 
-    public static final String USER_MAP_DIRECTORY = "Saved Maps";
+    public static final String USER_MAP_DIRECTORY = "userData/maps";
+    public static final String USER_GAME_STATE_DIRECTORY = "userData/gameStates";
 
     public static final Image BACKGROUND_TILE_IMAGE = new Image("/assets/images/background_tiles.png");
     public static final Image TOWERSIEGE_TILE_IMAGE = new Image("/assets/images/Castle1.png");

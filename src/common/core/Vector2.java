@@ -1,10 +1,12 @@
 package common.core;
 
+import java.io.Serializable;
+
 /**
  * Represents a displacement in 2-D space.
  * @version $revision $
  */
-public class Vector2 {
+public class Vector2 implements Serializable {
 
     private double x;
     private double y;

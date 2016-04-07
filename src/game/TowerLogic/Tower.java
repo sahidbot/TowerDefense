@@ -41,7 +41,7 @@ public class Tower extends Tile {
 
     private IAttackStrategy attackStrategy;
     private AttackEffect attackEffect;
-    private static final Logger towerLog = Logger.getLogger(Tower.class);
+    private static final Logger LOGGER = Logger.getLogger(Tower.class);
 
     /**
      * Default constructor
@@ -63,7 +63,7 @@ public class Tower extends Tile {
      * Sets the initial values for tower types
      */
     private void setInitialValues() {
-        towerLog.info("Setting Towers initial values");
+        LOGGER.info("Setting Towers initial values");
         switch (towerType) {
             case FROST:
                 setBaseCost(200);
@@ -125,7 +125,6 @@ public class Tower extends Tile {
      * @see TowerType
      */
     private static Image imageFrom(TowerType towerType) {
-        towerLog.info("Transferring tower type to corresponding image");
         Image towerImage;
         switch (towerType) {
             case ARROW:
@@ -151,7 +150,6 @@ public class Tower extends Tile {
      */
     @Override
     public void draw(GraphicsContext gc) {
-        towerLog.info(this.towerType.toString()+" tower is drawn");
         gc.drawImage(this.getImage(), getPosition().getX(), getPosition().getY());
         if (!isActive() && !isCanBuy()) {
             noMoneySprite.draw(gc);
@@ -188,9 +186,7 @@ public class Tower extends Tile {
      * @return current rate of fire
      */
     public double getRateOfFire() {
-
         double rateOfFireResult = rateOfFire + (getLevel() * rateOfFireMultiplier);
-        towerLog.info("The current firing rate of the tower: "+this.getTowerType().toString()+" is "+rateOfFireResult);
         return rateOfFireResult;
     }
 
@@ -200,9 +196,7 @@ public class Tower extends Tile {
      * @return current cost
      */
     public int getCost() {
-
         int costResult = baseCost + (getLevel() * baseCostMultiplier);
-        towerLog.info("The current cost of the tower: "+this.getTowerType().toString()+" is "+costResult);
         return costResult;
     }
 
@@ -222,7 +216,6 @@ public class Tower extends Tile {
      */
     public int getRange() {
         int rangeResult = range + (getLevel() * rangeMultiplier);
-        towerLog.info("The current range of the tower: "+this.getTowerType().toString()+" is "+rangeResult);
         return rangeResult;
     }
 
@@ -239,7 +232,6 @@ public class Tower extends Tile {
         double y = position.getY() + (height / 2) - height;
 
         Rect rect = new Rect(new Vector2(x, y), width, height);
-        towerLog.info("The current rectangle range of the tower: "+this.getTowerType().toString()+" is "+rect.toString());
         return rect;
     }
 
@@ -250,7 +242,6 @@ public class Tower extends Tile {
      */
     public double getDamage() {
         double damageResult = damage + (getLevel() * damageMultiplier);
-        towerLog.info("The current damage of the tower: "+this.getTowerType().toString()+" is "+damageResult);
         return damageResult;
     }
 
@@ -383,6 +374,10 @@ public class Tower extends Tile {
      * @param canBuy new value
      */
     public void setCanBuy(boolean canBuy) {
+        if (this.canBuy != canBuy) {
+            LOGGER.debug("Changed the state of tower buying option to: " + canBuy);
+        }
+
         this.canBuy = canBuy;
     }
 
@@ -408,7 +403,8 @@ public class Tower extends Tile {
      */
     public void setAttackStrategyEnum(AttackStrategyEnum strategy) {
         attackStrategy = strategyFactory.getAttackStrategy(strategy, this);
-        towerLog.info(getUniqueId() + ": The tower: " + this.getTowerType().toString() + " is now using:  " +strategy.toString()+" strategy");
+        LOGGER.info(getUniqueId() + ": The tower: " + this.getTowerType().toString() + " is now using:  " +
+                strategy.toString()+ " strategy");
     }
 
     /**

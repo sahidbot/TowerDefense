@@ -45,7 +45,7 @@ public class CritterManagerTest {
         leCritters = new ArrayList<>();
         leCritters.add(new Critter(new Vector2(0,0), CritterType.AIR));
         leCritters.add(new Critter(new Vector2(1,0), CritterType.AIR));
-        leCritterManager.SetCritterList(leCritters);
+        leCritterManager.setCritterList(leCritters);
 
         leTower = new Tower(TowerType.ARROW, new Vector2(1,2));
     }

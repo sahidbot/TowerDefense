@@ -78,6 +78,23 @@ public class InspectionPanel {
                     + " to "
                     + (selectedTower == null ? nullStr : selectedTower.getUniqueId()));
             this.selectedTower = selectedTower;
+            drawTowerLogText(selectedTower);
+        }
+    }
+
+    /**
+     * Draws the logging appearing in the inspection panel
+      * @param selectedTower tower to refresh console with
+     */
+    public void drawTowerLogText(Tower selectedTower) {
+        if (selectedTower != null) {
+            Queue<String> localLogs = selectedTower.getLocalLogs();
+            clearLog();
+            for (int i = 0; i < localLogs.size(); i++) {
+                String current = localLogs.remove();
+                addLog(current);
+                localLogs.add(current);
+            }
         }
     }
 
@@ -90,11 +107,11 @@ public class InspectionPanel {
         if (getSelectedTower() != null) {
             Font titleFont = Font.font(Settings.FONT_NAME, FontWeight.BOLD, 20);
             Font parametersFont = Font.font(Settings.FONT_NAME, FontWeight.NORMAL, 16);
-            Font logFont = Font.font(Settings.FONT_NAME, FontWeight.NORMAL, 12);
+            Font logFont = Font.font(Settings.FONT_NAME, FontWeight.NORMAL, 10);
 
             float titleSeparation = 24;
             float linesSeparation = 17;
-            float logSeparation = 13;
+            float logSeparation = 11;
 
             gc.setFont(titleFont);
             String towerTitle = getSelectedTower().getTowerType().name() + " TOWER";
@@ -166,6 +183,8 @@ public class InspectionPanel {
             
             //DrawLogs
             currentYPosition += getUpgradeButton().getHeight() + 2 + logSeparation;
+
+            gc.setFont(logFont);
             for (int i = 0; i< logQueue.size(); i++){
                 String toDraw = logQueue.remove();
                 drawText(gc,toDraw, new Vector2(titlePosition.getX() ,currentYPosition + i* logSeparation), Color.BLACK);

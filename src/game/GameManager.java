@@ -232,6 +232,7 @@ public class GameManager extends GameLoop implements Observer {
         MouseState mouseState = (MouseState) arg;
 
         if (mouseState.getEventType() == MouseEventType.RIGHT_CLICK) {
+            LOGGER.info("Detected right click");
             if (mouseState.getSelectedSprite() != null) {
                 LOGGER.info("Clearing selected tower: " + mouseState.getSelectedSprite().getUniqueId());
             }
@@ -242,17 +243,22 @@ public class GameManager extends GameLoop implements Observer {
         //Mouse clicked on the side panel
         if (mouseState.getPosition().getX() > tileManager.getWidth() && !isWaveStarted) {
             if (mouseState.getEventType() == MouseEventType.LEFT_CLICK) {
+                LOGGER.info("Detected " + mouseState.getEventType() + " in tile manager");
                 Tower inspectionPanelTower = sideBar.getInspectionPanel().getSelectedTower();
 
                 // sell and upgrade
                 if (inspectionPanelTower != null) {
+                    LOGGER.info("Detected a tower selected");
                     if (sideBar.getInspectionPanel().getSellButton().isEnabled() &&
                             sideBar.getInspectionPanel().getSellButton().collidesWith(mouseState.getPosition())) {
                         // if detected selling tower and sellbutton is clicked
+                        LOGGER.info("Detected collission with Sell Button");
                         sideBar.addAvailableGold(inspectionPanelTower.getRefund());
+                        LOGGER.info("Refreshing towers that are available for buying");
                         refreshCanBuyTowers();
 
                         // remove from the tile manager
+                        LOGGER.info("Removing tower: " + mouseState.getSelectedSprite().getUniqueId() + " from TileManager");
                         Vector2 tilePosForSelectedTower = tileManager.getTilePosition(inspectionPanelTower.getPosition());
                         int x = (int) tilePosForSelectedTower.getX();
                         int y = (int) tilePosForSelectedTower.getY();
@@ -262,10 +268,17 @@ public class GameManager extends GameLoop implements Observer {
                     } else if (sideBar.getInspectionPanel().getUpgradeButton().isEnabled() &&
                             sideBar.getInspectionPanel().getUpgradeButton().collidesWith(mouseState.getPosition())) {
                         // if detected upgrade tower and updatebutton is clicked
+                        LOGGER.info("Detected click on Upgrade Button");
                         if (sideBar.getAvailableGold() >= inspectionPanelTower.getCost()) {
-                            sideBar.addAvailableGold(-inspectionPanelTower.getCost());
+                            LOGGER.info("Upgrading tower");
                             inspectionPanelTower.AddLevel(1);
+                            LOGGER.info("Updating available gold");
+                            sideBar.addAvailableGold(-inspectionPanelTower.getCost());
+                            LOGGER.info("Refreshing available towers for buying");
                             refreshCanBuyTowers();
+                        }
+                        else{
+                            LOGGER.info("Not enough currency to buy tower");
                         }
                     }
 
@@ -273,10 +286,12 @@ public class GameManager extends GameLoop implements Observer {
                     else if (sideBar.getInspectionPanel().getLeftArrowButton().isEnabled() &&
                             sideBar.getInspectionPanel().getLeftArrowButton().collidesWith(mouseState.getPosition())) {
                         //collision detected
+                        LOGGER.info("Detected click on Left Arrow button");
                         inspectionPanelTower.setAttackStrategyEnum(inspectionPanelTower.getAttackStrategyEnum().next());
                     }
                     else if (sideBar.getInspectionPanel().getRightArrowButton().isEnabled() &&
                             sideBar.getInspectionPanel().getRightArrowButton().collidesWith(mouseState.getPosition())){
+                        LOGGER.info("Detected click on Right Arrow button");
                         inspectionPanelTower.setAttackStrategyEnum(inspectionPanelTower.getAttackStrategyEnum().previous());
                     }
                 }
@@ -284,6 +299,7 @@ public class GameManager extends GameLoop implements Observer {
                 //Check NewWaveButton
                 if(sideBar.getNewWaveButton().isEnabled() &&
                         sideBar.getNewWaveButton().collidesWith(mouseState.getPosition())){
+                    LOGGER.info("Detected click on New Wave button");
                     startWave();
                 }
 
@@ -292,6 +308,7 @@ public class GameManager extends GameLoop implements Observer {
                     if (tower.collidesWith(mouseState.getPosition())) {
                         //We detected the tower - lets see if we can buy it now
                         if (tower.isCanBuy() && !tower.isActive()) {
+                            LOGGER.info("Detected click on Tower available to buy");
                             mouseState.setSelectedSprite(tower);
                         }
 
@@ -315,6 +332,7 @@ public class GameManager extends GameLoop implements Observer {
                 Tower foundTower = null;
                 for (Tower tower : sideBar.getTowersAvailable()) {
                     if (tower.collidesWith(mouseState.getPosition())) {
+                        LOGGER.info("Detected hovering on tower: " + tower.getUniqueId());
                         foundTower = tower;
                         break;
                     }

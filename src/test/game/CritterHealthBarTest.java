@@ -1,7 +1,9 @@
 package test.game;
 
 import common.core.Vector2;
+import game.Critter;
 import game.CritterHealthBar;
+import game.CritterType;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -15,10 +17,12 @@ public class CritterHealthBarTest {
     @Rule
     public JavaFXThreadingRule javafxRule = new JavaFXThreadingRule();
     CritterHealthBar bar;
+    Critter leCritter;
 
     @Before
     public void BeforeTesting(){
-      bar = new CritterHealthBar(new Vector2(3, 3),100);
+        leCritter = new Critter(new Vector2(), CritterType.GROUND);
+      bar = new CritterHealthBar(new Vector2(3, 3),100, leCritter);
     }
 
     @Test

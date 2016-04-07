@@ -6,6 +6,7 @@ import common.Tile;
 import common.core.Vector2;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
+import org.apache.log4j.Logger;
 
 /**
  * Class that represents a critter in the game.
@@ -22,6 +23,7 @@ public class Critter extends Tile {
 
     private Tile nextPathTile;
     private CritterHealthBar healthBar;
+    private static final Logger LOGGER = Logger.getLogger(Critter.class);
 
     /**
      * Default Constructor
@@ -31,8 +33,9 @@ public class Critter extends Tile {
      */
     public Critter(Vector2 position, CritterType critterType) {
         super(imageFrom(critterType), position);
+        LOGGER.info(getUniqueId() + ": Instantiating");
         this.critterType = critterType;
-        healthBar = new CritterHealthBar(position, healthPoints);
+        healthBar = new CritterHealthBar(position, healthPoints,this);
     }
     /**
      * Default Constructor for tests
@@ -44,7 +47,7 @@ public class Critter extends Tile {
     public Critter(double width, double height, Vector2 position, CritterType critterType) {
         super(SpriteType.CRITTER, width, height, position);
         this.critterType = critterType;
-        healthBar = new CritterHealthBar(position, healthPoints);
+        healthBar = new CritterHealthBar(position, healthPoints,this);
     }
 
     /**
@@ -91,8 +94,11 @@ public class Critter extends Tile {
      * @param healthPoints new value for healthPoints
      */
     public void setHealthPoints(float healthPoints) {
-        this.healthPoints = healthPoints;
-        this.healthBar.updateHealthPoints(healthPoints);
+        if (this.healthPoints != healthPoints) {
+            LOGGER.info(getUniqueId() + ": reducing hp from " + this.healthPoints + " to " + healthPoints);
+            this.healthPoints = healthPoints;
+            this.healthBar.updateHealthPoints(healthPoints);
+        }
     }
 
     /**
@@ -160,6 +166,12 @@ public class Critter extends Tile {
      * @param damagePerSecondDuration the new value for the damage per second
      */
     public void setDamagePerSecondDuration(float damagePerSecondDuration) {
+        if(damagePerSecondDuration > 0){
+            LOGGER.info(getUniqueId() + ": initiating damage per second for: " + damagePerSecondDuration);
+        }
+        else{
+            LOGGER.info(getUniqueId() + ": finished damaging per second");
+        }
         this.damagePerSecondDuration = damagePerSecondDuration;
     }
 
@@ -176,6 +188,11 @@ public class Critter extends Tile {
      * @param frozenDuration the new value
      */
     public void setFrozenDuration(float frozenDuration) {
+        if (frozenDuration == 0 && this.frozenDuration > 0) {
+            LOGGER.info(getUniqueId() + " is not frozen anymore");
+        } else if(frozenDuration >= 0 && this.frozenDuration == 0) {
+            LOGGER.info(getUniqueId() + " is frozen for " + frozenDuration);
+        }
         this.frozenDuration = frozenDuration;
     }
 

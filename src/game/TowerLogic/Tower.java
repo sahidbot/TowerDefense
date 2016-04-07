@@ -265,6 +265,7 @@ public class Tower extends Tile {
      * @param levelsToAdd how many levels to add to the current level
      */
     public void AddLevel(int levelsToAdd) {
+        LOGGER.info(getUniqueId() + ": adding " + level + " levels");
         this.level++;
     }
 
@@ -374,8 +375,9 @@ public class Tower extends Tile {
      * @param canBuy new value
      */
     public void setCanBuy(boolean canBuy) {
-        if (this.canBuy != canBuy) {
-            LOGGER.debug("Changed the state of tower buying option to: " + canBuy);
+        if (this.canBuy != canBuy && !isActive()) {
+
+            LOGGER.debug(getUniqueId() + ": canBuy changed to: " + canBuy);
         }
 
         this.canBuy = canBuy;

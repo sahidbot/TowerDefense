@@ -43,7 +43,7 @@ public class MainMenuController implements Initializable{
     private ListView mapListView;
 
     private ObservableList<String> savedMaps;
-    private static final Logger maplog = Logger.getLogger(MainMenuController.class);
+    private static final Logger LOGGER = Logger.getLogger(MainMenuController.class);
 
     /**
      * Called to initialize a controller after its root element has been
@@ -55,8 +55,12 @@ public class MainMenuController implements Initializable{
      */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        LOGGER.info("Initializing");
+        LOGGER.info("Setting edit map button to true");
         btnEditMap.setDisable(true);
+        LOGGER.info("Setting start game button to true");
         btnStartGame.setDisable(true);
+        LOGGER.info("Setting load game button to true");
         btnLoadGame.setDisable(true);
 
         savedMaps = FXCollections.observableArrayList();
@@ -68,7 +72,7 @@ public class MainMenuController implements Initializable{
      * @param mouseEvent Reference to the control whose event is fired
      */
     public void onCreateMapClicked(MouseEvent mouseEvent) throws IOException {
-        maplog.info("Create Map Button Clicked");
+        LOGGER.info("Create Map Button Clicked. Loading stage");
         Stage stage = new Stage();
         Parent root = FXMLLoader.load(getClass().getResource("/mainmenu/views/createMapDialogView.fxml"));
         stage.setScene(new Scene(root));
@@ -80,16 +84,20 @@ public class MainMenuController implements Initializable{
      * @param mouseEvent Reference to the control whose event is fired
      */
     public void onEditMapClicked(MouseEvent mouseEvent) {
-        maplog.info("Edit Map Button Clicked");
+        LOGGER.info("Edit Map Button Clicked");
         String selectedMap = (String) mapListView.getSelectionModel().getSelectedItem();
         if (selectedMap != null) {
             String mapContent = Helper.loadMap(selectedMap);
             if (mapContent != null) {
+                LOGGER.info("Detected content in the map file");
                 String[] mapData = mapContent.split(System.getProperty("line.separator"));
 
+                LOGGER.info("Processing map file");
                 int sIndex = mapData[0].indexOf(",");
                 int columns = Integer.parseInt(mapData[0].substring(0, sIndex));
                 int rows = Integer.parseInt(mapData[0].substring(sIndex + 1, mapData[0].length()));
+
+                LOGGER.info("Map file processed, setting up window");
 
                 Stage stage = new Stage();
                 Group root = new Group();
@@ -97,18 +105,23 @@ public class MainMenuController implements Initializable{
                 stage.setScene(scene);
                 stage.setResizable(false);
 
+                LOGGER.info("Setting up map manager");
                 MapManager mapManager = MapManager.create(root, selectedMap, rows, columns);
                 mapManager.loadMapData(mapData);
                 mapManager.start();
+
+                LOGGER.info("Window ready to show");
                 stage.show();
                 stage.setHeight(stage.getHeight() - 12);
 
                 stage.setOnCloseRequest(event -> {
+                    LOGGER.info("Detected window closing, parsing data to save");
                     String newMapData = mapManager.getMapData();
                     if (newMapData != null) {
+                        LOGGER.info("Detected map data to save, saving data into new file");
                         Helper.saveMap(selectedMap, newMapData);
 
-                        maplog.info("Map saved successfully!");
+                        LOGGER.info("Map saved successfully!");
                         Alert alert = new Alert(Alert.AlertType.INFORMATION);
                         alert.setTitle("Tower Defense");
                         alert.setHeaderText("Map saved successfully!");
@@ -117,7 +130,7 @@ public class MainMenuController implements Initializable{
                         loadSavedMapList();
                     }
                     else {
-                        maplog.info("Unsucessful! Message: Invalid map");
+                        LOGGER.error("Unsucessful! Message: Invalid map");
                         Alert alert = new Alert(Alert.AlertType.ERROR);
                         alert.setTitle("Tower Defense");
                         alert.setHeaderText("Invalid map, cannot save!");
@@ -141,15 +154,23 @@ public class MainMenuController implements Initializable{
      * @param event Reference to the control whose event is fired
      */
     public void onListViewClicked(MouseEvent event) {
+        LOGGER.info("Detected click on ListView");
         String selectedMap = (String) mapListView.getSelectionModel().getSelectedItem();
-        btnEditMap.setDisable(selectedMap == null);
-        btnStartGame.setDisable(selectedMap == null);
-
+        if (btnEditMap.isDisable() != (selectedMap == null)) {
+            LOGGER.info("Edit map button disable changed to: " + (selectedMap == null));
+            btnEditMap.setDisable(selectedMap == null);
+        }
+        if (btnStartGame.isDisable() != (selectedMap == null)) {
+            LOGGER.info("Start game button disable changed to: " + (selectedMap == null));
+            btnStartGame.setDisable(selectedMap == null);
+        }
         // load
         File file = new File(Settings.USER_GAME_STATE_DIRECTORY + "/" + selectedMap);
-        btnLoadGame.setDisable(!file.exists());
-
-        maplog.info(selectedMap.toString()+" was selected");
+        if (btnLoadGame.isDisable() != !file.exists()) {
+            LOGGER.info("Load game button disable changed to: " + (!file.exists()));
+            btnLoadGame.setDisable(!file.exists());
+        }
+        LOGGER.info(selectedMap.toString() + " is now selected");
     }
     /**
      * Method to load saved maps in the directory
@@ -157,10 +178,13 @@ public class MainMenuController implements Initializable{
     private void loadSavedMapList() {
         final File folder = new File(Settings.USER_MAP_DIRECTORY);
         File[] listOfFiles = folder.listFiles();
+        LOGGER.info("Detected " + listOfFiles.length + " maps");
         for (File map : listOfFiles) {
-            savedMaps.add(map.getName());
+            String mapName = map.getName();
+            LOGGER.info("Adding map to list: " + mapName);
+            savedMaps.add(mapName);
         }
-        maplog.info(folder.getPath()+" loaded");
+        LOGGER.info(folder.getPath()+" loaded");
 
     }
 

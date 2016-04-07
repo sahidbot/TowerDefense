@@ -3,6 +3,7 @@ package common;
 import common.core.Vector2;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
+import org.apache.log4j.Logger;
 
 import java.io.*;
 
@@ -11,6 +12,8 @@ import java.io.*;
  * @version 1.0.0
  */
 public class Helper {
+
+    private static final Logger LOGGER = Logger.getLogger(Helper.class);
     /**
      * Check the valid boundaries for giver X, Y coordinates.
      *
@@ -67,10 +70,12 @@ public class Helper {
      */
     public static void saveMap(String mapName, String mapContents) {
         try {
+            LOGGER.info("Attempting to write into file");
             BufferedWriter out = new BufferedWriter(new FileWriter(Settings.USER_MAP_DIRECTORY + "/" + mapName));
             out.write(mapContents);
             out.close();
         } catch (IOException e) {
+            LOGGER.error("Could not save map ExceptionType: " + e.getClass().getName()  +  " Message:  " + e.getMessage());
             System.out.println(e.toString());
         }
     }

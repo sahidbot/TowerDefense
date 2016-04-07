@@ -242,6 +242,9 @@ public class CritterManager {
      * @param delta represents how much Critter is to be moved
      */
     private void moveCritter(Critter critter, double delta, double percentage) {
+        if(percentage != 1){
+            LOGGER.info("modifying movement of Critter: " + critter.getUniqueId() + "by " + (percentage * 100) + "%");
+        }
         Tile nextTile = getNextTile(critter);
 
         if (nextTile == null)

@@ -72,6 +72,11 @@ public class InspectionPanel {
      */
     public void setSelectedTower(Tower selectedTower) {
         if (selectedTower != this.selectedTower) {
+            String nullStr = "null";
+            LOGGER.info("Selected tower changed from "
+                    + this.selectedTower == null ? nullStr : this.selectedTower.getUniqueId()
+                    + "to "
+                    + selectedTower == null ? nullStr : selectedTower.getUniqueId());
             if (this.selectedTower != null) {
                 LOGGER.info("Selected tower changed from: " + this.selectedTower.getTowerType());
             }
@@ -79,9 +84,9 @@ public class InspectionPanel {
             if (selectedTower != null) {
                 LOGGER.info("Selected tower changed to: " + selectedTower.getTowerType());
             }
-        }
 
-        this.selectedTower = selectedTower;
+            this.selectedTower = selectedTower;
+        }
     }
 
     /**

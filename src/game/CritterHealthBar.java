@@ -3,6 +3,7 @@ package game;
 import common.core.Vector2;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
+import org.apache.log4j.Logger;
 
 /**
  * Health bar for a critter
@@ -16,14 +17,18 @@ public class CritterHealthBar {
     private double healthPoints;
 
     private Color healthColor;
+    private final Critter critterToObserve;
 
+    private static final Logger LOGGER = Logger.getLogger(CritterHealthBar.class);
     /**
      * Default constructor
      *
      * @param position Position of the critter
      * @param healthPoints Health point of the critter
      */
-    public CritterHealthBar(Vector2 position, float healthPoints) {
+    public CritterHealthBar(Vector2 position, float healthPoints, Critter critterToObserve) {
+        LOGGER.info("Instantiating. Critter to Observe: " + critterToObserve.getUniqueId());
+        this.critterToObserve = critterToObserve;
         this.position = position;
         this.maxHealthPoints = healthPoints;
         this.healthPoints = healthPoints;

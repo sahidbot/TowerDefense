@@ -26,7 +26,7 @@ public class CreateMapDialogController implements Initializable {
     private TextField txtRows;
     @FXML
     private TextField txtColumns;
-    private static final Logger mapcreatorlog = Logger.getLogger(CreateMapDialogController.class);
+    private static final Logger LOGGER = Logger.getLogger(CreateMapDialogController.class);
 
     /**
      * Called to initialize a controller after its root element has been
@@ -38,11 +38,14 @@ public class CreateMapDialogController implements Initializable {
      */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        LOGGER.info("Initializing");
         txtRows.textProperty().addListener((observable, oldValue, newValue) -> {
+            LOGGER.info("Detected change in txtRows to: " + newValue);
             checkNumericValue(txtRows, oldValue, newValue);
         });
 
         txtColumns.textProperty().addListener((observable, oldValue, newValue) -> {
+            LOGGER.info("Detected change in txtColumns to: " + newValue);
             checkNumericValue(txtColumns, oldValue, newValue);
         });
 
@@ -56,17 +59,19 @@ public class CreateMapDialogController implements Initializable {
      * @param mouseEvent Reference to the control whose event is fired
      */
     public void onCreateNewClicked(MouseEvent mouseEvent) {
-        mapcreatorlog.info("Create New Map Clicked");
+        LOGGER.info("Create New Map Clicked");
         if (!txtName.getText().equals("") &&
                 !txtRows.getText().equals("") &&
                 !txtColumns.getText().equals("")) {
             try {
+                LOGGER.info("Reading new map info");
                 int rows = Integer.parseInt(txtRows.getText());
                 int columns = Integer.parseInt(txtColumns.getText());
                 String mapName = txtName.getText();
-                mapcreatorlog.info("Reading new map info");
 
+                LOGGER.info("Checking if columns and rows are withing boundaries");
                 if (columns < 10 || columns > 30 || rows < 18 || rows > 24) {
+                    LOGGER.warn("Detected columns or rows out of range. columns: " + columns + " rows: " + rows);
                     Alert alert = new Alert(Alert.AlertType.INFORMATION);
                     alert.setTitle("Tower Defense");
                     alert.setHeaderText("Column can be between 10-30 and rows can be between 18-24");
@@ -74,25 +79,30 @@ public class CreateMapDialogController implements Initializable {
                     return;
                 }
 
+                LOGGER.info("Initializing window");
                 Stage stage = new Stage();
                 Group root = new Group();
                 Scene scene = new Scene(root);
                 stage.setScene(scene);
                 stage.setResizable(false);
 
+                LOGGER.info("Initializing MapManager");
                 MapManager mapManager = MapManager.create(root, mapName, rows, columns);
                 mapManager.start();
+
+                LOGGER.info("Showing window");
                 stage.show();
                 stage.setHeight(stage.getHeight() - 12);
 
                 stage.setOnCloseRequest(event -> {
                     try {
+                        LOGGER.info("Detected close request. Reading candidate to map data");
                         String mapData = mapManager.getMapData();
-                        mapcreatorlog.info("Reading map data");
                         if (mapData != null) {
+                            LOGGER.info("Detected valid map data");
                             Helper.saveMap(mapName, mapData);
 
-                            mapcreatorlog.info("Map saved successfully!");
+                            LOGGER.info("Map saved successfully!");
                             Alert alert = new Alert(Alert.AlertType.INFORMATION);
                             alert.setTitle("Tower Defense");
                             alert.setHeaderText("Map saved successfully!");
@@ -101,7 +111,7 @@ public class CreateMapDialogController implements Initializable {
                             ((Stage) txtName.getScene().getWindow()).close();
                         }
                         else {
-                            mapcreatorlog.info("Unsucessful! Message: Invalid map");
+                            LOGGER.error("Unsucessful! Message: Invalid map");
                             Alert alert = new Alert(Alert.AlertType.ERROR);
                             alert.setTitle("Tower Defense");
                             alert.setHeaderText("Invalid map, cannot save!");
@@ -109,13 +119,13 @@ public class CreateMapDialogController implements Initializable {
                         }
                     }
                     catch (Exception ex) {
-                        mapcreatorlog.error("Error while reading map data. Message: "+ ex.getMessage());
+                        LOGGER.error("Error while reading map data. Message: "+ ex.getMessage());
                         System.out.println(ex);
                     }
                 });
             }
             catch (Exception ex) {
-                mapcreatorlog.error("Error while reading map information. Message: "+ ex.getMessage());
+                LOGGER.error("Error while reading map information. Message: "+ ex.getMessage());
                 System.out.println(ex.toString());
             }
         }
@@ -131,7 +141,7 @@ public class CreateMapDialogController implements Initializable {
     public Boolean checkNumericValue(TextField text, String oldValue, String newValue) {
         try {
             if (newValue.matches("\\d*")) {
-                mapcreatorlog.info("Reading values entered for map creation. Value= "+newValue);
+                LOGGER.info("Reading values entered for map creation. Value= "+newValue);
                 int value = Integer.parseInt(newValue);
                 return true;
             } else {
@@ -140,7 +150,7 @@ public class CreateMapDialogController implements Initializable {
             }
         }
         catch (Exception ex) {
-            mapcreatorlog.error("Error while reading values. Message: "+ ex.getMessage());
+            LOGGER.error("Error while reading values. Message: "+ ex.getMessage());
             System.out.println(ex.toString());
             return false;
         }

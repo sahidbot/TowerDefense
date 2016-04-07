@@ -89,7 +89,7 @@ public class GameManager extends GameLoop implements Observer {
 
         isGameEnd = false;
         isWaveStarted = false;
-        level = 1;
+        level = 5;
     }
 
     /**
@@ -176,6 +176,8 @@ public class GameManager extends GameLoop implements Observer {
     */
     @Override
     protected void update(double delta) {
+        if (isGameEnded()) return;
+
         sideBar.getNewWaveButton().setEnabled(!isWaveStarted);
         towerShoots(delta);
 
@@ -231,6 +233,8 @@ public class GameManager extends GameLoop implements Observer {
      */
     @Override
     public void update(Observable o, Object arg) {
+        if (isGameEnded()) return;
+
         MouseState mouseState = (MouseState) arg;
 
         if (mouseState.getEventType() == MouseEventType.RIGHT_CLICK) {

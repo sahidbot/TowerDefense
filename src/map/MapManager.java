@@ -3,11 +3,8 @@ package map;
 import common.*;
 import common.core.*;
 import javafx.scene.Group;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.stage.Stage;
 import org.apache.log4j.Logger;
 
 import java.util.Observable;
@@ -23,13 +20,15 @@ public class MapManager extends GameLoop implements Observer {
     public IMouseHandler mouseHandler;
     public TileManager tileManager;
     public SideBar sideBar;
-    private static final Logger mapmanagerlog = Logger.getLogger(MapManager.class);
 
     private GraphicsContext gc;
     private String mapName;
     private double width;
     private double height;
     private Vector2 mousePosition = Vector2.getZero();
+
+    private static final Logger LOGGER = Logger.getLogger(MapManager.class);
+
     /**
      * Constructor to initializze Map
      * @param gc The {@link javafx.scene.canvas.GraphicsContext} to use. All graphics will be placed here
@@ -61,7 +60,7 @@ public class MapManager extends GameLoop implements Observer {
      * @param columns The number of columns in the Map
      */
     public static MapManager create(Group root, String name, int rows, int columns) {
-        mapmanagerlog.info("Mapmanager instance was created");
+        LOGGER.info("Creating the instance of the map manager");
 
         double width = (Settings.TILE_WIDTH * columns) + Settings.SIDEBAR_WIDTH;
         double height = Settings.TILE_HEIGHT * rows;
@@ -95,6 +94,8 @@ public class MapManager extends GameLoop implements Observer {
                 }
             }
 
+            LOGGER.info("Returned valid map data");
+
             return sb.toString();
         }
 
@@ -105,7 +106,9 @@ public class MapManager extends GameLoop implements Observer {
      * @param mapData Map data as Array of string
      */
     public void loadMapData(String[] mapData) {
+        LOGGER.info("Loading map from map data");
         Helper.loadTileManagerFromMapData(tileManager, mapData);
+        LOGGER.info("Map loaded from map data");
     }
 
     /**
@@ -149,7 +152,6 @@ public class MapManager extends GameLoop implements Observer {
      */
     @Override
     protected void clear() {
-        mapmanagerlog.info("Map Contents Cleared");
         gc.clearRect(0, 0, width, height);
     }
     /**

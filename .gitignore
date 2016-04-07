@@ -127,3 +127,6 @@ Temporary Items
 
 #log4j
 logs/
+
+#saved game
+/userData/gameStates/

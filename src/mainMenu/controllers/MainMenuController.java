@@ -98,7 +98,6 @@ public class MainMenuController implements Initializable{
                 int rows = Integer.parseInt(mapData[0].substring(sIndex + 1, mapData[0].length()));
 
                 LOGGER.info("Map file processed, setting up window");
-
                 Stage stage = new Stage();
                 Group root = new Group();
                 Scene scene = new Scene(root);

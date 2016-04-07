@@ -74,17 +74,9 @@ public class InspectionPanel {
         if (selectedTower != this.selectedTower) {
             String nullStr = "null";
             LOGGER.info("Selected tower changed from "
-                    + this.selectedTower == null ? nullStr : this.selectedTower.getUniqueId()
-                    + "to "
-                    + selectedTower == null ? nullStr : selectedTower.getUniqueId());
-            if (this.selectedTower != null) {
-                LOGGER.info("Selected tower changed from: " + this.selectedTower.getTowerType());
-            }
-
-            if (selectedTower != null) {
-                LOGGER.info("Selected tower changed to: " + selectedTower.getTowerType());
-            }
-
+                    + (this.selectedTower == null ? nullStr : this.selectedTower.getUniqueId())
+                    + " to "
+                    + (selectedTower == null ? nullStr : selectedTower.getUniqueId()));
             this.selectedTower = selectedTower;
         }
     }

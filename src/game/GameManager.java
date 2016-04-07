@@ -243,7 +243,7 @@ public class GameManager extends GameLoop implements Observer {
         //Mouse clicked on the side panel
         if (mouseState.getPosition().getX() > tileManager.getWidth() && !isWaveStarted) {
             if (mouseState.getEventType() == MouseEventType.LEFT_CLICK) {
-                LOGGER.info("Detected " + mouseState.getEventType() + " in tile manager");
+                LOGGER.info("Detected " + mouseState.getEventType() + " on side panel");
                 Tower inspectionPanelTower = sideBar.getInspectionPanel().getSelectedTower();
 
                 // sell and upgrade
@@ -377,9 +377,6 @@ public class GameManager extends GameLoop implements Observer {
                 mouseState.clearSelectedSprite();
 
                 LOGGER.debug("Placed a new tower at position: " + position.toString());
-            }
-            else {
-                LOGGER.debug("Cannot place tower at position: " + mouseState.getPosition().toString());
             }
         }
 

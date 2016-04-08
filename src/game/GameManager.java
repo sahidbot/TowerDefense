@@ -89,7 +89,7 @@ public class GameManager extends GameLoop implements Observer {
 
         isGameEnd = false;
         isWaveStarted = false;
-        level = 5;
+        level = 1;
     }
 
     /**
